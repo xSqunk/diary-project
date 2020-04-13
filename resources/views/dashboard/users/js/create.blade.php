@@ -11,7 +11,7 @@
 		}
 		
 		function removeError( item ) {
-			parent = item.parents( '.udi-form-row' );
+			parent = item.parents( '.diary-form-row' );
 			errorDiv = item.parents( '.input-with-error' );
 			item.parents( '.input-with-error' ).find( 'input' ).detach().appendTo( parent );
 			errorDiv.remove();

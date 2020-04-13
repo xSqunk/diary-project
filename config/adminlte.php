@@ -45,12 +45,12 @@ return [
     |
     */
 
-    'logo' => '<b>Dziennik</b>XYZ',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo' => '<b>Diary</b>',
+    'logo_img' => 'img/logo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'AdminLTE',
+    'logo_img_alt' => 'logo dziennik',
 
     /*
     |--------------------------------------------------------------------------
@@ -64,7 +64,7 @@ return [
     |
     */
 
-    'usermenu_enabled' => true,
+    'usermenu_enabled' => false,
     'usermenu_header' => false,
     'usermenu_header_class' => 'bg-primary',
     'usermenu_image' => false,
@@ -167,7 +167,7 @@ return [
 
     'use_route_url' => false,
 
-    'dashboard_url' => 'home',
+    'dashboard_url' => 'dashboard',
 
     'logout_url' => 'logout',
 
@@ -179,7 +179,7 @@ return [
 
     'password_email_url' => 'password/email',
 
-    'profile_url' => false,
+    'profile_url' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -193,7 +193,7 @@ return [
     |
     */
 
-    'enabled_laravel_mix' => false,
+    'enabled_laravel_mix' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -213,11 +213,11 @@ return [
 //            'search' => true,
 //            'topnav' => true,
 //        ],
-//        [
-//            'text' => 'blog',
-//            'url'  => 'admin/blog',
-//            'can'  => 'manage-blog',
-//        ],
+        [
+            'text' => 'blog',
+            'url'  => 'admin/blog',
+            'can'  => 'manage-blog',
+        ],
 //        [
 //            'text'        => 'pages',
 //            'url'         => 'admin/pages',
@@ -226,10 +226,35 @@ return [
 //            'label_color' => 'success',
 //        ],
         [
-            'text' => 'Użytkownicy',
-            'url'  => 'dashboard/users',
+            'text'    => 'Użytkownicy',
             'icon' => 'fas fa-fw fa-user',
+            'submenu' => [
+                [
+                    'text' => 'Lista użytkowników',
+                    'icon' => 'fas fa-fw fa-user',
+                    'url'  => 'dashboard/users',
+                ],
+                [
+                    'text' => 'Dodaj użytkownika',
+                    'icon' => 'fas fa-user-plus',
+                    'url'  => 'dashboard/users/create',
+                ],
+            ],
         ],
+//        ['header' => 'labels'],
+//        [
+//            'text'       => 'important',
+//            'icon_color' => 'red',
+//        ],
+//        [
+//            'text'       => 'warning',
+//            'icon_color' => 'yellow',
+//        ],
+//        [
+//            'text'       => 'information',
+//            'icon_color' => 'aqua',
+//        ],
+
         ['header' => 'USTAWIENIA KONTA'],
         [
             'text' => 'Profil',

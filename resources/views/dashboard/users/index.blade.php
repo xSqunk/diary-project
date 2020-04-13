@@ -14,10 +14,10 @@
 	<table class="is-dataTable table-striped table-bordered" width="100%">
 		<thead>
 		<tr>
-			<th>Nazwa</th>
-			<th>Email/Domena</th>
+			<th>Imię i Nazwisko</th>
 			<th>Grupy</th>
-			<th>Notatki</th>
+			<th>Email</th>
+			<th>Telefon</th>
 			<th>Status</th>
 			<th>Akcje</th>
 		</tr>
@@ -25,34 +25,58 @@
 
 		<tbody>
 		@foreach($users as $user)
-			<tr>
+			<tr data-hash_id="{{$user->hashId}}" data-name="{{$user->meta->name}}" data-surname="{{$user->meta->surname}}">
 				<td>
-{{--					<img src="{{ $user->getAvatarUrl() }}" class="img-circle udiAvatarImage" alt="User Image">{{ $user->name }}--}}
+					<img src="{{ $user->meta->getAvatarUrl() }}" class="img-circle udiAvatarImage" alt="User Image">
+					{{ $user->meta->name . ' ' . $user->meta->surname}}
+				</td>
+				<td>
+					<p>
+						@if($user->groups)
+							<ul>
+							@foreach($user->groups as $group)
+								<li>{{$group->name}}</li>
+							@endforeach
+							</ul>
+						@else
+							-
+						@endif
+					</p>
 				</td>
 				<td>{{ $user->email }}</td>
-				<td>
-					<p> - </p>
-				</td>
-				<td class="is-text-centered"><p> {{ empty($user->notices) ? '-' : $user->notices }} </p></td>
+				<td class="is-text-centered"><p>{{$user->meta->phone}}</p></td>
 				<td class="is-text-centered">
-
+					@switch( $user->status )
+						@case ( App\User::STATUS_IS_ACTIVE )
+						<i class="far fa-check-circle is-color-green" title="{{ $user->statusName }}"></i>
+						@break
+						@case ( App\User::STATUS_IS_INACTIVE )
+						<i class="fas fa-ban is-color-red" title="{{ $user->statusName }}"></i>
+						@break
+					@endswitch
 				</td>
 				<td>
-{{--					<a href="{{ route( 'users.edit', [ 'user' => $user->hashId ] ) }}">--}}
-{{--						<button class="btn diary-edit-btn" title="Edytuj użytkownika">--}}
-{{--							<i class="fas fa-edit"></i>--}}
-{{--						</button>--}}
-{{--					</a>--}}
+					<a href="{{ route( 'users.edit', [ 'user' => $user->hashId ] ) }}">
+						<button class="btn diary-edit-btn" title="Edytuj użytkownika">
+							<i class="fas fa-edit"></i>
+						</button>
+					</a>
+					@if(auth()->user()->id !== $user->id)
+						<button class="btn delete-user" title="Usuń użytkownika">
+							<i class="fas fa-trash"></i>
+						</button>
+					@endif
 				</td>
 			</tr>
 		@endforeach
 		</tbody>
 	</table>
 
+
 @stop
 
 @section('js')
-
+	@include('dashboard.users.js.index')
 @stop
 
 @section('css')

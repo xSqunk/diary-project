@@ -23,6 +23,11 @@ Route::middleware( ['auth'] )->group( static function(){
     Route::get( '/dashboard', 'DashboardController@index' )->name( 'home' );
 
     Route::group( [ 'prefix' => 'dashboard' ], function(){
+
+        Route::get( '/profile', [
+            'uses' => 'UserController@profileIndex',
+        ] )->name( 'users.profile' );
+
         Route::group( [ 'prefix' => 'users' ], function(){
 
             Route::get( '/', [
@@ -37,11 +42,24 @@ Route::middleware( ['auth'] )->group( static function(){
                 'uses' => 'UserController@store'
             ] )->name( 'users.store' );
 
+            Route::get( '/edit/{user}', [
+                'uses' => 'UserController@edit'
+            ] )->name( 'users.edit' );
+
+            Route::post( '/update', [
+                'uses' => 'UserController@update'
+            ] )->name( 'users.update' );
+
             Route::post( '/checkEmail', [
                 'uses' => 'UserController@checkEmail'
             ] )->name( 'users.checkEmail' );
 
+            Route::delete( '/', [
+                'uses' => 'UserController@delete'
+            ] )->name( 'users.delete' );
+
         } );
+
     });
 
 });

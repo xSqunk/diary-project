@@ -2,38 +2,119 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Mtvs\EloquentHashids\HasHashid;
+use Mtvs\EloquentHashids\HashidRouting;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasHashid, HashidRouting;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
-        'name', 'email', 'password',
+        'status', 'email', 'password', 'last_login', 'role_admin',
+        'role_teacher', 'role_student', 'role_parent', 'role_director'
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password', 'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public const STATUS_IS_ACTIVE = 1;
+    public const STATUS_IS_INACTIVE = 0;
+
+    public function meta() {
+        return $this->hasOne(UserMeta::class);
+    }
+
+    public function getHashIdAttribute(){
+        return $this->hashId();
+    }
+
+    public function getStatusNameAttribute(): ?string{
+        $status = $this->status;
+
+        switch( $status ){
+            case self::STATUS_IS_INACTIVE:
+                return 'Nieaktywny';
+                break;
+            case self::STATUS_IS_ACTIVE:
+                return 'Aktywny';
+                break;
+            default:
+                return '';
+        }
+    }
+
+    public function getGroupsAttribute(): ?array{
+
+        $groups = array();
+
+        if($this->role_admin) {
+            $groups[] = (object) array(
+                'key' => 'admin',
+                'name' => 'Administratorzy'
+            );
+        }
+
+        if($this->role_teacher) {
+            $groups[] = (object) array(
+                'key' => 'teacher',
+                'name' => 'Nauczyciele'
+            );
+        }
+
+        if($this->role_student) {
+            $groups[] = (object) array(
+                'key' => 'student',
+                'name' => 'Uczniowie'
+            );
+        }
+
+        if($this->role_parent) {
+            $groups[] = (object) array(
+                'key' => 'parent',
+                'name' => 'Rodzice'
+            );
+        }
+
+        if($this->role_director) {
+            $groups[] = (object) array(
+                'key' => 'director',
+                'name' => 'Dyrektorzy'
+            );
+        }
+
+        return $groups;
+    }
+
+    public static function Groups(){
+        return array(
+            'admin' => array(
+                'name' => 'Administratorzy',
+                'description' => 'Grupa administratorów'
+            ),
+            'teacher' => array(
+                'name' => 'Nauczyciele',
+                'description' => 'Grupa nauczycieli'
+            ),
+            'student' => array(
+                'name' => 'Uczniowie',
+                'description' => 'Grupa uczniów'
+            ),
+            'parent' => array(
+                'name' => 'Rodzice',
+                'description' => 'Grupa rodziców'
+            ),
+            'director' => array(
+                'name' => 'Dyrektorzy',
+                'description' => 'Grupa dyrektorów'
+            )
+        );
+    }
+
 }
