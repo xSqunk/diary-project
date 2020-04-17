@@ -18603,6 +18603,10 @@ a .btn:focus {
 .content {
   background-color: transparent !important;
   width: 100%;
+  min-height: 250px;
+  padding: 15px !important;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .logo-mini img,
@@ -20249,5 +20253,88 @@ a.logged-user-box {
 
 .login-btn-box .btn {
   width: 200px;
+}
+
+.profile-form input[readonly] {
+  background: none;
+  border: none;
+  outline: none !important;
+}
+
+#main-form.profile-form {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  -moz-column-gap: 20px;
+       column-gap: 20px;
+  /*row-gap: 10px;*/
+  padding: 40px;
+}
+
+.form-label,
+.form-label + input {
+  margin-bottom: 10px;
+}
+
+.form-avatar {
+  grid-column: 1;
+  grid-row: 1/10;
+  margin-right: 30px;
+}
+
+.form-avatar > * {
+  cursor: pointer;
+}
+
+.form-avatar label {
+  display: block;
+}
+
+.form-avatar #avatar {
+  display: none;
+}
+
+.form-avatar img {
+  max-width: 200px;
+  width: 150px;
+  height: 150px;
+  max-height: 200px;
+  border-radius: 500px;
+}
+
+.form-btn-group {
+  justify-self: end;
+  grid-column: -1/-2;
+  grid-row: 10;
+}
+
+#upload-avatar,
+.form-btn-group .cancel {
+  border: 1px solid #ccc;
+}
+
+#upload-avatar > i {
+  margin-left: 5px;
+}
+
+#profile-content {
+  border: 1px solid #dee2e6;
+  border-top: none;
+}
+
+#password-form.profile-form {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  -moz-column-gap: 20px;
+       column-gap: 20px;
+  padding: 40px;
+}
+
+#password-form .form-control:disabled,
+.form-control[readonly] {
+  background-color: #e9ecef !important;
+}
+
+#password-form .form-control {
+  margin-bottom: 10px;
 }
 

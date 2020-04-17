@@ -293,11 +293,6 @@ return [
             'url'  => 'dashboard/profile',
             'icon' => 'fas fa-fw fa-user',
         ],
-        [
-            'text' => 'Zmiana hasła',
-            'url'  => 'dashboard/change_password',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
 //        [
 //            'text'    => 'multilevel',
 //            'icon'    => 'fas fa-fw fa-share',

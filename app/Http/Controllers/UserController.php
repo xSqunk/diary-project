@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Group;
 use App\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
@@ -55,10 +57,62 @@ class UserController extends Controller
         ] );
     }
 
-    public function profileIndex() {
-        return view( 'dashboard.users.edit', [
-            'user' => auth()->user(),
-            'groups' => User::Groups()
+    public function profileIndex(Request $request) {
+
+        $user  = Auth::user();
+        $tabId = $request->session()->pull( 'profileActiveTabId', 1 );
+
+        return view( 'dashboard.users.profile', [
+            'current'       => $user,
+            'activeTabId'   => $tabId,
+        ] );
+    }
+
+    public function profileUpdate( Request $request ){
+        session( [ 'profileActiveTabId' => 1 ] );
+        $user = User::findByHashidOrFail( $request->userId );
+
+        if( isset( $request->avatar ) ){
+            $name         = $request->avatar->store( 'avatars', [ 'disk' => 'upload' ] );
+            $user->meta->avatar = $name;
+            $user->meta->save();
+        }
+
+        return redirect()->route( 'users.profile' )->with( 'alert', [
+            'title' => 'Pomyślnie zaktualizowano użytkownika!',
+            'type'  => 'success',
+            'timer' => '5000',
+        ] );
+
+    }
+
+    public function passwordUpdate( Request $request ){
+
+        session( [ 'profileActiveTabId' => 2 ] );
+        $user = User::findByHashidOrFail( $request->userId );
+
+        $validator = Validator::make( $request->all(), [
+            'password'         => 'required|max:255|min:8|regex:/^.*(?=.{3,})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\d])(?=.*[!@#$%^*]).*$/',
+            'confirm-password' => 'required|same:password',
+        ] );
+
+        if( ! Hash::check( $request[ 'old-password' ], $user->password ) ){
+            $validator->errors()->add( 'old-password', 'Wprowadzone aktualne hasło jest nieprawidłowe.' );
+        }
+
+        if( count( $validator->errors()->messages() ) !== 0 || $validator->fails() ){
+            return redirect()->back()->withErrors( $validator )->withInput(
+                $request->all( 'password' )
+            );
+        }
+
+        $user->password = Hash::make( $request->password );
+        $user->save();
+
+        return redirect()->route( 'users.profile' )->with( 'alert', [
+            'title' => 'Pomyślnie zaktualizowano hasło użytkownika!',
+            'type'  => 'success',
+            'timer' => '5000',
         ] );
     }
 

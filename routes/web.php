@@ -28,6 +28,14 @@ Route::middleware( ['auth'] )->group( static function(){
             'uses' => 'UserController@profileIndex',
         ] )->name( 'users.profile' );
 
+        Route::post( '/profileUpdate', [
+            'uses' => 'UserController@profileUpdate'
+        ] )->name( 'users.profileUpdate' );
+
+        Route::post( '/passwordUpdate', [
+            'uses' => 'UserController@passwordUpdate'
+        ] )->name( 'users.passwordUpdate' );
+
         Route::group( [ 'prefix' => 'users' ], function(){
 
             Route::get( '/', [
