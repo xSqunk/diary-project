@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'Dziennik XYZ',
+    'title' => 'eDiary',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -45,7 +45,7 @@ return [
     |
     */
 
-    'logo' => '<b>Diary</b>',
+    'logo' => '<b>eDiary</b>',
     'logo_img' => 'img/logo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -238,6 +238,38 @@ return [
                     'text' => 'Dodaj użytkownika',
                     'icon' => 'fas fa-user-plus',
                     'url'  => 'dashboard/users/create',
+                ],
+            ],
+        ],
+        [
+            'text'    => 'Uczniowie',
+            'icon' => 'fas fa-user-graduate',
+            'submenu' => [
+                [
+                    'text' => 'Lista uczniów',
+                    'icon' => 'fas fa-fw fa-user',
+                    'url'  => 'dashboard/students',
+                ],
+                [
+                    'text' => 'Dodaj ucznia',
+                    'icon' => 'fas fa-user-plus',
+                    'url'  => 'dashboard/students/create',
+                ],
+            ],
+        ],
+        [
+            'text'    => 'Nauczyciele',
+            'icon' => 'fas fa-fw fa-user',
+            'submenu' => [
+                [
+                    'text' => 'Lista nauczycieli',
+                    'icon' => 'fas fa-fw fa-user',
+                    'url'  => 'dashboard/teachers',
+                ],
+                [
+                    'text' => 'Dodaj nauczyciela',
+                    'icon' => 'fas fa-user-plus',
+                    'url'  => 'dashboard/teachers/create',
                 ],
             ],
         ],

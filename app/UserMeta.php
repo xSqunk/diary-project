@@ -11,7 +11,7 @@ class UserMeta extends Model
 
     protected $fillable = [
         'user_id', 'name', 'phone', 'surname',
-        'birth_date', 'PESEL'
+        'birth_date', 'PESEL', 'avatar'
     ];
 
     public function user() {

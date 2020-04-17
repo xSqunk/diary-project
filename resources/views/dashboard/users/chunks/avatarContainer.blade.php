@@ -1,5 +1,5 @@
 <div class="avatar-container" style="margin-right:30px !important;">
-    <img id="avatarPrev" src="{{ $avatar ?? asset('upload/avatars/user.png') }}" class="AvatarImage mb-2"
+    <img id="avatarPrev" src="{{ !isset($avatar) || $avatar === 'user.png' ? asset('upload/avatars/user.png') : asset("upload/$avatar") }}" class="AvatarImage mb-2"
          style="max-width: 200px;
 									width: 150px;
 									height: 150px;

@@ -1,11 +1,15 @@
 @extends('dashboard.home')
 
-@section('content_header')
-	<h1>Dodawanie użytkownika</h1>
+@section('title', $head_text)
 
-	<a href="{{route('users.index')}}">
-		<button class="btn btn-info btn-sm"><i class="fa fa-undo"></i> Anuluj</button>
-	</a>
+@section('content_header')
+	<div class="content-header-inner">
+		<h1>{!! $head_text !!}</h1>
+
+		<a href="{{route("$view_type.index")}}">
+			<button class="btn btn-info btn-sm"><i class="fa fa-undo"></i> Anuluj</button>
+		</a>
+	</div>
 @stop
 
 
@@ -16,7 +20,7 @@
 
 			@include('dashboard.common.errors', [ 'errors' => $errors ] )
 
-			<form action="{{ route( 'users.store' ) }}" id="form-user-insert" method="POST" novalidate enctype="multipart/form-data">
+			<form action="{{ route( "$view_type.store" ) }}" id="form-user-insert" method="POST" novalidate enctype="multipart/form-data">
 				@csrf
 
 				<div class="" style="display: flex;padding: 40px 0;">
@@ -37,14 +41,17 @@
 							</div>
 						</div>
 
-						<label for="status">Status
-							@include('dashboard/common/tooltip', [ 'msg' => 'Nieaktywny użytkownik nie będzie mógł się zalogować do systemu' ])
-						</label>
-						<select required name="status" class=" @if( $errors->has('status') ) input-error @endif custom-select"  id="status">
-							<option value="1" @if ( old ( 'status' ) == 1 ) selected @endif>Aktywny</option>
-							<option value="0" @if ( old ( 'status' ) == 0 ) selected @endif>Nieaktywny</option>
-						</select>
+						<div class="diary-form-row">
+							<label for="status">Status
+								@include('dashboard/common/tooltip', [ 'msg' => 'Nieaktywny użytkownik nie będzie mógł się zalogować do systemu' ])
+							</label>
+							<select required name="status" class=" @if( $errors->has('status') ) input-error @endif custom-select"  id="status">
+								<option value="1" @if ( old ( 'status' ) == 1 ) selected @endif>Aktywny</option>
+								<option value="0" @if ( old ( 'status' ) == 0 ) selected @endif>Nieaktywny</option>
+							</select>
+						</div>
 
+						@if($view_type === 'users')
 						<div class="user-group-container">
 							<div class="form-section-header">Grupy:</div>
 							@foreach( $groups as $key => $group )
@@ -64,6 +71,7 @@
 								</div>
 							@endforeach
 						</div>
+						@endif
 
 						<div class="diary-form-row">
 							<label for="name">Imię</label>

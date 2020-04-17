@@ -60,6 +60,54 @@ Route::middleware( ['auth'] )->group( static function(){
 
         } );
 
+        Route::group( [ 'prefix' => 'students' ], function(){
+
+            Route::get( '/', [
+                'uses' => 'StudentController@index'
+            ] )->name( 'students.index' );
+
+            Route::get( '/create', [
+                'uses' => 'StudentController@create'
+            ] )->name( 'students.create' );
+
+            Route::post( '/create', [
+                'uses' => 'StudentController@store'
+            ] )->name( 'students.store' );
+
+            Route::get( '/edit/{user}', [
+                'uses' => 'StudentController@edit'
+            ] )->name( 'students.edit' );
+
+            Route::post( '/update', [
+                'uses' => 'StudentController@update'
+            ] )->name( 'students.update' );
+
+        } );
+
+        Route::group( [ 'prefix' => 'teachers' ], function(){
+
+            Route::get( '/', [
+                'uses' => 'TeacherController@index'
+            ] )->name( 'teachers.index' );
+
+            Route::get( '/create', [
+                'uses' => 'TeacherController@create'
+            ] )->name( 'teachers.create' );
+
+            Route::post( '/create', [
+                'uses' => 'TeacherController@store'
+            ] )->name( 'teachers.store' );
+
+            Route::get( '/edit/{user}', [
+                'uses' => 'TeacherController@edit'
+            ] )->name( 'teachers.edit' );
+
+            Route::post( '/update', [
+                'uses' => 'TeacherController@update'
+            ] )->name( 'teachers.update' );
+
+        } );
+
     });
 
 });

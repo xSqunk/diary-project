@@ -117,4 +117,24 @@ class User extends Authenticatable
         );
     }
 
+    public function scopeIsAdmin( $query ){
+        return $query->where( 'role_admin', '=', 1 );
+    }
+
+    public function scopeIsTeacher( $query ){
+        return $query->where( 'role_teacher', '=', 1 );
+    }
+
+    public function scopeIsStudent( $query ){
+        return $query->where( 'role_student', '=', 1 );
+    }
+
+    public function scopeIsParent( $query ){
+        return $query->where( 'role_parent', '=', 1 );
+    }
+
+    public function scopeIsDirector( $query ){
+        return $query->where( 'role_director', '=', 1 );
+    }
+
 }

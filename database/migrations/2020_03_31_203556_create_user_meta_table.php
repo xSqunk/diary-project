@@ -21,7 +21,7 @@ class CreateUserMetaTable extends Migration
             $table->string('phone')->nullable();
             $table->date('birth_date')->nullable();
             $table->string('PESEL')->nullable();
-            $table->string( 'avatar' )->default( 'user.jpg' );
+            $table->string( 'avatar' )->default( 'user.png' );
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 

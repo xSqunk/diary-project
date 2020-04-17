@@ -1,21 +1,25 @@
 @extends('dashboard.home')
 
-@section('title', 'Lista Użytkowników')
+@section('title', $head_text)
 
 @section('content_header')
-	<h1>LISTA UŻYTKOWNIKÓW W SYSTEMIE</h1>
-	<a href="{{ route('users.create') }}" class="page-title-action">
-		<button class="btn btn-info btn-sm"><i class="fa fa-plus "></i> Dodaj</button>
-	</a>
+	<div class="content-header-inner">
+		<h1>{!! $head_text !!}</h1>
+		<a href="{{ route("$view_type.create") }}" class="page-title-action">
+			<button class="btn btn-info btn-sm"><i class="fa fa-plus "></i> Dodaj</button>
+		</a>
+	</div>
 @stop
 
 @section('content')
 
-	<table class="is-dataTable table-striped table-bordered" width="100%">
+	<table class="is-dataTable table-striped table-bordered mt-3" width="100%">
 		<thead>
 		<tr>
 			<th>Imię i Nazwisko</th>
-			<th>Grupy</th>
+			@if($view_type === 'users')
+				<th>Grupy</th>
+			@endif
 			<th>Email</th>
 			<th>Telefon</th>
 			<th>Status</th>
@@ -30,6 +34,7 @@
 					<img src="{{ $user->meta->getAvatarUrl() }}" class="img-circle udiAvatarImage" alt="User Image">
 					{{ $user->meta->name . ' ' . $user->meta->surname}}
 				</td>
+				@if($view_type === 'users')
 				<td>
 					<p>
 						@if($user->groups)
@@ -43,6 +48,7 @@
 						@endif
 					</p>
 				</td>
+				@endif
 				<td>{{ $user->email }}</td>
 				<td class="is-text-centered"><p>{{$user->meta->phone}}</p></td>
 				<td class="is-text-centered">
@@ -56,7 +62,7 @@
 					@endswitch
 				</td>
 				<td>
-					<a href="{{ route( 'users.edit', [ 'user' => $user->hashId ] ) }}">
+					<a href="{{ route( "$view_type.edit", [ 'user' => $user->hashId ] ) }}">
 						<button class="btn diary-edit-btn" title="Edytuj użytkownika">
 							<i class="fas fa-edit"></i>
 						</button>

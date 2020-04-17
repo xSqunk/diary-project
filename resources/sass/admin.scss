@@ -65,7 +65,7 @@ span.select2.select2-container {
 
 }
 
-.udi-container {
+.diary-container {
   padding: 0 10px;
 }
 
@@ -77,10 +77,10 @@ span.select2.select2-container {
 
 
 @include media-mobile {
-  .udi-container {
+  .diary-container {
     padding: 30px 10px 10px 10px;
   }
-  .udi-form-row-left, .udi-form-row-right {
+  .diary-form-row-left, .diary-form-row-right {
     flex-basis: 100% !important;
   }
 
@@ -96,7 +96,7 @@ span.select2.select2-container {
 }
 
 
-.udi-modal-header {
+.diary-modal-header {
   padding: 0;
   border-bottom: 1px solid #cfd3db;
   color: #ffffff;
@@ -134,7 +134,7 @@ span.select2.select2-container {
     margin-top: 10px;
   }
 
-  i.udi-modal-start-icon {
+  i.diary-modal-start-icon {
     margin-right: 10px;
   }
 
@@ -162,47 +162,47 @@ span.select2.select2-container {
 }
 
 
-.udi-modal-activity, .udi-modal-notices, .udi-modal-chances, .udi-modal-repo, .udi-modal-promo {
-  .udi-form-group {
+.diary-modal-activity, .diary-modal-notices, .diary-modal-chances, .diary-modal-repo, .diary-modal-promo {
+  .diary-form-group {
     border-top: 0 !important;
   }
 
-  .udi-modal-header {
+  .diary-modal-header {
     color: #000000 !important;
   }
 
-  .udi-form-rows.udi-form-row-submit {
+  .diary-form-rows.diary-form-row-submit {
     margin: 0 !important;
   }
 
 }
 
-.udi-container-body {
+.diary-container-body {
   /*margin-top: 20px;*/
 }
 
-.udi-modal-body {
+.diary-modal-body {
   margin-top: 20px;
 }
 
-.udi-form-rows {
+.diary-form-rows {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   justify-content: space-between;
 }
 
-.udi-form-row-left {
+.diary-form-row-left {
   flex-basis: 48%;
   text-align: left;
 }
 
-.udi-form-row-right {
+.diary-form-row-right {
   flex-basis: 48%;
   text-align: right;
 }
 
-.udi-form-row {
+.diary-form-row {
   .input-with-error {
     position: relative;
     display: flex;
@@ -237,7 +237,7 @@ span.select2.select2-container {
   flex: 100%;
 }
 
-.udi-form-row .input-with-error input {
+.diary-form-row .input-with-error input {
   height: 40px !important;
   border-color: #ff0000 !important;
   margin: 0 0 0 -7.5px;
@@ -248,7 +248,7 @@ span.select2.select2-container {
   }
 }
 
-.udi-form-rows .udi-form-row {
+.diary-form-rows .diary-form-row {
   display: flex;
   flex-wrap: wrap;
   text-align: left;
@@ -296,7 +296,7 @@ span.select2.select2-container {
 
 }
 
-.udi-form-section-table {
+.diary-form-section-table {
   th:last-of-type {
     width: 25%;
   }
@@ -327,7 +327,7 @@ span.select2.select2-container {
   border-color: #1c75bb;
 }
 
-.udi-form-full-row {
+.diary-form-full-row {
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
@@ -361,8 +361,8 @@ span.select2.select2-container {
   }
 }
 
-.udi-form-rows {
-  .udi-form-row {
+.diary-form-rows {
+  .diary-form-row {
     textarea:focus, select:focus, input:focus {
       outline: none;
       border-color: #1c75bb;
@@ -385,45 +385,58 @@ span.select2.select2-container {
       flex: 3;
     }
 
-    .udi-form-row-multi {
+    .diary-form-row-multi {
       display: flex;
       flex: 3;
       margin-left: -10px;
       flex-wrap: wrap;
     }
 
-    .udi-form-row-label-multi {
+    .diary-form-row-label-multi {
       flex: 1;
       flex-wrap: wrap;
     }
 
   }
 
-  &.notices .udi-form-row-right {
+  &.notices .diary-form-row-right {
     flex: 1;
   }
 
-  .udi-date-input::-webkit-clear-button {
+  .diary-date-input::-webkit-clear-button {
     padding-right: 15px;
   }
 }
 
-.udi-form-row .udi-date-input {
+.diary-form-row .diary-date-input {
   width: calc(70% - 53px) !important;
 }
 
-.udi-form-rows .udi-form-row textarea {
+.diary-form-rows .diary-form-row textarea {
   padding: 10px;
   overflow-y: overlay;
 }
 
-.udi-form-row {
+.diary-form-row {
   align-items: center;
   position: relative;
+  margin: 10px 0;
 }
 
+.swal2-actions button {
+  margin: 0 5px;
+}
 
-.udi-modal-footer {
+.content-header-inner {
+  display: flex;
+  align-items: center;
+}
+
+.user-group-container {
+  margin: 10px 0;
+}
+
+.diary-modal-footer {
   margin-top: 20px;
   padding: 20px 60px;
   border-top: 1px solid #cfd3db;
@@ -446,12 +459,12 @@ span.select2.select2-container {
     cursor: pointer;
   }
 
-  i.udi-modal-footer-icon {
+  i.diary-modal-footer-icon {
     margin-right: 10px;
   }
 }
 
-.udi-form-permissions-row {
+.diary-form-permissions-row {
   display: flex;
   /*text-align: right;*/
 }
@@ -484,11 +497,11 @@ span.select2.select2-container {
   margin: 10px;
 }
 
-.udi-check-permission, .udi-check-all-permission {
+.diary-check-permission, .diary-check-all-permission {
   margin: 0 15px;
 }
 
-.udi-form-section-header {
+.diary-form-section-header {
   border-top: 1px solid #cfd3db;
   padding-top: 10px;
   font-weight: 600;
@@ -631,7 +644,7 @@ section > ul > li.treeview > a > span.pull-right-container > i {
   }
 }
 
-.udi-form-groups-section {
+.diary-form-groups-section {
   margin-left: 20px;
 }
 
@@ -639,11 +652,11 @@ section > ul > li.treeview > a > span.pull-right-container > i {
   font-size: 10px;
 }
 
-.udi-form-row .random-password-btn {
+.diary-form-row .random-password-btn {
   position: absolute;
   right: 1px;
   top: 1px;
-  height: 54.5px;
+  height: 35px;
   border-radius: 0 4px 4px 0;
   border: none;
   z-index: 1;
@@ -669,13 +682,13 @@ section > ul > li.treeview > a > span.pull-right-container > i {
   width: 100%;
 }
 
-.udi-widgets-container {
+.diary-widgets-container {
 
-  .udi-widget-row {
+  .diary-widget-row {
     display: flex;
     flex-wrap: wrap;
 
-    .udi-widget {
+    .diary-widget {
       display: flex;
       padding: 20px;
       padding-right: 0;
@@ -939,16 +952,16 @@ section > ul > li.treeview > a > span.pull-right-container > i {
   padding: 10px;
 }
 
-.tab-pane .udi-form-group:first-of-type {
+.tab-pane .diary-form-group:first-of-type {
   margin-top: 0 !important;
   border-top: 0 !important;
 
-  .udi-form-group-title {
+  .diary-form-group-title {
     top: 0 !important;
   }
 }
 
-.udi-form-group {
+.diary-form-group {
   //border: 1px solid #dbdbdb;
   //border-top: 0;
   border-top: 1px solid #dbdbdb;
@@ -956,7 +969,7 @@ section > ul > li.treeview > a > span.pull-right-container > i {
   margin-top: 30px;
   position: relative;
 
-  .udi-form-group-title {
+  .diary-form-group-title {
     position: absolute;
     top: -13px;
     left: 0;
@@ -968,7 +981,7 @@ section > ul > li.treeview > a > span.pull-right-container > i {
     padding-left: 5px;
   }
 
-  .udi-form-group-items {
+  .diary-form-group-items {
     margin-top: 20px;
   }
 
@@ -989,7 +1002,7 @@ section > ul > li.treeview > a > span.pull-right-container > i {
 
 }
 
-.udi-widget-box {
+.diary-widget-box {
   .box-header {
     background-color: #dfd9d9 !important;
     color: #000000 !important;
@@ -1567,17 +1580,17 @@ table.dataTable:not(p) thead .sorting_desc_disabled:after {
 //DATETABLES-END
 
 
-.udi-table {
-  .udi-table-row {
+.diary-table {
+  .diary-table-row {
     display: flex;
     justify-content: space-between;
     text-align: center;
 
-    &.udi-table-row-header {
+    &.diary-table-row-header {
       font-weight: 600;
     }
 
-    .udi-table-col {
+    .diary-table-col {
       border: 1px solid #dbdbdb;
       flex-basis: 25%;
       padding: 2px 5px;
@@ -1812,4 +1825,20 @@ a.logged-user-box {
 
 .logged-user-box p {
   margin: 0;
+}
+
+.login-box-outer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.login-btn-box {
+  display: flex;
+  justify-content: center;
+}
+
+.login-btn-box .btn {
+  width: 200px;
 }

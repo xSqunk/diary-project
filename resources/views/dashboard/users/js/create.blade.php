@@ -109,8 +109,8 @@
 			readURL( this );
 		} );
 		
-		$( '.udi-input-error' ).change( function () {
-			$( this ).removeClass( 'udi-input-error' );
+		$( '.diary-input-error' ).change( function () {
+			$( this ).removeClass( 'diary-input-error' );
 		} );
 		
 	} );

@@ -3,15 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 
-class UserController extends Controller
+class TeacherController extends Controller
 {
-
     protected const attributesNames = [
         'email'            => '<strong>E-mail</strong>',
         'password'         => '<strong>Hasło</strong>',
@@ -26,20 +23,19 @@ class UserController extends Controller
     ];
 
     public function index( Request $request ){
-        $users = User::all();
+        $teachers = User::isTeacher()->get();
 
         return view( 'dashboard.users.index', [
-            'users' => $users,
-            'view_type' => 'users',
-            'head_text' => 'Lista użytkowników',
+            'users' => $teachers,
+            'view_type' => 'teachers',
+            'head_text' => 'Lista nauczycieli',
         ] );
     }
 
     public function create(){
         return view( 'dashboard.users.create', [
-            'groups' => User::Groups(),
-            'view_type' => 'users',
-            'head_text' => 'Dodawanie użytkownika',
+            'view_type' => 'teachers',
+            'head_text' => 'Dodawanie nauczyciela',
         ] );
     }
 
@@ -49,16 +45,8 @@ class UserController extends Controller
 
         return view( 'dashboard.users.edit', [
             'user' => $user,
-            'groups' => User::Groups(),
-            'view_type' => 'users',
-            'head_text' => 'Edycja użytkownika',
-        ] );
-    }
-
-    public function profileIndex() {
-        return view( 'dashboard.users.edit', [
-            'user' => auth()->user(),
-            'groups' => User::Groups()
+            'view_type' => 'teachers',
+            'head_text' => 'Edycja nauczyciela',
         ] );
     }
 
@@ -86,11 +74,7 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->password = Hash::make( $request->password );
         $user->status = $request->status;
-        $user->role_admin = isset($request->groups['admin']) ? 1 : 0;
-        $user->role_teacher = isset($request->groups['teacher']) ? 1 : 0;
-        $user->role_student = isset($request->groups['student']) ? 1 : 0;
-        $user->role_parent = isset($request->groups['parent']) ? 1 : 0;
-        $user->role_director = isset($request->groups['director']) ? 1 : 0;
+        $user->role_teacher = 1;
 
         if( isset( $request->avatar ) ){
             $file_name = $request->avatar->store( 'avatars', [ 'disk' => 'upload' ] );
@@ -110,8 +94,8 @@ class UserController extends Controller
             'avatar' => $avatar_name,
         ]);
 
-        return redirect()->route( 'users.index' )->with( 'alert', [
-            'title' => 'Pomyślnie utworzono użytkownika!',
+        return redirect()->route( 'teachers.index' )->with( 'alert', [
+            'title' => 'Pomyślnie utworzono nauczyciela!',
             'type'  => 'success',
             'timer' => '5000',
         ] );
@@ -147,11 +131,8 @@ class UserController extends Controller
 
         $user->email = $request->email;
         $user->status = $request->status;
-        $user->role_admin = isset($request->groups['admin']) ? 1 : 0;
-        $user->role_teacher = isset($request->groups['teacher']) ? 1 : 0;
-        $user->role_student = isset($request->groups['student']) ? 1 : 0;
-        $user->role_parent = isset($request->groups['parent']) ? 1 : 0;
-        $user->role_director = isset($request->groups['director']) ? 1 : 0;
+        $user->role_teacher = 1;
+
 
         $user->save();
 
@@ -166,43 +147,10 @@ class UserController extends Controller
             'avatar' => $avatar_name,
         ]);
 
-        return redirect()->route( 'users.index' )->with( 'alert', [
-            'title' => 'Pomyślnie zaktualizowano użytkownika!',
+        return redirect()->route( 'teachers.index' )->with( 'alert', [
+            'title' => 'Pomyślnie zaktualizowano nauczyciela!',
             'type'  => 'success',
             'timer' => '5000',
         ] );
-    }
-
-    public function checkEmail( Request $request ){
-        if( ! $request->email ){
-            return Response::json( [
-                'code'    => 503,
-                'message' => 'Brak adresu email do sprawdzenia'
-            ], 503 );
-        }
-
-        $email = htmlentities( $request->email );
-
-        try{
-            $count = User::where( 'email', '=', $email )->count();
-        } catch( Exception $e ){
-            return Response::json( [
-                'code'    => 503,
-                'message' => 'Błąd'
-            ], 503 );
-        }
-
-        return Response::json( [
-            'code'  => 200,
-            'count' => $count,
-        ], 200 );
-
-    }
-
-    public function delete( Request $request ){
-        $user = User::findByHashidOrFail( $request->hashId );
-
-        $user->meta()->delete();
-        $user->delete();
     }
 }
