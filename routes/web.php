@@ -90,6 +90,18 @@ Route::middleware( ['auth'] )->group( static function(){
                 'uses' => 'StudentController@update'
             ] )->name( 'students.update' );
 
+            Route::get( '/parents/{user}', [
+                'uses' => 'StudentController@parents'
+            ] )->name( 'students.parents' );
+
+            Route::delete( '/parents', [
+                'uses' => 'StudentController@deleteParent'
+            ] )->name( 'students.parents.delete' );
+
+            Route::put( '/parents', [
+                'uses' => 'StudentController@addParent'
+            ] )->name( 'students.parents.add' );
+
         } );
 
         Route::group( [ 'prefix' => 'teachers' ], function(){
@@ -113,6 +125,30 @@ Route::middleware( ['auth'] )->group( static function(){
             Route::post( '/update', [
                 'uses' => 'TeacherController@update'
             ] )->name( 'teachers.update' );
+
+        } );
+
+        Route::group( [ 'prefix' => 'parents' ], function(){
+
+            Route::get( '/', [
+                'uses' => 'ParentController@index'
+            ] )->name( 'parents.index' );
+
+            Route::get( '/create', [
+                'uses' => 'ParentController@create'
+            ] )->name( 'parents.create' );
+
+            Route::post( '/create', [
+                'uses' => 'ParentController@store'
+            ] )->name( 'parents.store' );
+
+            Route::get( '/edit/{user}', [
+                'uses' => 'ParentController@edit'
+            ] )->name( 'parents.edit' );
+
+            Route::post( '/update', [
+                'uses' => 'ParentController@update'
+            ] )->name( 'parents.update' );
 
         } );
 

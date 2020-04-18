@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Parents;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -47,6 +48,17 @@ class StudentController extends Controller
             'user' => $user,
             'view_type' => 'students',
             'head_text' => 'Edycja ucznia',
+        ] );
+    }
+
+    public function parents($id) {
+
+        $student = User::findByHashidOrFail( $id );
+        $parents = User::InGroup('parent')->NotLogged()->get();
+
+        return view( 'dashboard.students.parents', [
+            'student' => $student,
+            'parents' => $parents,
         ] );
     }
 
@@ -152,5 +164,20 @@ class StudentController extends Controller
             'type'  => 'success',
             'timer' => '5000',
         ] );
+    }
+
+    public function deleteParent( Request $request ){
+        Parents::all()
+            ->where('student_id', '=', $request->student_id)
+            ->where('parent_id', '=', $request->parent_id)
+            ->first()
+            ->delete();
+    }
+
+    public function addParent(Request $request) {
+        Parents::create([
+            'student_id' => $request->student_id,
+            'parent_id' => $request->parent_id
+        ]);
     }
 }

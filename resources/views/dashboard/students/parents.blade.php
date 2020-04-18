@@ -1,48 +1,21 @@
 @extends('dashboard.home')
 
-@section('title', $head_text)
+@section('title', 'Rodzice ucznia')
 
 @section('content_header')
 	<div class="content-header-inner">
-		<h1>{!! $head_text !!}</h1>
-		<a href="{{ route("$view_type.create") }}" class="page-title-action">
-			<button class="btn btn-info btn-sm"><i class="fa fa-plus "></i> {{__('dashboard/user.Dodaj')}}</button>
-		</a>
+		<h1>Rodzice ucznia: {{$student->meta->name . ' ' . $student->meta->surname}}</h1>
+
 	</div>
 @stop
 
 @section('content')
 
-	@if($view_type === 'users')
-
-	<div class="filter-container">
-		<h3 class="mb-4">{{__('dashboard/user.Filtrowanie')}}</h3>
-
-		<div class="form-row">
-			<form action="{{ route( "$view_type.index" ) }}" id="form-user-filter" method="GET" novalidate enctype="multipart/form-data">
-				@csrf
-				<div class="form-group filter-group">
-					<label class="control-label" for="type">{{__('dashboard/user.Grupa')}}</label>
-					<select required name="group" class="form-control" id="group">
-						@foreach( $groups as $key => $group )
-							<option value="{{$key}}" @if(isset($_GET['group']) && $_GET['group'] === $key) selected @endif >{{$group['name']}}</option>
-						@endforeach
-					</select>
-				</div>
-				<button class="btn btn-primary" type="submit" >Filtruj</button>
-			</form>
-		</div>
-	</div>
-
-	@endif
-
+	@if(count($student->parents) > 0)
 	<table class="is-dataTable table-striped table-bordered mt-3" width="100%">
 		<thead>
 			<tr>
 				<th>{{__('dashboard/user.Imię i Nazwisko')}}</th>
-				@if($view_type === 'users')
-					<th>{{__('dashboard/user.Grupy')}}</th>
-				@endif
 				<th>{{__('dashboard/user.Email')}}</th>
 				<th>{{__('dashboard/user.Telefon')}}</th>
 				<th>{{__('dashboard/user.Status')}}</th>
@@ -51,27 +24,18 @@
 		</thead>
 
 		<tbody>
-		@foreach($users as $user)
+		@php
+		$parent_ids = [];
+		@endphp
+		@foreach($student->parents as $user)
+			@php
+				$parent_ids[] = $user->id;
+			@endphp
 			<tr data-hash_id="{{$user->hashId}}" data-name="{{$user->meta->name}}" data-surname="{{$user->meta->surname}}">
 				<td>
 					<img src="{{ $user->meta->getAvatarUrl() }}" class="img-circle udiAvatarImage" alt="User Image">
 					{{ $user->meta->name . ' ' . $user->meta->surname}}
 				</td>
-				@if($view_type === 'users')
-				<td>
-					<p>
-						@if($user->groups)
-							<ul>
-							@foreach($user->groups as $group)
-								<li>{{$group->name}}</li>
-							@endforeach
-							</ul>
-						@else
-							-
-						@endif
-					</p>
-				</td>
-				@endif
 				<td>{{ $user->email }}</td>
 				<td class="is-text-centered"><p>{{$user->meta->phone}}</p></td>
 				<td class="is-text-centered">
@@ -85,10 +49,8 @@
 					@endswitch
 				</td>
 				<td>
-					@if($view_type === 'students')
-					<a href="{{route('students.parents', ['user' => $user->hashId])}}" class="btn btn-secondary">{{__('dashboard/user.Rodzice')}}</a>
-					@endif
-					<a href="{{ route( "$view_type.edit", [ 'user' => $user->hashId ] ) }}">
+					<button data-parent_id="{{$user->id}}" data-student_id="{{$student->id}}" class="btn btn-secondary delete-parent">{{__('dashboard/user.Usuń rodzica')}}</button>
+					<a href="{{ route( 'parents.edit', [ 'user' => $user->hashId ] ) }}">
 						<button class="btn diary-edit-btn" title="{{__('dashboard/user.Edytuj użytkownika')}}">
 							<i class="fas fa-edit"></i>
 						</button>
@@ -103,12 +65,37 @@
 		@endforeach
 		</tbody>
 	</table>
+	@else
+		<div class="no-results-box">
+			<div class="no-results-text">{{__('dashboard/user.Brak przypisanych rodziców do ucznia')}}</div>
+		</div>
+	@endif
 
+	<div class="add-parent-box">
+		<div class="add-parent">
+			<i class="fas fa-plus-circle"></i>
+			<div class="add-parent-text">{{__('dashboard/user.Dodaj rodzica')}}</div>
+		</div>
+
+		<div class="add-parent-accordion" style="display: none;">
+			<select data-student_id="{{$student->id}}" name="parent" id="parent" class="add-parent-select form-control input-md input-select2" >
+				<option value="0" selected disabled>{{__('dashboard/user.Wybierz rodzica')}}</option>
+				@foreach( $parents as $parent )
+					<option value="{{$parent->id}}" @if(in_array($parent->id, $parent_ids, true)) disabled @endif>
+						{{$parent->meta->name . ' ' . $parent->meta->surname . ' (' . $parent->meta->PESEL . ')'}}
+					</option>
+				@endforeach
+			</select>
+			<button class="btn btn-primary add-parent-button">{{__('dashboard/user.Dodaj rodzica')}}</button>
+		</div>
+
+	</div>
 
 @stop
 
 @section('js')
 	@include('dashboard.users.js.index')
+	@include('dashboard.students.js.parents')
 @stop
 
 @section('css')

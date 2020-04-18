@@ -20353,3 +20353,33 @@ a.logged-user-box {
   margin-right: 15px;
 }
 
+.no-results-text {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+span#select2-parent-container {
+  margin-top: -9px;
+}
+
+.add-parent-box {
+  margin-top: 15px;
+}
+
+.add-parent {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.add-parent .fas {
+  color: #00cc06;
+  font-size: 18px;
+  margin-right: 8px;
+}
+
+#parent.add-parent-select {
+  width: 300px;
+}
+
