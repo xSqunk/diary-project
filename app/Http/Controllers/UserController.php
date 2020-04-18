@@ -28,10 +28,17 @@ class UserController extends Controller
     ];
 
     public function index( Request $request ){
-        $users = User::all();
+
+
+        if(isset($request->group)) {
+            $users = User::InGroup($request->group)->get();
+        } else {
+            $users = User::all();
+        }
 
         return view( 'dashboard.users.index', [
             'users' => $users,
+            'groups' => User::Groups(),
             'view_type' => 'users',
             'head_text' => 'Lista użytkowników',
         ] );

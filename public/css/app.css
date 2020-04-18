@@ -20338,3 +20338,18 @@ a.logged-user-box {
   margin-bottom: 10px;
 }
 
+.filter-container {
+  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 30px;
+  padding: 10px;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+}
+
+.filter-group .control-label {
+  margin-right: 15px;
+}
+

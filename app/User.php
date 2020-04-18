@@ -137,4 +137,8 @@ class User extends Authenticatable
         return $query->where( 'role_director', '=', 1 );
     }
 
+    public function scopeInGroup( $query, $group ){
+        return $query->where( "role_$group", '=', 1 );
+    }
+
 }
