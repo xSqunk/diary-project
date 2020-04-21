@@ -1972,3 +1972,7 @@ span#select2-parent-container {
 #parent.add-parent-select {
   width: 300px;
 }
+
+.select2-selection__rendered {
+  margin-top: -10px !important;
+}

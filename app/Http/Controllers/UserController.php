@@ -30,10 +30,10 @@ class UserController extends Controller
     public function index( Request $request ){
 
 
-        if(isset($request->group)) {
-            $users = User::InGroup($request->group)->get();
-        } else {
+        if(!isset($request->group) || $request->group === 'all') {
             $users = User::all();
+        } else {
+            $users = User::InGroup($request->group)->get();
         }
 
         return view( 'dashboard.users.index', [

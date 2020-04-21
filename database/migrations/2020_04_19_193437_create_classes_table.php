@@ -16,9 +16,10 @@ class CreateClassesTable extends Migration
         Schema::create('classes', function (Blueprint $table) {
             $table->id();
             $table->bigInteger( 'teacher_id' )->unsigned();
-            $table->tinyInteger('number');
-            $table->string('letter')->nullable();
+            $table->string('sign')->nullable();
             $table->string('description');
+            $table->tinyInteger('type')->default(1);
+            $table->smallInteger('max_members')->default(10);
 
 
             $table->foreign('teacher_id')->references('id')->on('users')->onDelete('cascade');

@@ -17,5 +17,8 @@ return [
     'Brak przypisanych rodziców do ucznia' => 'Brak przypisanych rodziców do ucznia',
     'Dodaj rodzica' => 'Dodaj rodzica',
     'Wybierz rodzica' => 'Wybierz rodzica',
+    'Wszystkie' => 'Wszystkie',
+    'Aktywny' => 'Aktywny',
+    'Nieaktywny' => 'Nieaktywny',
 
 ];

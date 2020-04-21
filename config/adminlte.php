@@ -273,6 +273,22 @@ return [
                 ],
             ],
         ],
+        [
+            'text'    => 'Klasy',
+            'icon' => 'fas fa-door-open',
+            'submenu' => [
+                [
+                    'text' => 'Lista klas',
+                    'icon' => 'fas fa-door-open',
+                    'url'  => 'dashboard/classes',
+                ],
+                [
+                    'text' => 'Dodaj klasę',
+                    'icon' => 'fas fa-door-closed',
+                    'url'  => 'dashboard/classes/create',
+                ],
+            ],
+        ],
 //        ['header' => 'labels'],
 //        [
 //            'text'       => 'important',

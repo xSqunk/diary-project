@@ -24,6 +24,7 @@
 				<div class="form-group filter-group">
 					<label class="control-label" for="type">{{__('dashboard/user.Grupa')}}</label>
 					<select required name="group" class="form-control" id="group">
+						<option value="all">Wszystkie</option>
 						@foreach( $groups as $key => $group )
 							<option value="{{$key}}" @if(isset($_GET['group']) && $_GET['group'] === $key) selected @endif >{{$group['name']}}</option>
 						@endforeach
@@ -77,10 +78,10 @@
 				<td class="is-text-centered">
 					@switch( $user->status )
 						@case ( App\User::STATUS_IS_ACTIVE )
-						<i class="far fa-check-circle is-color-green" title="{{ $user->statusName }}"></i>
+						<div class=" badge badge-success"><span style="display: none">_active</span> {{__('dashboard/user.Aktywny')}}</div>
 						@break
 						@case ( App\User::STATUS_IS_INACTIVE )
-						<i class="fas fa-ban is-color-red" title="{{ $user->statusName }}"></i>
+						<div class="badge badge-danger"><span style="display: none">_inactive</span> {{__('dashboard/user.Nieaktywny')}}</div>
 						@break
 					@endswitch
 				</td>

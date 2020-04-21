@@ -151,5 +151,9 @@ class User extends Authenticatable
         return $query->where( 'id', '!=', auth()->user()->id );
     }
 
+    public function scopeOnlyActive( $query ){
+        return $query->where( 'status', '=', 1 );
+    }
+
 
 }

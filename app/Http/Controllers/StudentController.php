@@ -51,17 +51,6 @@ class StudentController extends Controller
         ] );
     }
 
-    public function parents($id) {
-
-        $student = User::findByHashidOrFail( $id );
-        $parents = User::InGroup('parent')->NotLogged()->get();
-
-        return view( 'dashboard.students.parents', [
-            'student' => $student,
-            'parents' => $parents,
-        ] );
-    }
-
     public function store( Request $request ){
 
         $validator = Validator::make( $request->all(), [
@@ -164,20 +153,5 @@ class StudentController extends Controller
             'type'  => 'success',
             'timer' => '5000',
         ] );
-    }
-
-    public function deleteParent( Request $request ){
-        Parents::all()
-            ->where('student_id', '=', $request->student_id)
-            ->where('parent_id', '=', $request->parent_id)
-            ->first()
-            ->delete();
-    }
-
-    public function addParent(Request $request) {
-        Parents::create([
-            'student_id' => $request->student_id,
-            'parent_id' => $request->parent_id
-        ]);
     }
 }

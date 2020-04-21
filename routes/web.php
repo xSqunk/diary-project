@@ -91,15 +91,15 @@ Route::middleware( ['auth'] )->group( static function(){
             ] )->name( 'students.update' );
 
             Route::get( '/parents/{user}', [
-                'uses' => 'StudentController@parents'
+                'uses' => 'ParentController@index'
             ] )->name( 'students.parents' );
 
             Route::delete( '/parents', [
-                'uses' => 'StudentController@deleteParent'
+                'uses' => 'ParentController@deleteParent'
             ] )->name( 'students.parents.delete' );
 
             Route::put( '/parents', [
-                'uses' => 'StudentController@addParent'
+                'uses' => 'ParentController@addParent'
             ] )->name( 'students.parents.add' );
 
         } );
@@ -128,27 +128,55 @@ Route::middleware( ['auth'] )->group( static function(){
 
         } );
 
-        Route::group( [ 'prefix' => 'parents' ], function(){
+//        Route::group( [ 'prefix' => 'parents' ], function(){
+//
+//            Route::get( '/', [
+//                'uses' => 'ParentController@index'
+//            ] )->name( 'parents.index' );
+//
+//            Route::get( '/create', [
+//                'uses' => 'ParentController@create'
+//            ] )->name( 'parents.create' );
+//
+//            Route::post( '/create', [
+//                'uses' => 'ParentController@store'
+//            ] )->name( 'parents.store' );
+//
+//            Route::get( '/edit/{user}', [
+//                'uses' => 'ParentController@edit'
+//            ] )->name( 'parents.edit' );
+//
+//            Route::post( '/update', [
+//                'uses' => 'ParentController@update'
+//            ] )->name( 'parents.update' );
+//
+//        } );
+
+        Route::group( [ 'prefix' => 'classes' ], function(){
 
             Route::get( '/', [
-                'uses' => 'ParentController@index'
-            ] )->name( 'parents.index' );
+                'uses' => 'ClassController@index'
+            ] )->name( 'classes.index' );
 
             Route::get( '/create', [
-                'uses' => 'ParentController@create'
-            ] )->name( 'parents.create' );
+                'uses' => 'ClassController@create'
+            ] )->name( 'classes.create' );
 
             Route::post( '/create', [
-                'uses' => 'ParentController@store'
-            ] )->name( 'parents.store' );
+                'uses' => 'ClassController@store'
+            ] )->name( 'classes.store' );
 
-            Route::get( '/edit/{user}', [
-                'uses' => 'ParentController@edit'
-            ] )->name( 'parents.edit' );
+            Route::get( '/edit/{class}', [
+                'uses' => 'ClassController@edit'
+            ] )->name( 'classes.edit' );
 
             Route::post( '/update', [
-                'uses' => 'ParentController@update'
-            ] )->name( 'parents.update' );
+                'uses' => 'ClassController@update'
+            ] )->name( 'classes.update' );
+
+            Route::delete( '/', [
+                'uses' => 'ClassController@delete'
+            ] )->name( 'classes.delete' );
 
         } );
 

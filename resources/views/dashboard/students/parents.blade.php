@@ -24,13 +24,7 @@
 		</thead>
 
 		<tbody>
-		@php
-		$parent_ids = [];
-		@endphp
 		@foreach($student->parents as $user)
-			@php
-				$parent_ids[] = $user->id;
-			@endphp
 			<tr data-hash_id="{{$user->hashId}}" data-name="{{$user->meta->name}}" data-surname="{{$user->meta->surname}}">
 				<td>
 					<img src="{{ $user->meta->getAvatarUrl() }}" class="img-circle udiAvatarImage" alt="User Image">
@@ -50,7 +44,7 @@
 				</td>
 				<td>
 					<button data-parent_id="{{$user->id}}" data-student_id="{{$student->id}}" class="btn btn-secondary delete-parent">{{__('dashboard/user.Usuń rodzica')}}</button>
-					<a href="{{ route( 'parents.edit', [ 'user' => $user->hashId ] ) }}">
+					<a href="{{ route( 'users.edit', [ 'user' => $user->hashId ] ) }}">
 						<button class="btn diary-edit-btn" title="{{__('dashboard/user.Edytuj użytkownika')}}">
 							<i class="fas fa-edit"></i>
 						</button>
@@ -81,7 +75,7 @@
 			<select data-student_id="{{$student->id}}" name="parent" id="parent" class="add-parent-select form-control input-md input-select2" >
 				<option value="0" selected disabled>{{__('dashboard/user.Wybierz rodzica')}}</option>
 				@foreach( $parents as $parent )
-					<option value="{{$parent->id}}" @if(in_array($parent->id, $parent_ids, true)) disabled @endif>
+					<option value="{{$parent->id}}" @if($student->parents->contains('id', $parent->id)) disabled @endif>
 						{{$parent->meta->name . ' ' . $parent->meta->surname . ' (' . $parent->meta->PESEL . ')'}}
 					</option>
 				@endforeach

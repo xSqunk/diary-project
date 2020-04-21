@@ -1,16 +1,15 @@
 <script>
 
     $(document).ready(function() {
-        $('.delete-user').click(function() {
+        $('.delete-class').click(function() {
 
             let row = $(this).closest('tr');
             let hash_id = row.data('hash_id');
             let name = row.data('name');
-            let surname = row.data('surname');
 
             swal.fire({
                 title: 'Jesteś pewny?',
-                text: "Czy napewno chcesz usunąć użytkownika " + name + " " + surname,
+                text: "Czy napewno chcesz usunąć klasę " + name,
                 type: 'warning',
                 icon: 'warning',
                 showCancelButton: true,
@@ -24,7 +23,7 @@
             }).then((result) => {
                 if (result.value) {
                     $.ajax( {
-                        url: '{{route('users.delete')}}' + '?_token=' + '{{ csrf_token() }}',
+                        url: '{{route('classes.delete')}}' + '?_token=' + '{{ csrf_token() }}',
                         type: 'DELETE',
                         data: {
                             hashId: hash_id
@@ -39,7 +38,7 @@
 
                     swal.fire({
                         title: 'Usunięto!',
-                        html: 'Użytkownik został usunięty',
+                        html: 'Klasa została usunięta',
                         type: 'success',
                         icon: 'success'
                     }).then(function() {
@@ -48,7 +47,7 @@
                 } else {
                     swal.fire({
                         title: 'Anulowano',
-                        html: 'Nie usunięto użytkownika',
+                        html: 'Nie usunięto klasy',
                         type: 'error',
                         icon: 'error'
                     })
