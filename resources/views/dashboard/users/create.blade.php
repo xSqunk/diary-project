@@ -51,6 +51,20 @@
 							</select>
 						</div>
 
+						@if($view_type === 'students')
+							<div class="diary-form-row">
+								<label for="class_id">Klasa</label>
+								<select required name="class_id" class=" @if( $errors->has('class_id') ) input-error @endif custom-select" id="class_id">
+									<option value="0" selected disabled>Wybierz klasę</option>
+									@foreach($classes as $class)
+									<option value="{{$class->id}}" @if( old( 'class_id') == $class->id ) selected @endif @if( \App\User::InClass($class->id)->count() >= $class->max_members ) disabled @endif>
+										{{$class->FullName}}, miejsca - {{\App\User::InClass($class->id)->count()}}/{{$class->max_members}}
+									</option>
+									@endforeach
+								</select>
+							</div>
+						@endif
+
 						@if($view_type === 'users')
 						<div class="user-group-container">
 							<div class="form-section-header">Grupy:</div>

@@ -122,4 +122,16 @@ class ClassController extends Controller
         $class = SchoolClass::findByHashidOrFail( $request->hashId );
         $class->delete();
     }
+
+    public function addStudent( Request $request) {
+        $user = User::findOrFail($request->student_id);
+        $user->class_id = $request->class_id;
+        $user->save();
+    }
+
+    public function removeStudent( Request $request) {
+        $user = User::findOrFail($request->student_id);
+        $user->class_id = 0;
+        $user->save();
+    }
 }

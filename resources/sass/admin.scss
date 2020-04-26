@@ -1542,47 +1542,26 @@ a.sidebar-toggle:before {
 
 //END BONUSES
 
-//DATETABLES-START
-table.dataTable:not(p) thead .sorting:before,
-table.dataTable:not(p) thead .sorting_asc:before,
-table.dataTable:not(p) thead .sorting_desc:before,
-table.dataTable:not(p) thead .sorting_asc_disabled:before,
-table.dataTable:not(p) thead .sorting_desc_disabled:before {
-  right: 1em;
-  font-family: "Font Awesome 5 Free";
-  font-weight: 900;
-  content: "\f30c";
-}
-
-table.dataTable:not(p) thead .sorting:after,
-table.dataTable:not(p) thead .sorting_asc:after,
-table.dataTable:not(p) thead .sorting_desc:after,
-table.dataTable:not(p) thead .sorting_asc_disabled:after,
-table.dataTable:not(p) thead .sorting_desc_disabled:after {
-  right: 0.5em;
-  font-family: "Font Awesome 5 Free";
-  font-weight: 900;
-  content: "\f309";
-}
-
-table.dataTable:not(p) thead .sorting:before,
-table.dataTable:not(p) thead .sorting:after,
-table.dataTable:not(p) thead .sorting_asc:before,
-table.dataTable:not(p) thead .sorting_asc:after,
-table.dataTable:not(p) thead .sorting_desc:before,
-table.dataTable:not(p) thead .sorting_desc:after,
-table.dataTable:not(p) thead .sorting_asc_disabled:before,
-table.dataTable:not(p) thead .sorting_asc_disabled:after,
-table.dataTable:not(p) thead .sorting_desc_disabled:before,
-table.dataTable:not(p) thead .sorting_desc_disabled:after {
-  bottom: 0;
-  top: 0;
+.dataTables_length label {
   display: flex;
   align-items: center;
 }
 
-//DATETABLES-END
+.dataTables_length span {
+  margin: 0 5px;
+}
 
+.dataTables_length span:last-child {
+  min-width: 130px;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+  margin-left: 0 !important;
+}
+
+.is-dataTable {
+  margin-bottom: 15px;
+}
 
 .diary-table {
   .diary-table-row {
@@ -1952,24 +1931,24 @@ span#select2-parent-container {
   margin-top: -9px;
 }
 
-.add-parent-box {
+.add-parent-box, .add-class-student-box {
   margin-top: 15px;
 }
 
-.add-parent {
+.add-parent, .add-student {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
   cursor: pointer;
 }
 
-.add-parent .fas {
+.add-parent .fas, .add-student .fas {
   color: #00cc06;
   font-size: 18px;
   margin-right: 8px;
 }
 
-#parent.add-parent-select {
+#parent.add-parent-select, #student.add-student-select {
   width: 300px;
 }
 

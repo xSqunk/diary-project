@@ -5,9 +5,11 @@
 @section('content_header')
 	<div class="content-header-inner">
 		<h1>{!! $head_text !!}</h1>
+		@if(!$class)
 		<a href="{{ route("$view_type.create") }}" class="page-title-action">
 			<button class="btn btn-info btn-sm"><i class="fa fa-plus "></i> {{__('dashboard/user.Dodaj')}}</button>
 		</a>
+		@endif
 	</div>
 @stop
 
@@ -35,6 +37,28 @@
 		</div>
 	</div>
 
+	@endif
+
+	@if($class)
+		<div class="add-class-student-box">
+			<div class="add-student">
+				<i class="fas fa-plus-circle"></i>
+				<div class="add-student-text">{{__('dashboard/user.Dodaj ucznia do klasy')}}</div>
+			</div>
+
+			<div class="add-student-accordion" style="display: none;">
+				<select data-class_id="{{$class->id}}" name="student" id="student" class="add-student-select form-control input-md input-select2" >
+					<option value="0" selected disabled>{{__('dashboard/user.Wybierz ucznia')}}</option>
+					@foreach( $free_students as $f_student )
+						<option value="{{$f_student->id}}">
+							{{$f_student->meta->name . ' ' . $f_student->meta->surname . ' (' . $f_student->meta->PESEL . ')'}}
+						</option>
+					@endforeach
+				</select>
+				<button class="btn btn-primary add-student-button">{{__('dashboard/user.Dodaj ucznia')}}</button>
+			</div>
+
+		</div>
 	@endif
 
 	<table class="is-dataTable table-striped table-bordered mt-3" width="100%">
@@ -86,9 +110,30 @@
 					@endswitch
 				</td>
 				<td>
-					@if($view_type === 'students')
-					<a href="{{route('students.parents', ['user' => $user->hashId])}}" class="btn btn-secondary">{{__('dashboard/user.Rodzice')}}</a>
-					@endif
+					<div class="btn-group" role="group">
+						<button id="btnGroupDrop1" type="button" class="btn btn-sm btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fas fa-address-book"></i> Akcje
+						</button>
+						<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+							@if($view_type === 'students')
+								<a class="dropdown-item" href="{{route('students.parents', ['user' => $user->hashId])}}">
+									<div></div>
+									<i class="fas fa-users"></i> {{__('dashboard/user.Rodzice')}}
+									<span class="badge badge-pill badge-info">{{$user->parents()->count()}}</span>
+								</a>
+							@endif
+							@if($class)
+								<button class="dropdown-item class-signout"
+										data-student_id="{{$user->id}}"
+										data-student_name="{{$user->FullName}}">
+									<div></div>
+									<i class="fas fa-sign-out-alt"></i> {{__('dashboard/user.Wypisz z klasy')}}
+								</button>
+							@endif
+
+						</div>
+					</div>
+
 					<a href="{{ route( "$view_type.edit", [ 'user' => $user->hashId ] ) }}">
 						<button class="btn diary-edit-btn" title="{{__('dashboard/user.Edytuj użytkownika')}}">
 							<i class="fas fa-edit"></i>
@@ -104,7 +149,6 @@
 		@endforeach
 		</tbody>
 	</table>
-
 
 @stop
 

@@ -6,15 +6,11 @@
             $('.add-parent-accordion').fadeIn(300);
         });
 
-        $( document ).ready( function () {
-            $( '.input-select2' ).select2();
-        } );
-
         $('.add-parent-button').click(function() {
             let select = $(this).parent().find('#parent');
             let parent_id = select.val();
             let student_id = select.data('student_id');
-            let name = select.text();
+            let name = select.find('option:selected').text();
 
             if(!parent_id) {
                 swal.fire( {

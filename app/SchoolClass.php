@@ -46,6 +46,10 @@ class SchoolClass extends Model
         }
     }
 
+    public function getClassTeacherAttribute(): string{
+        return $this->teacher->meta->name . ' ' . $this->teacher->meta->surname;
+    }
+
     public function getFullNameAttribute(){
         return $this->sign . ' (' . $this->getTypeNameAttribute($this->type) . ')';
     }
