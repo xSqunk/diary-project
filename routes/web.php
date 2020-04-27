@@ -180,6 +180,22 @@ Route::middleware( ['auth'] )->group( static function(){
 
         } );
 
+
+        Route::group( [ 'prefix' => 'notes' ], function(){
+
+            Route::get( '/', [
+                'uses' => 'NotesController@index'
+            ] )->name( 'notes.index' );
+            Route::get( '/create', [
+                'uses' => 'NotesController@create'
+            ] )->name( 'notes.create' );
+            Route::post( '/create', [
+                'uses' => 'NotesController@store'
+            ] )->name( 'notes.store' );
+
+
+        } );
+
     });
 
 });
