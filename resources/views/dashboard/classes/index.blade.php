@@ -34,7 +34,7 @@
 					{{$class->description}}
 				</td>
 				<td class="is-text-centered">
-					{{'0/' . $class->max_members}}
+					{{\App\User::InClass($class->id)->count() . '/' . $class->max_members}}
 				</td>
 				<td>
 					{{$class->teacher->meta->name . ' ' . $class->teacher->meta->surname}}
@@ -45,10 +45,10 @@
 							<i class="fas fa-address-book"></i> Akcje
 						</button>
 						<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-							<a class="dropdown-item" href="#">
+							<a class="dropdown-item" href="{{route('students.class.index', ['class_id' => $class->id])}}">
 								<div></div>
 								<i class="fas fa-list-ol"></i> Uczniowie
-								<span class="badge  badge-pill badge-info">0/{{$class->max_members}}</span></a>
+								<span class="badge  badge-pill badge-info">{{\App\User::InClass($class->id)->count()}}/{{$class->max_members}}</span></a>
 						</div>
 					</div>
 					<a href="{{ route( 'classes.edit', [ 'class' => $class->hashId ] ) }}">

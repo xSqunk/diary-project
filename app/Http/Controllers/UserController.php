@@ -39,6 +39,7 @@ class UserController extends Controller
         return view( 'dashboard.users.index', [
             'users' => $users,
             'groups' => User::Groups(),
+            'class' => null,
             'view_type' => 'users',
             'head_text' => 'Lista użytkowników',
         ] );

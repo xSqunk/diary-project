@@ -74,6 +74,10 @@ Route::middleware( ['auth'] )->group( static function(){
                 'uses' => 'StudentController@index'
             ] )->name( 'students.index' );
 
+            Route::get( '/class/{class_id}', [
+                'uses' => 'StudentController@index'
+            ] )->name( 'students.class.index' )->where('class_id', '[0-9]+');
+
             Route::get( '/create', [
                 'uses' => 'StudentController@create'
             ] )->name( 'students.create' );
@@ -177,6 +181,14 @@ Route::middleware( ['auth'] )->group( static function(){
             Route::delete( '/', [
                 'uses' => 'ClassController@delete'
             ] )->name( 'classes.delete' );
+
+            Route::put( '/students', [
+                'uses' => 'ClassController@addStudent'
+            ] )->name( 'class.student.add' );
+
+            Route::delete( '/students', [
+                'uses' => 'ClassController@removeStudent'
+            ] )->name( 'class.student.remove' );
 
         } );
 
