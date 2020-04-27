@@ -91,16 +91,24 @@ Route::middleware( ['auth'] )->group( static function(){
             ] )->name( 'students.update' );
 
             Route::get( '/parents/{user}', [
-                'uses' => 'ParentController@index'
+                'uses' => 'ParentsController@index'
             ] )->name( 'students.parents' );
 
             Route::delete( '/parents', [
-                'uses' => 'ParentController@deleteParent'
+                'uses' => 'ParentsController@deleteParent'
             ] )->name( 'students.parents.delete' );
 
             Route::put( '/parents', [
-                'uses' => 'ParentController@addParent'
+                'uses' => 'ParentsController@addParent'
             ] )->name( 'students.parents.add' );
+
+        } );
+
+        Route::group( [ 'prefix' => 'plan' ], function(){
+
+            Route::get( '/', [
+                'uses' => 'PlanMonthController@index'
+            ] )->name( 'plan.month.index' );
 
         } );
 
@@ -131,23 +139,23 @@ Route::middleware( ['auth'] )->group( static function(){
 //        Route::group( [ 'prefix' => 'parents' ], function(){
 //
 //            Route::get( '/', [
-//                'uses' => 'ParentController@index'
+//                'uses' => 'ParentsController@index'
 //            ] )->name( 'parents.index' );
 //
 //            Route::get( '/create', [
-//                'uses' => 'ParentController@create'
+//                'uses' => 'ParentsController@create'
 //            ] )->name( 'parents.create' );
 //
 //            Route::post( '/create', [
-//                'uses' => 'ParentController@store'
+//                'uses' => 'ParentsController@store'
 //            ] )->name( 'parents.store' );
 //
 //            Route::get( '/edit/{user}', [
-//                'uses' => 'ParentController@edit'
+//                'uses' => 'ParentsController@edit'
 //            ] )->name( 'parents.edit' );
 //
 //            Route::post( '/update', [
-//                'uses' => 'ParentController@update'
+//                'uses' => 'ParentsController@update'
 //            ] )->name( 'parents.update' );
 //
 //        } );
