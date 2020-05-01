@@ -289,6 +289,22 @@ return [
                 ],
             ],
         ],
+        [
+            'text'    => 'Oceny',
+            'icon' => 'fas fa-book-open',
+            'submenu' => [
+                [
+                    'text' => 'Lista ocen',
+                    'icon' => 'fas fa-book-reader',
+                    'url'  => 'dashboard/grades',
+                ],
+                [
+                    'text' => 'Dodaj ocenę',
+                    'icon' => 'fas fa-pencil-alt',
+                    'url'  => 'dashboard/grades/create',
+                ],
+            ],
+        ],
 //        ['header' => 'labels'],
 //        [
 //            'text'       => 'important',
