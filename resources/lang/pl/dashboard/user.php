@@ -20,5 +20,9 @@ return [
     'Wszystkie' => 'Wszystkie',
     'Aktywny' => 'Aktywny',
     'Nieaktywny' => 'Nieaktywny',
+    'Dodaj ucznia do klasy' => 'Dodaj ucznia do klasy',
+    'Wybierz ucznia' => 'Wybierz ucznia',
+    'Dodaj ucznia' => 'Dodaj ucznia',
+    'Wypisz z klasy' => 'Wypisz z klasy',
 
 ];

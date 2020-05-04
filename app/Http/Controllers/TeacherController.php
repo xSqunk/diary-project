@@ -27,6 +27,7 @@ class TeacherController extends Controller
 
         return view( 'dashboard.users.index', [
             'users' => $teachers,
+            'class' => null,
             'view_type' => 'teachers',
             'head_text' => 'Lista nauczycieli',
         ] );

@@ -5,8 +5,11 @@
 /vendor
 .env
 .env.backup
+.idea
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+
+!/vendor/jeroennoten/jeroennoten/resources/views/master.blade.php

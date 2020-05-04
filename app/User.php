@@ -41,6 +41,10 @@ class User extends Authenticatable
         return $this->hashId();
     }
 
+    public function isActive(): bool {
+        return $this->status === 1;
+    }
+
     public function getStatusNameAttribute(): ?string{
         $status = $this->status;
 
@@ -96,6 +100,10 @@ class User extends Authenticatable
         }
 
         return $groups;
+    }
+
+    public function getFullNameAttribute(): ?string{
+        return $this->meta->name . ' ' . $this->meta->surname;
     }
 
     public static function Groups(){
@@ -155,5 +163,12 @@ class User extends Authenticatable
         return $query->where( 'status', '=', 1 );
     }
 
+    public function scopeInClass( $query, $class_id ){
+        return $query->where( 'class_id', '=', $class_id );
+    }
+
+    public function scopeNotInClass( $query, $class_id ){
+        return $query->where( 'class_id', '!=', $class_id );
+    }
 
 }

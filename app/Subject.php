@@ -3,13 +3,21 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Mtvs\EloquentHashids\HasHashid;
+use Mtvs\EloquentHashids\HashidRouting;
 
 class Subject extends Model
 {
+    use Notifiable, HasHashid, HashidRouting;
+
+    protected $table = 'subjects';
+
     protected $fillable = [
         'name', 'shortcut'
     ];
 
+<<<<<<< HEAD
     public const SUBJECT_MATEMATYKA = 1;
     public const SUBJECT_BIOLOGIA = 2;
     public const SUBJECT_FIZYKA = 3;
@@ -49,4 +57,23 @@ class Subject extends Model
         return $subjects;
     }
 
+=======
+    public function index( Request $request ){
+        $subjects = Subject::isSubject()->get();
+
+        return view( 'dashboard.users.index', [
+            'subjects' => $subjects,
+            'subject' => null,
+            'view_type' => 'subjects',
+            'head_text' => 'Lista przedmitów',
+        ] );
+    }
+
+    public function getNoteSubjectAttribute(): string{
+        return $this->subject->meta->name;
+    }
+    public function getFullNameAttribute(){
+        return $this->name . ' (' . $this->getTypeNameAttribute($this->name) . ')';
+    }
+>>>>>>> cee978ff0860b1d6e37d43924b941c36a3cefa6e
 }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Parents;
+use App\SchoolClass;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -14,6 +14,7 @@ class StudentController extends Controller
         'email'            => '<strong>E-mail</strong>',
         'password'         => '<strong>Hasło</strong>',
         'old-password'     => '<strong>Aktualne hasło</strong>',
+        'class_id'         => '<strong>Klasa</strong>',
         'name'             => '<strong>Imię</strong>',
         'surname'          => '<strong>Nazwisko</strong>',
         'phone'            => '<strong>Telefon</strong>',
@@ -23,19 +24,30 @@ class StudentController extends Controller
         'avatar'           => '<strong>Avatar</strong>',
     ];
 
-    public function index( Request $request ){
-        $students = User::isStudent()->get();
+    public function index( $class_id = null ){
+        if($class_id) {
+            $students = User::InClass($class_id)->isStudent()->get();
+            $class = SchoolClass::findOrFail($class_id);
+            $free_students = User::InClass(0)->NotLogged()->get();
+            $head_text = 'Lista uczniów klasy ' . $class->sign . ' (wych. ' . $class->ClassTeacher . ') ';
+        } else {
+            $students = User::isStudent()->get();
+            $head_text = 'Lista uczniów';
+        }
 
         return view( 'dashboard.users.index', [
             'users' => $students,
             'view_type' => 'students',
-            'head_text' => 'Lista uczniów',
+            'head_text' => $head_text,
+            'class' => $class ?? null,
+            'free_students' => $free_students ?? null
         ] );
     }
 
     public function create(){
         return view( 'dashboard.users.create', [
             'view_type' => 'students',
+            'classes' => SchoolClass::orderBy('type', 'asc')->orderBy('sign', 'asc')->get(),
             'head_text' => 'Dodawanie ucznia',
         ] );
     }
@@ -51,11 +63,21 @@ class StudentController extends Controller
         ] );
     }
 
+    public function show($id) {
+
+        $user = User::findByHashidOrFail( $id );
+
+        return view( 'dashboard.students.show', [
+            'student' => $user,
+        ] );
+    }
+
     public function store( Request $request ){
 
         $validator = Validator::make( $request->all(), [
             'email'            => 'email|required|unique:users|max:255',
             'password'         => "required|max:255|min:8|regex:/^.*(?=.{3,})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\d])(?=.*[!@#$%^*]).*$/",
+            'class_id'         => 'required|not_in:0',
             'name'             => 'required|max:255',
             'surname'          => 'required|max:255',
             'phone'            => 'required|max:11',
@@ -67,13 +89,14 @@ class StudentController extends Controller
 
         if( $validator->fails() ){
             return redirect()->back()->withErrors( $validator )->withInput(
-                $request->all( 'email', 'password', 'name', 'surname', 'phone', 'birth_date', 'PESEL' )
+                $request->all( 'email', 'password', 'class_id', 'name', 'surname', 'phone', 'birth_date', 'PESEL' )
             );
         }
 
         $user = new User();
         $user->email = $request->email;
         $user->password = Hash::make( $request->password );
+        $user->class_id = $request->class_id;
         $user->status = $request->status;
         $user->role_student = 1;
 
@@ -153,5 +176,14 @@ class StudentController extends Controller
             'type'  => 'success',
             'timer' => '5000',
         ] );
+    }
+
+    public function getPanel( Request $request ){
+
+        $panel = str_replace('tab-', '', $request->tab_id);
+
+        echo view( "dashboard.students.panels.$panel", [
+            //data array
+        ] )->render();
     }
 }

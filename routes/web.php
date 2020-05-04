@@ -66,6 +66,10 @@ Route::middleware( ['auth'] )->group( static function(){
                 'uses' => 'UserController@delete'
             ] )->name( 'users.delete' );
 
+            Route::get( '/{id}/status/{status}/type/{type}', [
+                'uses' => 'UserController@status'
+            ] )->name( 'users.status' );
+
         } );
 
         Route::group( [ 'prefix' => 'students' ], function(){
@@ -73,6 +77,10 @@ Route::middleware( ['auth'] )->group( static function(){
             Route::get( '/', [
                 'uses' => 'StudentController@index'
             ] )->name( 'students.index' );
+
+            Route::get( '/class/{class_id}', [
+                'uses' => 'StudentController@index'
+            ] )->name( 'students.class.index' )->where('class_id', '[0-9]+');
 
             Route::get( '/create', [
                 'uses' => 'StudentController@create'
@@ -86,9 +94,17 @@ Route::middleware( ['auth'] )->group( static function(){
                 'uses' => 'StudentController@edit'
             ] )->name( 'students.edit' );
 
+            Route::get( '/show/{id}', [
+                'uses' => 'StudentController@show'
+            ] )->name( 'student.show' );
+
             Route::post( '/update', [
                 'uses' => 'StudentController@update'
             ] )->name( 'students.update' );
+
+            Route::post( '/panel', [
+                'uses' => 'StudentController@getPanel'
+            ] )->name( 'students.panel' );
 
             Route::get( '/parents/{user}', [
                 'uses' => 'ParentController@index'
@@ -101,6 +117,14 @@ Route::middleware( ['auth'] )->group( static function(){
             Route::put( '/parents', [
                 'uses' => 'ParentController@addParent'
             ] )->name( 'students.parents.add' );
+
+        } );
+
+        Route::group( [ 'prefix' => 'plan' ], function(){
+
+            Route::get( '/', [
+                'uses' => 'PlanMonthController@index'
+            ] )->name( 'plan.month.index' );
 
         } );
 
@@ -178,6 +202,30 @@ Route::middleware( ['auth'] )->group( static function(){
                 'uses' => 'ClassController@delete'
             ] )->name( 'classes.delete' );
 
+            Route::put( '/students', [
+                'uses' => 'ClassController@addStudent'
+            ] )->name( 'class.student.add' );
+
+            Route::delete( '/students', [
+                'uses' => 'ClassController@removeStudent'
+            ] )->name( 'class.student.remove' );
+
+        } );
+
+
+        Route::group( [ 'prefix' => 'notes' ], function(){
+
+            Route::get( '/', [
+                'uses' => 'NotesController@index'
+            ] )->name( 'notes.index' );
+            Route::get( '/create', [
+                'uses' => 'NotesController@create'
+            ] )->name( 'notes.create' );
+            Route::post( '/create', [
+                'uses' => 'NotesController@store'
+            ] )->name( 'notes.store' );
+
+
         } );
 
         Route::group( [ 'prefix' => 'grades' ], function(){
@@ -211,10 +259,6 @@ Route::middleware( ['auth'] )->group( static function(){
     });
 
 });
-
-Route::get( 'parents', [
-    'uses' => 'ParentsController@index'
-] )->name( 'test.index' );
 
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');

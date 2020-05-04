@@ -1914,13 +1914,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log('Component mounted.');
-  },
-  props: ['text']
+  }
 });
 
 /***/ }),
@@ -40371,18 +40368,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("a", { attrs: { href: "#" } }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-info btn-sm",
-          domProps: { textContent: _vm._s(_vm.text) }
-        },
-        [_c("i", { staticClass: "fa fa-undo" })]
-      )
-    ])
-  ])
+  return _c("div", [_vm._v("\n   test\n")])
 }
 var staticRenderFns = []
 render._withStripped = true
