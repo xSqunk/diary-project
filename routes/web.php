@@ -228,6 +228,34 @@ Route::middleware( ['auth'] )->group( static function(){
 
         } );
 
+        Route::group( [ 'prefix' => 'grades' ], function(){
+
+            Route::get( '/', [
+                'uses' => 'GradeController@index'
+            ] )->name( 'grades.index' );
+
+             Route::get( '/create', [
+                 'uses' => 'GradeController@create'
+             ] )->name( 'grades.create' );
+
+             Route::post( '/create', [
+                 'uses' => 'GradeController@store'
+             ] )->name( 'grades.store' );
+
+             Route::get( '/edit/{grade}', [
+                 'uses' => 'GradeController@edit'
+             ] )->name( 'grades.edit' );
+
+             Route::post( '/update', [
+                 'uses' => 'GradeController@update'
+             ] )->name( 'grades.update' );
+
+             Route::delete( '/', [
+                'uses' => 'GradeController@delete'
+            ] )->name( 'grades.delete' );
+
+        } );
+
     });
 
 });
