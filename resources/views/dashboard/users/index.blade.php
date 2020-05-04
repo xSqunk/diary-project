@@ -80,7 +80,11 @@
 			<tr data-hash_id="{{$user->hashId}}" data-name="{{$user->meta->name}}" data-surname="{{$user->meta->surname}}">
 				<td>
 					<img src="{{ $user->meta->getAvatarUrl() }}" class="img-circle udiAvatarImage" alt="User Image">
+					@if($view_type === 'students')
+					<a href="{{route('student.show', ['id' => $user->hashId])}}">{{ $user->meta->name . ' ' . $user->meta->surname}}</a>
+					@else
 					{{ $user->meta->name . ' ' . $user->meta->surname}}
+					@endif
 				</td>
 				@if($view_type === 'users')
 				<td>
@@ -135,12 +139,12 @@
 					</div>
 
 					<a href="{{ route( "$view_type.edit", [ 'user' => $user->hashId ] ) }}">
-						<button class="btn diary-edit-btn" title="{{__('dashboard/user.Edytuj użytkownika')}}">
+						<button class="btn btn-success diary-edit-btn" title="{{__('dashboard/user.Edytuj użytkownika')}}">
 							<i class="fas fa-edit"></i>
 						</button>
 					</a>
 					@if(auth()->user()->id !== $user->id)
-						<button class="btn delete-user" title="{{__('dashboard/user.Usuń użytkownika')}}">
+						<button class="btn btn-danger delete-user" title="{{__('dashboard/user.Usuń użytkownika')}}">
 							<i class="fas fa-trash"></i>
 						</button>
 					@endif
