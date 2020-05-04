@@ -35,7 +35,7 @@ class User extends Authenticatable
     public function parents(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany( __CLASS__, 'parents', 'student_id', 'parent_id');
-    }
+    } #############
 
     public function getHashIdAttribute(){
         return $this->hashId();
