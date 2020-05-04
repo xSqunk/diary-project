@@ -66,6 +66,10 @@ Route::middleware( ['auth'] )->group( static function(){
                 'uses' => 'UserController@delete'
             ] )->name( 'users.delete' );
 
+            Route::get( '/{id}/status/{status}/type/{type}', [
+                'uses' => 'UserController@status'
+            ] )->name( 'users.status' );
+
         } );
 
         Route::group( [ 'prefix' => 'students' ], function(){
@@ -90,20 +94,28 @@ Route::middleware( ['auth'] )->group( static function(){
                 'uses' => 'StudentController@edit'
             ] )->name( 'students.edit' );
 
+            Route::get( '/show/{id}', [
+                'uses' => 'StudentController@show'
+            ] )->name( 'student.show' );
+
             Route::post( '/update', [
                 'uses' => 'StudentController@update'
             ] )->name( 'students.update' );
 
+            Route::post( '/panel', [
+                'uses' => 'StudentController@getPanel'
+            ] )->name( 'students.panel' );
+
             Route::get( '/parents/{user}', [
-                'uses' => 'ParentsController@index'
+                'uses' => 'ParentController@index'
             ] )->name( 'students.parents' );
 
             Route::delete( '/parents', [
-                'uses' => 'ParentsController@deleteParent'
+                'uses' => 'ParentController@deleteParent'
             ] )->name( 'students.parents.delete' );
 
             Route::put( '/parents', [
-                'uses' => 'ParentsController@addParent'
+                'uses' => 'ParentController@addParent'
             ] )->name( 'students.parents.add' );
 
         } );
@@ -143,23 +155,23 @@ Route::middleware( ['auth'] )->group( static function(){
 //        Route::group( [ 'prefix' => 'parents' ], function(){
 //
 //            Route::get( '/', [
-//                'uses' => 'ParentsController@index'
+//                'uses' => 'ParentController@index'
 //            ] )->name( 'parents.index' );
 //
 //            Route::get( '/create', [
-//                'uses' => 'ParentsController@create'
+//                'uses' => 'ParentController@create'
 //            ] )->name( 'parents.create' );
 //
 //            Route::post( '/create', [
-//                'uses' => 'ParentsController@store'
+//                'uses' => 'ParentController@store'
 //            ] )->name( 'parents.store' );
 //
 //            Route::get( '/edit/{user}', [
-//                'uses' => 'ParentsController@edit'
+//                'uses' => 'ParentController@edit'
 //            ] )->name( 'parents.edit' );
 //
 //            Route::post( '/update', [
-//                'uses' => 'ParentsController@update'
+//                'uses' => 'ParentController@update'
 //            ] )->name( 'parents.update' );
 //
 //        } );
@@ -203,10 +215,6 @@ Route::middleware( ['auth'] )->group( static function(){
     });
 
 });
-
-Route::get( 'parents', [
-    'uses' => 'ParentsController@index'
-] )->name( 'test.index' );
 
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');

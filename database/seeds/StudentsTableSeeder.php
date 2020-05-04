@@ -4,7 +4,7 @@ use App\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
-class UsersTableSeeder extends Seeder
+class StudentsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,25 +14,6 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         $users = array(
-            //admin
-            [
-                'email' => 'admin@admin.pl',
-                'password' => 'admin',
-                'status' => 1,
-                'role_admin' => 1,
-                'role_teacher' => 1,
-                'role_student' => 1,
-                'role_parent' => 1,
-                'role_director' => 1,
-                'meta' => [
-                    'name' => 'Jan',
-                    'surname' => 'Nowak',
-                    'phone' => '722354232',
-                    'birth_date' => '1990-05-13',
-                    'PESEL' => '90051355129',
-                ]
-            ],
-            //students
             [
                 'email' => 'student1@admin.pl',
                 'password' => 'admin',
@@ -489,178 +470,6 @@ class UsersTableSeeder extends Seeder
                     'phone' => '669540493',
                     'birth_date' => '2004-02-19',
                     'PESEL' => '04021929203',
-                ]
-            ],
-            //rodzice
-            [
-                'email' => 'parent1@admin.pl',
-                'password' => 'admin',
-                'status' => 1,
-                'role_admin' => 0,
-                'role_teacher' => 0,
-                'role_student' => 0,
-                'role_parent' => 1,
-                'role_director' => 0,
-                'meta' => [
-                    'name' => 'Mateusz',
-                    'surname' => 'Dziedzic',
-                    'phone' => '512849338',
-                    'birth_date' => '1980-02-15',
-                    'PESEL' => '80021533934',
-                ]
-            ],
-            [
-                'email' => 'parent2@admin.pl',
-                'password' => 'admin',
-                'status' => 1,
-                'role_admin' => 0,
-                'role_teacher' => 0,
-                'role_student' => 0,
-                'role_parent' => 1,
-                'role_director' => 0,
-                'meta' => [
-                    'name' => 'Wiktor',
-                    'surname' => 'Wilczyński',
-                    'phone' => '758374843',
-                    'birth_date' => '1978-11-09',
-                    'PESEL' => '78110938473',
-                ]
-            ],
-            [
-                'email' => 'parent3@admin.pl',
-                'password' => 'admin',
-                'status' => 1,
-                'role_admin' => 0,
-                'role_teacher' => 0,
-                'role_student' => 0,
-                'role_parent' => 1,
-                'role_director' => 0,
-                'meta' => [
-                    'name' => 'Barbara',
-                    'surname' => 'Grabowska',
-                    'phone' => '755940393',
-                    'birth_date' => '1981-03-19',
-                    'PESEL' => '81031929203',
-                ]
-            ],
-            [
-                'email' => 'parent4@admin.pl',
-                'password' => 'admin',
-                'status' => 1,
-                'role_admin' => 0,
-                'role_teacher' => 0,
-                'role_student' => 0,
-                'role_parent' => 1,
-                'role_director' => 0,
-                'meta' => [
-                    'name' => 'Jan',
-                    'surname' => 'Cebulak',
-                    'phone' => '550494383',
-                    'birth_date' => '1977-09-10',
-                    'PESEL' => '77091029393',
-                ]
-            ],
-            [
-                'email' => 'parent5admin.pl',
-                'password' => 'admin',
-                'status' => 1,
-                'role_admin' => 0,
-                'role_teacher' => 0,
-                'role_student' => 0,
-                'role_parent' => 1,
-                'role_director' => 0,
-                'meta' => [
-                    'name' => 'Maria',
-                    'surname' => 'Rutkowska',
-                    'phone' => '757496383',
-                    'birth_date' => '1982-10-21',
-                    'PESEL' => '82102129392',
-                ]
-            ],
-            //nauczyciele
-            [
-                'email' => 'teacher1admin.pl',
-                'password' => 'admin',
-                'status' => 1,
-                'role_admin' => 0,
-                'role_teacher' => 1,
-                'role_student' => 0,
-                'role_parent' => 0,
-                'role_director' => 0,
-                'meta' => [
-                    'name' => 'Jakub',
-                    'surname' => 'Wrona',
-                    'phone' => '505393282',
-                    'birth_date' => '1972-04-21',
-                    'PESEL' => '72042184944',
-                ]
-            ],
-            [
-                'email' => 'teacher2admin.pl',
-                'password' => 'admin',
-                'status' => 1,
-                'role_admin' => 0,
-                'role_teacher' => 1,
-                'role_student' => 0,
-                'role_parent' => 1,
-                'role_director' => 0,
-                'meta' => [
-                    'name' => 'Zuzanna',
-                    'surname' => 'Maciejewska',
-                    'phone' => '771928393',
-                    'birth_date' => '1988-02-19',
-                    'PESEL' => '88021920993',
-                ]
-            ],
-            [
-                'email' => 'teacher3admin.pl',
-                'password' => 'admin',
-                'status' => 1,
-                'role_admin' => 0,
-                'role_teacher' => 1,
-                'role_student' => 0,
-                'role_parent' => 0,
-                'role_director' => 0,
-                'meta' => [
-                    'name' => 'Katarzyna',
-                    'surname' => 'Grzelak',
-                    'phone' => '690337848',
-                    'birth_date' => '1969-05-01',
-                    'PESEL' => '69050193894',
-                ]
-            ],
-            [
-                'email' => 'teacher4admin.pl',
-                'password' => 'admin',
-                'status' => 1,
-                'role_admin' => 0,
-                'role_teacher' => 1,
-                'role_student' => 0,
-                'role_parent' => 0,
-                'role_director' => 0,
-                'meta' => [
-                    'name' => 'Katarzyna',
-                    'surname' => 'Grzelak',
-                    'phone' => '690337848',
-                    'birth_date' => '1969-05-01',
-                    'PESEL' => '69050193894',
-                ]
-            ],
-            [
-                'email' => 'teacher5admin.pl',
-                'password' => 'admin',
-                'status' => 1,
-                'role_admin' => 0,
-                'role_teacher' => 1,
-                'role_student' => 0,
-                'role_parent' => 0,
-                'role_director' => 0,
-                'meta' => [
-                    'name' => 'Tymoteusz',
-                    'surname' => 'Brzozowski',
-                    'phone' => '776867494',
-                    'birth_date' => '1993-04-05',
-                    'PESEL' => '93040538373',
                 ]
             ],
         );

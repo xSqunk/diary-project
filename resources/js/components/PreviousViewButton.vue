@@ -1,8 +1,6 @@
 <template>
     <div>
-        <a href="#">
-        <button class="btn btn-info btn-sm" v-text="text"><i class="fa fa-undo"></i> </button>
-        </a>
+       test
     </div>
 </template>
 
@@ -11,9 +9,5 @@
         mounted() {
             console.log('Component mounted.')
         },
-
-        props: [
-            'text'
-        ]
     }
 </script>
