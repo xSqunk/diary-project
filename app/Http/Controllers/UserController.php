@@ -267,4 +267,31 @@ class UserController extends Controller
         $user->meta()->delete();
         $user->delete();
     }
+
+    public function status( $id, $status, $type ){
+
+        $user = User::findByHashidOrFail( $id );
+
+        $msg = '';
+        switch( $status ){
+            case 0:
+                $user->status = 0;
+                $user->save();
+                $msg = __( "dashboard/$type.Użytkownik został pomyślnie zablokowany" );
+                break;
+            case 1:
+                $user->status = 1;
+                $user->save();
+                $msg = __( "dashboard/$type.Użytkownik został pomyślnie odblokowany" );
+                break;
+            default:
+                abort( 404 );
+        }
+
+        return redirect()->route( "$type.show", [ 'id' => $user->hashId ] )->with( 'alert', [
+            'title' => $msg,
+            'type'  => 'success',
+            'timer' => '5000',
+        ] );
+    }
 }

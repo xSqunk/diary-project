@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\NotesClass;
 use App\User;
+use App\UserMeta;
 use Illuminate\Http\Request;
 
 class NotesController extends Controller
@@ -20,11 +21,16 @@ class NotesController extends Controller
 
         $notes = NotesClass::all();
 
+
         return view( 'dashboard.notes.index', [
             'notes' => $notes,
             'head_text' => 'Lista uwag w szkole',
+            'id' => $request,
         ] );
+
+
     }
+
 
     public function create(){
         return view( 'dashboard.notes.create', [
@@ -71,8 +77,12 @@ class NotesController extends Controller
         $note->text = $request->text;
         $note->positiv = $request->positiv;
         $note->timestamps = $request->timestamps;
-
         $note->save();
+
+        $user_meta = new UserMeta();
+        $user_meta->user_id = $request->user_id;
+        $user_meta->name = $request->name;
+        $user_meta->save();
 
         return redirect()->route( 'notes.index' )->with( 'alert', [
             'title' => 'Pomyślnie dodano uwagę!',
@@ -107,15 +117,18 @@ class NotesController extends Controller
         $note->text = $request->text;
         $note->positiv = $request->positiv;
         $note->timestamps = $request->timestamps;
-
-
         $note->save();
+
 
         return redirect()->route( 'notes.index' )->with( 'alert', [
             'title' => 'Pomyślnie zaktualizowano uwagę!',
             'type'  => 'success',
             'timer' => '5000',
         ] );
+    }
+    public function usersList(Request $request){
+        $this->usersList();
+        return $this->usersList();
     }
 
     public function delete( Request $request ){

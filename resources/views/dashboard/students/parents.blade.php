@@ -5,7 +5,9 @@
 @section('content_header')
 	<div class="content-header-inner">
 		<h1>Rodzice ucznia: {{$student->meta->name . ' ' . $student->meta->surname}}</h1>
-
+		<a href="{{route('students.index')}}">
+			<button class="btn btn-info btn-sm"><i class="fa fa-undo"></i> Cofnij</button>
+		</a>
 	</div>
 @stop
 

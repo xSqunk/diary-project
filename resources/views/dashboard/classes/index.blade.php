@@ -52,11 +52,11 @@
 						</div>
 					</div>
 					<a href="{{ route( 'classes.edit', [ 'class' => $class->hashId ] ) }}">
-						<button class="btn diary-edit-btn" title="{{__('dashboard/class.Edytuj klasę')}}">
+						<button class="btn btn-success diary-edit-btn" title="{{__('dashboard/class.Edytuj klasę')}}">
 							<i class="fas fa-edit"></i>
 						</button>
 					</a>
-					<button class="btn delete-class" title="{{__('dashboard/user.Usuń klasę')}}">
+					<button class="btn btn-danger delete-class" title="{{__('dashboard/user.Usuń klasę')}}">
 						<i class="fas fa-trash"></i>
 					</button>
 				</td>

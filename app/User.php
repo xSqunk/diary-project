@@ -41,6 +41,10 @@ class User extends Authenticatable
         return $this->hashId();
     }
 
+    public function isActive(): bool {
+        return $this->status === 1;
+    }
+
     public function getStatusNameAttribute(): ?string{
         $status = $this->status;
 

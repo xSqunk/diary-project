@@ -63,6 +63,15 @@ class StudentController extends Controller
         ] );
     }
 
+    public function show($id) {
+
+        $user = User::findByHashidOrFail( $id );
+
+        return view( 'dashboard.students.show', [
+            'student' => $user,
+        ] );
+    }
+
     public function store( Request $request ){
 
         $validator = Validator::make( $request->all(), [
@@ -167,5 +176,14 @@ class StudentController extends Controller
             'type'  => 'success',
             'timer' => '5000',
         ] );
+    }
+
+    public function getPanel( Request $request ){
+
+        $panel = str_replace('tab-', '', $request->tab_id);
+
+        echo view( "dashboard.students.panels.$panel", [
+            //data array
+        ] )->render();
     }
 }

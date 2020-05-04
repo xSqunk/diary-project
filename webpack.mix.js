@@ -20,4 +20,5 @@ mix.scripts([
     'public/vendor/jquery/jquery.min.js',
     'public/vendor/overlayScrollbars/js/jquery.overlayScrollbars.min.js',
     'resources/js/global.js',
+    'node_modules/axios/dist/axios.min.js'
  ], 'public/js/scripts.js');
