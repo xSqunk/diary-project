@@ -27,8 +27,8 @@
                             @endforeach
 					</select>
                     <select required name="month" class="form-control" id="month">
-                            @foreach( $months as $month)
-                                <option value="{{$month}}" @if(isset($_GET['chosenMonth'])) selected @endif >{{$month}}</option>
+                            @foreach( $months as $key=>$month)
+                                <option value="{{$key}}" @if(isset($_GET['chosenMonth'])) selected @endif >{{$month}}</option>
                             @endforeach
                     </select>
 				</div>
@@ -45,61 +45,20 @@
 		<thead>
 			<tr>
 				<th>{{__('dashboard/plan.Dzień')}}</th>
-				@if($view_type === 'users')
-					<th>{{__('dashboard/user.Grupy')}}</th>
-				@endif
-				<th>{{__('dashboard/user.Email')}}</th>
-				<th>{{__('dashboard/user.Telefon')}}</th>
-				<th>{{__('dashboard/user.Status')}}</th>
-				<th>{{__('dashboard/user.Akcje')}}</th>
 			</tr>
 		</thead>
 
 		<tbody>
-		@foreach($users as $user)
-			<tr data-hash_id="{{$user->hashId}}" data-name="{{$user->meta->name}}" data-surname="{{$user->meta->surname}}">
-				<td>
-					<img src="{{ $user->meta->getAvatarUrl() }}" class="img-circle udiAvatarImage" alt="User Image">
-					{{ $user->meta->name . ' ' . $user->meta->surname}}
-				</td>
-				@if($view_type === 'users')
+		@foreach($lesson_days as $lesson_day)
+			<tr data-hash_id="{{$lesson_day->hashId}}">
+
 				<td>
 					<p>
-						@if($user->groups)
-							<ul>
-							@foreach($user->groups as $group)
-								<li>{{$group->name}}</li>
-							@endforeach
-							</ul>
-						@else
-							-
-						@endif
+                        <ul> {{substr($lesson_day->lesson_date, 8)}} </ul>
 					</p>
 				</td>
-				@endif
-				<td>{{ $user->email }}</td>
-				<td class="is-text-centered"><p>{{$user->meta->phone}}</p></td>
-				<td class="is-text-centered">
-					@switch( $user->status )
-						@case ( App\User::STATUS_IS_ACTIVE )
-						<div class=" badge badge-success"><span style="display: none">_active</span> {{__('dashboard/user.Aktywny')}}</div>
-						@break
-						@case ( App\User::STATUS_IS_INACTIVE )
-						<div class="badge badge-danger"><span style="display: none">_inactive</span> {{__('dashboard/user.Nieaktywny')}}</div>
-						@break
-					@endswitch
-				</td>
-				<td>
-					@if($view_type === 'students')
-					<a href="{{route('students.parents', ['user' => $user->hashId])}}" class="btn btn-secondary">{{__('dashboard/user.Rodzice')}}</a>
-					@endif
 
-					@if(auth()->user()->id !== $user->id)
-						<button class="btn delete-user" title="{{__('dashboard/user.Usuń użytkownika')}}">
-							<i class="fas fa-trash"></i>
-						</button>
-					@endif
-				</td>
+
 			</tr>
 		@endforeach
 		</tbody>
