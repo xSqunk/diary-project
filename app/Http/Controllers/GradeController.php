@@ -30,6 +30,17 @@ class GradeController extends Controller
         ] );
     }
 
+    public function student(Request $request) {
+        echo 'MOJE OCENY';
+
+        $grades = Grade::all();
+
+        return view( 'dashboard.grades.index', [
+            'grades' => $grades,
+            'head_text' => 'Lista ocen',
+        ] );
+    }
+
     public function create(){
 
         $user = Auth::user();
