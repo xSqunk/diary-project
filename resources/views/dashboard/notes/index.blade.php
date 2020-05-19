@@ -21,7 +21,8 @@
 				<th>{{__('dashboard/note.Przedmiot')}}</th>
 				<th>{{__('dashboard/note.Treść')}}</th>
 				<th>{{__('dashboard/note.Typ uwagi')}}</th>
-                <th>{{__('dashboard/note.Czas utworzenia')}}</th>
+                <th>{{__('dashboard/note.Data utworzenia')}}</th>
+                <th>{{__('dashboard/note.Akcje')}}</th>
 			</tr>
 		</thead>
 
@@ -35,8 +36,7 @@
 					{{$note->student->meta->name . ' ' . $note->student->meta->surname}}
                 </td>
 				<td>
-{{--                    {{$note->subjects->meta->name}}--}}
-                        {{$note->subject_id}}
+                    {{$note->subject->name}}
 				</td>
 				<td>
 					{{$note->text}}
@@ -51,8 +51,18 @@
 				</td>
                 <td>
                     {{$note->created_at}}
-
-
+                </td>
+                <td>
+                    <a href="{{ route( 'notes.edit', [ 'note' => $note->hashId ] ) }}">
+                        <button class="btn btn-success diary-edit-btn" title="{{__('dashboard/note.Edytuj uwage')}}">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </a>
+                    <a href="{{ route( 'notes.delete' ) }}">
+                        <button class="btn btn-danger delete-note" title="{{__('dashboard/note.Usuń uwage')}}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </a>
                 </td>
 			</tr>
 		@endforeach

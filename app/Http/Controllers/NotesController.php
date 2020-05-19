@@ -5,16 +5,19 @@ namespace App\Http\Controllers;
 use App\NotesClass;
 use App\User;
 use App\UserMeta;
+use App\Subject;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class NotesController extends Controller
 {
     protected const attributesNames = [
-        'student_id'            => '<strong>Oznaczenie klasy</strong>',
-        'teacher_id'            => '<strong>Opis</strong>',
-        'subjects_id'           => '<strong>Ilość miejsc</strong>',
-        'text'                  => '<strong>Wychowawca</strong>',
-        'positiv'               => '<strong>Typ klasy</strong>',
+        'student_id'            => '<strong>Student</strong>',
+        'teacher_id'            => '<strong>Nauczyciel</strong>',
+        'subjects_id'           => '<strong>Przedmiot</strong>',
+        'text'                  => '<strong>Treść</strong>',
+        'subject_id'            => '<strong>Przedmiot</strong>',
+        'positiv'               => '<strong>Typ uwagi</strong>',
     ];
 
     public function index( Request $request ){
@@ -36,6 +39,8 @@ class NotesController extends Controller
         return view( 'dashboard.notes.create', [
             'head_text' => 'Dodawanie uwagi',
             'teachers' => User::InGroup('teacher')->OnlyActive()->get(),
+            'students' => User::InGroup('student')->OnlyActive()->get(),
+            'subjects' => Subject::all(),
             'types' => NotesClass::getAvailableTypes(),
         ] );
     }
@@ -46,43 +51,43 @@ class NotesController extends Controller
 
         return view( 'dashboard.notes.edit', [
             'class' => $note,
-            'head_text' => 'Dodawanie uwagi',
+            'head_text' => 'Edytowanie uwagi',
             'teachers' => User::InGroup('teacher')->OnlyActive()->get(),
+            'students' => User::InGroup('student')->OnlyActive()->get(),
+            'subjects' => Subject::all(),
             'types' => NotesClass::getAvailableTypes(),
+            'note' => $note
         ] );
     }
 
     public function store( Request $request ){
 
         $validator = Validator::make( $request->all(), [
-            'student_id'       => 'required|unique:notes|not_in:0',
-            'teacher_id'       => 'required|unique:notes|not_in:0',
-            'subjects_id'      => 'required|max:255',
+            'student_id'       => 'required|not_in:0',
+            'teacher_id'       => 'required|not_in:0',
+            'subject_id'      => 'required|not_in:0',
             'text'             => 'required|nullable',
-            'positiv'          => 'required|max:1',
+            'positiv'          => 'required|nullable',
         ] );
 
         $validator->setAttributeNames( self::attributesNames );
 
         if( $validator->fails() ){
             return redirect()->back()->withErrors( $validator )->withInput(
-                $request->all( 'student_id', 'teacher_id', 'subjects_id', 'text', 'positiv' )
+                $request->all( 'student_id', 'teacher_id', 'subject_id', 'text', 'positiv' )
             );
         }
 
+        $now = date('Y-m-d H-i');
         $note = new NotesClass();
         $note->student_id = $request->student_id;
         $note->teacher_id = $request->teacher_id;
-        $note->subjects_id = $request->subjects_id;
+        $note->subject_id = $request->subject_id;
         $note->text = $request->text;
         $note->positiv = $request->positiv;
-        $note->timestamps = $request->timestamps;
+        $now = $request->created_at;
         $note->save();
 
-        $user_meta = new UserMeta();
-        $user_meta->user_id = $request->user_id;
-        $user_meta->name = $request->name;
-        $user_meta->save();
 
         return redirect()->route( 'notes.index' )->with( 'alert', [
             'title' => 'Pomyślnie dodano uwagę!',
@@ -91,33 +96,36 @@ class NotesController extends Controller
         ] );
     }
 
-    public function update(Request $request) {
+    public function update( Request $request) {
 
-        $note = NotesClass::findByHashidOrFail( $request->noteId );
+        $note = NotesClass::findByHashid( $request );
 
         $validator = Validator::make( $request->all(), [
-            'teacher_id'       => 'required|not_in:0|unique:classes,teacher_id,' . $note->id,
-            'student_id'       => 'required|unique:notes|not_in:0',
-            'subjects_id'      => 'required|max:255',
+            'student_id'       => 'required|not_in:0' . $note->id,
+            'teacher_id'       => 'required|not_in:0',
+            'subject_id'       => 'required|not_in:0',
             'text'             => 'required|nullable',
-            'positiv'          => 'required|max:1',
+            'positiv'          => 'required|nullable',
         ] );
 
         $validator->setAttributeNames( self::attributesNames );
 
         if( $validator->fails() ){
             return redirect()->back()->withErrors( $validator )->withInput(
-                $request->all( 'student_id', 'teacher_id', 'subjects_id', 'text', 'positiv' )
+                $request->all( 'student_id', 'teacher_id', 'subject_id', 'text', 'positiv' )
             );
         }
 
+        $note = NotesClass::find($id);
+        $now = date('Y-m-d H-i');
         $note->student_id = $request->student_id;
         $note->teacher_id = $request->teacher_id;
-        $note->subjects_id = $request->subjects_id;
+        $note->subject_id = $request->subject_id;
         $note->text = $request->text;
         $note->positiv = $request->positiv;
-        $note->timestamps = $request->timestamps;
+        $now = $request->updated_at;
         $note->save();
+
 
 
         return redirect()->route( 'notes.index' )->with( 'alert', [
@@ -132,7 +140,8 @@ class NotesController extends Controller
     }
 
     public function delete( Request $request ){
-        $class = NotesClass::findByHashidOrFail( $request->hashId );
-        $class->delete();
+        $note = NotesClass::findByHashidOrFail( $request->hashId );
+        $note->delete();
     }
+
 }

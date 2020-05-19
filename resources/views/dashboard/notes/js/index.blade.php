@@ -1,7 +1,7 @@
 <script>
 
     $(document).ready(function() {
-        $('.delete-class').click(function() {
+        $('.delete-note').click(function() {
 
             let row = $(this).closest('tr');
             let hash_id = row.data('hash_id');
@@ -9,7 +9,7 @@
 
             swal.fire({
                 title: 'Jesteś pewny?',
-                text: "Czy napewno chcesz usunąć klasę " + name,
+                text: "Czy napewno chcesz usunąć uwagę " + name,
                 type: 'warning',
                 icon: 'warning',
                 showCancelButton: true,
@@ -23,7 +23,7 @@
             }).then((result) => {
                 if (result.value) {
                     $.ajax( {
-                        url: '{{route('classes.delete')}}' + '?_token=' + '{{ csrf_token() }}',
+                        url: '{{route('notes.delete')}}' + '?_token=' + '{{ csrf_token() }}',
                         type: 'DELETE',
                         data: {
                             hashId: hash_id
@@ -38,7 +38,7 @@
 
                     swal.fire({
                         title: 'Usunięto!',
-                        html: 'Klasa została usunięta',
+                        html: 'Uwaga została usunięta',
                         type: 'success',
                         icon: 'success'
                     }).then(function() {
@@ -47,7 +47,7 @@
                 } else {
                     swal.fire({
                         title: 'Anulowano',
-                        html: 'Nie usunięto klasy',
+                        html: 'Nie usunięto uwagi',
                         type: 'error',
                         icon: 'error'
                     })

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\SchoolClass;
 use App\User;
+use App\NotesClass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -37,6 +38,29 @@ class StudentController extends Controller
 
         return view( 'dashboard.users.index', [
             'users' => $students,
+            'view_type' => 'students',
+            'head_text' => $head_text,
+            'class' => $class ?? null,
+            'free_students' => $free_students ?? null
+        ] );
+    }
+
+    public function notes( $class_id = null ){
+        if($class_id) {
+            $note = NotesClass::InClass($class_id)->get();
+            $students = User::InClass($class_id)->isStudent()->get();
+            $class = SchoolClass::findOrFail($class_id);
+            $free_students = User::InClass(0)->NotLogged()->get();
+            $head_text = 'Lista uwag klasy ' . $class->sign . ' (wych. ' . $class->ClassTeacher . ') ';
+        } else {
+            $students = User::isStudent()->get();
+            $head_text = 'Lista uczniów';
+        }
+
+        return view( 'dashboard.notes.index', [
+
+            'users' => $students,
+            'notes' => $note,
             'view_type' => 'students',
             'head_text' => $head_text,
             'class' => $class ?? null,
@@ -179,11 +203,17 @@ class StudentController extends Controller
     }
 
     public function getPanel( Request $request ){
+        $student = User::findOrFail($request->id);
 
         $panel = str_replace('tab-', '', $request->tab_id);
-
+//        $student_notes = Notes::where('student_id', $request)->get();
         echo view( "dashboard.students.panels.$panel", [
-            //data array
+    //            data array
+//            'name' => $panel->name,
+            'surname' => 'bla bla',
+            'notes' => $student -> notes
+
+
         ] )->render();
     }
 }

@@ -42,11 +42,11 @@
 							<label for="student">{{__('dashboard/note.Student')}}</label>
                             <select name="student_id" id="student_id" class="form-control input-md input-select2" required>
                                 <option value="0" selected>{{__('dashboard/note.Student')}}</option>
-{{--                                @foreach($students as $student)--}}
-{{--                                    <option value="{{$student->id}}" @if( old( 'student_id') == $student->id ) selected @endif>--}}
-{{--                                        {{$student->meta->name}} {{$student->meta->surname}}--}}
-{{--                                    </option>--}}
-{{--                                @endforeach--}}
+                                @foreach($students as $student)
+                                    <option value="{{$student->id}}" @if( old( 'student_id') == $student->id ) selected @endif>
+                                        {{$student->meta->name}} {{$student->meta->surname}}
+                                    </option>
+                                @endforeach
                             </select>
 						</div>
 
@@ -54,24 +54,24 @@
                             <label for="subject_id">{{__('dashboard/note.Przedmiot')}}</label>
                             <select name="subject_id" id="subject_id" class="form-control input-md input-select2" required>
                                 <option value="0" selected>{{__('dashboard/note.Przedmiot')}}</option>
-{{--                                @foreach($subjects as $subject)--}}
-{{--                                    <option value="{{$subject->id}}" @if( old( '$subject_id') == $subject->id ) selected @endif>--}}
-{{--                                        {{$subject->meta->name}} {{$subject->meta->shortcut}}--}}
-{{--                                    </option>--}}
-{{--                                @endforeach--}}
+                                @foreach($subjects as $subject)
+                                    <option value="{{$subject->id}}" @if( old( '$subject_id') == $subject->id ) selected @endif>
+                                        {{$subject->name}}
+                                    </option>
+                                @endforeach
                             </select>
 						</div>
 
 						<div class="diary-form-row">
-							<label for="tresc">{{__('dashboard/note.Treść')}}</label>
-                            <textarea id="tresc" name="tresc" placeholder="{{__('dashboard/note.Treść')}}" class="form-control input-md">{{old('tresc')}}</textarea>
+							<label for="text">{{__('dashboard/note.Treść')}}</label>
+                            <textarea id="text" name="text" placeholder="{{__('dashboard/note.Treść')}}" class="form-control input-md">{{old('text')}}</textarea>
 						</div>
 
 						<div class="diary-form-row">
-							<label for="type">{{__('dashboard/note.Typ uwagi')}}</label>
-							<select name="type" id="teacher_id" class="form-control input-md" required>
-                                <option value="1" selected>{{__('Negatywna')}}</option>
-                                <option value="0" selected>{{__('Pozytywna')}}</option>
+							<label for="positiv">{{__('dashboard/note.Typ uwagi')}}</label>
+							<select name="positiv" id="positiv" class="form-control input-md" required>
+                                <option value="1" selected>{{__('Pozytywna')}}</option>
+                                <option value="0" selected>{{__('Negatywna')}}</option>
 							</select>
 						</div>
 

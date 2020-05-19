@@ -82,6 +82,10 @@ Route::middleware( ['auth'] )->group( static function(){
                 'uses' => 'StudentController@index'
             ] )->name( 'students.class.index' )->where('class_id', '[0-9]+');
 
+            Route::get( '/notes/{class_id}', [
+                'uses' => 'StudentController@notes'
+            ] )->name( 'students.class.notes' );
+
             Route::get( '/create', [
                 'uses' => 'StudentController@create'
             ] )->name( 'students.create' );
@@ -218,12 +222,26 @@ Route::middleware( ['auth'] )->group( static function(){
             Route::get( '/', [
                 'uses' => 'NotesController@index'
             ] )->name( 'notes.index' );
+
             Route::get( '/create', [
                 'uses' => 'NotesController@create'
             ] )->name( 'notes.create' );
+
             Route::post( '/create', [
                 'uses' => 'NotesController@store'
             ] )->name( 'notes.store' );
+
+            Route::delete( '/', [
+                'uses' => 'NotesController@delete'
+            ] )->name( 'notes.delete' );
+
+            Route::get( '/edit/{note}', [
+                'uses' => 'NotesController@edit'
+            ] )->name( 'notes.edit' );
+
+            Route::post( '/update', [
+                'uses' => 'NotesController@update'
+            ] )->name( 'notes.update' );
 
 
         } );

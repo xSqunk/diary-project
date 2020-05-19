@@ -20,51 +20,62 @@
 
 			@include('dashboard.common.errors', [ 'errors' => $errors ] )
 
-			<form action="{{ route( 'notes.update' ) }}" id="form-user-insert" method="POST" novalidate enctype="multipart/form-data">
+			<form action="{{ route( 'notes.update' ) }}" id="form-note-insert" method="POST" novalidate enctype="multipart/form-data">
 				@csrf
 
-				<input type="hidden" name="classId" value="{{$note->hashId}}" />
+				<input type="hidden" name="noteId" value="{{$note->noteId}}" />
 
 				<div class="" style="display: flex;padding: 40px 0;">
 					<div class="diary-form-grid grid-size-2" style="flex:1;margin-bottom: 20px;">
 
 						<div class="diary-form-row">
-							<label for="sign">{{__('dashboard/note.Oznaczenie klasy')}}</label>
-							<input type="text" class="@if( $errors->has('sign') ) input-error @endif form-control" name="sign" id="sign" value="{{ old('sign', $class->sign) }}" required>
+							<label for="teacher">{{__('dashboard/note.Nauczyciel')}}</label>
+                            <select name="teacher_id" id="teacher_id" class="form-control input-md input-select2" required>
+                                <option value="0" selected>{{__('dashboard/note.Wybierz nauczyciela')}}</option>
+                                @foreach($teachers as $teacher)
+                                    <option value="{{$teacher->id}}" @if( old( 'teacher_id', $note->teacher_id) == $teacher->id ) selected @endif>
+                                        {{$teacher->meta->name}} {{$teacher->meta->surname}}
+                                    </option>
+                                @endforeach
+                            </select>
 						</div>
 
 						<div class="diary-form-row">
-							<label for="description">{{__('dashboard/note.Opis')}}</label>
-							<textarea id="description" name="description" placeholder="{{__('dashboard/note.Opis')}}" class="form-control input-md">{{old('description', $class->description)}}</textarea>
+							<label for="student">{{__('dashboard/note.Student')}}</label>
+                            <select name="student_id" id="student_id" class="form-control input-md input-select2" required>
+                                <option value="0" selected>{{__('dashboard/note.Student')}}</option>
+                                @foreach($students as $student)
+                                    <option value="{{$student->id}}" @if( old( 'student_id', $note->student_id) == $student->id ) selected @endif>
+                                        {{$student->meta->name}} {{$student->meta->surname}}
+                                    </option>
+                                @endforeach
+                            </select>
+
 						</div>
 
 						<div class="diary-form-row">
-							<label for="max_members">{{__('dashboard/note.Ilość miejsc')}}</label>
-							<input type="number" class="@if( $errors->has('max_members') ) input-error @endif form-control" name="max_members" id="max_members" value="{{ old('max_members', $class->max_members) }}" required>
+							<label for="subject">{{__('dashboard/note.Przedmiot')}}</label>
+                            <select name="subject_id" id="subject_id" class="form-control input-md input-select2" required>
+                                <option value="0" selected>{{__('dashboard/note.Przedmiot')}}</option>
+                                @foreach($subjects as $subject)
+                                    <option value="{{$subject->id}}" @if( old( '$subject_id', $note->subject_id) == $subject->id ) selected @endif>
+                                        {{$subject->name}}
+                                    </option>
+                                @endforeach
+                            </select>
 						</div>
 
 						<div class="diary-form-row">
-							<label for="teacher_id">{{__('dashboard/note.Wychowawca')}}</label>
-							<select name="teacher_id" id="teacher_id" class="form-control input-md input-select2" required>
-								<option value="0" selected>{{__('dashboard/note.Wybierz wychowawcę')}}</option>
-								@foreach($teachers as $teacher)
-									<option value="{{$teacher->id}}" @if( old( 'teacher_id', $class->teacher_id) == $teacher->id ) selected @endif>
-										{{$teacher->meta->name}} {{$teacher->meta->surname}}
-									</option>
-								@endforeach
-							</select>
+							<label for="text">{{__('dashboard/note.Treść')}}</label>
+                            <textarea id="text" name="text" placeholder="{{__('dashboard/note.Opis')}}" class="form-control input-md">{{old('text', $note->text)}}</textarea>
 						</div>
 
 						<div class="diary-form-row">
-							<label for="type">{{__('dashboard/note.Typ klasy')}}</label>
-							<select name="type" id="teacher_id" class="form-control input-md" required>
-								<option value="0" selected>{{__('dashboard/note.Wybierz typ')}}</option>
-								@foreach($types as $key => $type)
-									<option value="{{$key}}" @if( old( 'type', $class->type) == $key ) selected @endif>
-										{{$type}}
-									</option>
-								@endforeach
-							</select>
+                            <label for="positiv">{{__('dashboard/note.Typ uwagi')}}</label>
+                            <select name="positiv" id="positiv" class="form-control input-md" required>
+                                <option value="1" selected>{{__('Negatywna')}}</option>
+                                <option value="0" selected>{{__('Pozytywna')}}</option>
+                            </select>
 						</div>
 
 						<div class="form-btn-group form-rows" style="justify-content: flex-end;">
@@ -84,5 +95,5 @@
 	<script>
 	@include('dashboard.common.errorsJs')
 	</script>
-	@include('dashboard.classes.js.create')
+	@include('dashboard.notes.js.create')
 @stop

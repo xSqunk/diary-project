@@ -46,6 +46,7 @@
 				<div class="add-student-text">{{__('dashboard/user.Dodaj ucznia do klasy')}}</div>
 			</div>
 
+
 			<div class="add-student-accordion" style="display: none;">
 				<select data-class_id="{{$class->id}}" name="student" id="student" class="add-student-select form-control input-md input-select2" >
 					<option value="0" selected disabled>{{__('dashboard/user.Wybierz ucznia')}}</option>
@@ -126,6 +127,10 @@
 									<span class="badge badge-pill badge-info">{{$user->parents()->count()}}</span>
 								</a>
 							@endif
+                                <a class="dropdown-item">
+                                    <div></div>
+                                    <i class="far fa-sticky-note"></i> {{__('dashboard/note.Dodaj uwage uczniowi')}}
+                                </a>
 							@if($class)
 								<button class="dropdown-item class-signout"
 										data-student_id="{{$user->id}}"
@@ -134,7 +139,6 @@
 									<i class="fas fa-sign-out-alt"></i> {{__('dashboard/user.Wypisz z klasy')}}
 								</button>
 							@endif
-
 						</div>
 					</div>
 
