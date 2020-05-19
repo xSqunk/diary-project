@@ -225,70 +225,86 @@ return [
 //            'label'       => 4,
 //            'label_color' => 'success',
 //        ],
-        [
-            'text'    => 'Użytkownicy',
-            'icon' => 'fas fa-fw fa-user',
-            'submenu' => [
-                [
-                    'text' => 'Lista użytkowników',
-                    'icon' => 'fas fa-fw fa-user',
-                    'url'  => 'dashboard/users',
-                ],
-                [
-                    'text' => 'Dodaj użytkownika',
-                    'icon' => 'fas fa-user-plus',
-                    'url'  => 'dashboard/users/create',
-                ],
-            ],
-        ],
-        [
-            'text'    => 'Uczniowie',
-            'icon' => 'fas fa-user-graduate',
-            'submenu' => [
-                [
-                    'text' => 'Lista uczniów',
-                    'icon' => 'fas fa-fw fa-user',
-                    'url'  => 'dashboard/students',
-                ],
-                [
-                    'text' => 'Dodaj ucznia',
-                    'icon' => 'fas fa-user-plus',
-                    'url'  => 'dashboard/students/create',
-                ],
-            ],
-        ],
-        [
-            'text'    => 'Nauczyciele',
-            'icon' => 'fas fa-fw fa-user',
-            'submenu' => [
-                [
-                    'text' => 'Lista nauczycieli',
-                    'icon' => 'fas fa-fw fa-user',
-                    'url'  => 'dashboard/teachers',
-                ],
-                [
-                    'text' => 'Dodaj nauczyciela',
-                    'icon' => 'fas fa-user-plus',
-                    'url'  => 'dashboard/teachers/create',
-                ],
-            ],
-        ],
-        [
-            'text'    => 'Klasy',
-            'icon' => 'fas fa-door-open',
-            'submenu' => [
-                [
-                    'text' => 'Lista klas',
-                    'icon' => 'fas fa-door-open',
-                    'url'  => 'dashboard/classes',
-                ],
-                [
-                    'text' => 'Dodaj klasę',
-                    'icon' => 'fas fa-door-closed',
-                    'url'  => 'dashboard/classes/create',
-                ],
-            ],
-        ],
+//        [
+//            'text'    => 'Użytkownicy',
+//            'icon' => 'fas fa-fw fa-user',
+//            'submenu' => [
+//                [
+//                    'text' => 'Lista użytkowników',
+//                    'icon' => 'fas fa-fw fa-user',
+//                    'url'  => 'dashboard/users',
+//                ],
+//                [
+//                    'text' => 'Dodaj użytkownika',
+//                    'icon' => 'fas fa-user-plus',
+//                    'url'  => 'dashboard/users/create',
+//                ],
+//            ],
+//        ],
+//        [
+//            'text'    => 'Uczniowie',
+//            'icon' => 'fas fa-user-graduate',
+//            'submenu' => [
+//                [
+//                    'text' => 'Lista uczniów',
+//                    'icon' => 'fas fa-fw fa-user',
+//                    'url'  => 'dashboard/students',
+//                ],
+//                [
+//                    'text' => 'Dodaj ucznia',
+//                    'icon' => 'fas fa-user-plus',
+//                    'url'  => 'dashboard/students/create',
+//                ],
+//            ],
+//        ],
+//        [
+//            'text'    => 'Nauczyciele',
+//            'icon' => 'fas fa-fw fa-user',
+//            'submenu' => [
+//                [
+//                    'text' => 'Lista nauczycieli',
+//                    'icon' => 'fas fa-fw fa-user',
+//                    'url'  => 'dashboard/teachers',
+//                ],
+//                [
+//                    'text' => 'Dodaj nauczyciela',
+//                    'icon' => 'fas fa-user-plus',
+//                    'url'  => 'dashboard/teachers/create',
+//                ],
+//            ],
+//        ],
+//        [
+//            'text'    => 'Klasy',
+//            'icon' => 'fas fa-door-open',
+//            'submenu' => [
+//                [
+//                    'text' => 'Lista klas',
+//                    'icon' => 'fas fa-door-open',
+//                    'url'  => 'dashboard/classes',
+//                ],
+//                [
+//                    'text' => 'Dodaj klasę',
+//                    'icon' => 'fas fa-door-closed',
+//                    'url'  => 'dashboard/classes/create',
+//                ],
+//            ],
+//        ],
+//        [
+//            'text'    => 'Oceny',
+//            'icon' => 'fas fa-book-open',
+//            'submenu' => [
+//                [
+//                    'text' => 'Lista ocen',
+//                    'icon' => 'fas fa-book-reader',
+//                    'url'  => 'dashboard/grades',
+//                ],
+//                [
+//                    'text' => 'Dodaj ocenę',
+//                    'icon' => 'fas fa-pencil-alt',
+//                    'url'  => 'dashboard/grades/create',
+//                ],
+//            ],
+//        ],
 //        ['header' => 'labels'],
 //        [
 //            'text'       => 'important',
@@ -303,12 +319,12 @@ return [
 //            'icon_color' => 'aqua',
 //        ],
 
-        ['header' => 'USTAWIENIA KONTA'],
-        [
-            'text' => 'Profil',
-            'url'  => 'dashboard/profile',
-            'icon' => 'fas fa-fw fa-user',
-        ],
+//        ['header' => 'USTAWIENIA KONTA'],
+//        [
+//            'text' => 'Profil',
+//            'url'  => 'dashboard/profile',
+//            'icon' => 'fas fa-fw fa-user',
+//        ],
 //        [
 //            'text'    => 'multilevel',
 //            'icon'    => 'fas fa-fw fa-share',

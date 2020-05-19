@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Parents;
-use App\User;
+use App\Lesson;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -24,24 +24,35 @@ class PlanMonthController extends Controller
     ];
 
     public function index( Request $request ){
-        $students = User::isStudent()->get();
+        #$students = User::isStudent()->get();
         $years = array(2020, 2019, 2018, 2017);
+        $months = array('01' => "Styczeń", '02' => "Luty", '03' => "Marzec",
+                        '04' => "Kwiecień", '05' => "Maj", '06' => "Czerwiec",
+                        '07' => "Lipiec", '08' => "Sierpień", '09' => "Wrzesień",
+                        '10' => "Październik", '11' => "Listopad", '12' => "Grudzień"
+        ); ###### usunac stringi keys
 
-        if(!isset($request->year)) {
-            $someValue = "UNSET";
+
+        $year = $_GET['year'];
+        $month = array_search ($_GET['month'], $months);
+
+        #dd($request->filled("month"));
+        if ($request->filled("year") and $request->filled("month")) {
+            $from = date("Y-m-d", strtotime($year.'-'.$month.'-01'));
+            $to = date("Y-m-t", strtotime($year.'-'.$month.'-01'));
+
+            #dd($from.' to '.$to);
+            $lesson_days = Lesson::whereBetween('lesson_date', [$from, $to])->get();
+            ##dd($lesson_days);
         } else {
-            $someValue = "SET ";
+            $lesson_days = [];
         }
 
 
-       $months = array("Styczeń", "Luty", "Marzec",
-                       "Kwiecień", "Maj", "Czerwiec",
-                       "Lipiec", "Sierpień", "Wrzesień",
-                       "Październik", "Listopad", "Grudzień"
-       );
+       #dd($months);
 
         return view( 'dashboard.plan.month.index', [
-            'users' => $students,
+            'lesson_days' => $lesson_days,
             'view_type' => 'plan',
             'years' => $years,
             'months' => $months,
