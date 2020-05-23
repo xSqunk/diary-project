@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Grade;
 use App\Lesson;
+use App\SchoolClass;
+use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class PlanMonthController extends Controller
 {
@@ -17,9 +21,6 @@ class PlanMonthController extends Controller
             "Październik", "Listopad", "Grudzień"
         );
 
-        $Dni = array('', 'Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota', 'Niedziela');
-        $Miesiace = array('', 'Stycznia', 'Lutego', 'Marca', 'Kwietnia', 'Maja', 'Czerwca', 'Lipca', 'Sierpnia', 'Września', 'Października', 'Listopada', 'Grudnia');
-
         if ($request->filled("year")) {
             $year = $request->year;
         } else {
@@ -32,29 +33,19 @@ class PlanMonthController extends Controller
             $month =  date("n");
         }
 
-        $year = $request->year;
-        $month = $request->month;
+        $dates = CarbonPeriod::create($year . '-' . $month . '-01', $year . '-' . $month . '-' . Carbon::create($year . '-' . $month . '-01')->daysInMonth);
 
-        $from = date("Y-m-d", strtotime($year . '-' . $month . '-01'));
-        $to = date("Y-m-t", strtotime($year . '-' . $month . '-01'));
-
-        $lessons_for_day = Lesson::whereBetween('lesson_date', [$from, $to])->where('class_id', '=', $request->class_id)->get();
-
-        $lesson_days_with_names = [];
-
-        foreach ($lessons_for_day as $lesson_day) {
-            $lesson_date = strtotime($lesson_day->lesson_date);
-            $name_of_day = '' . $Dni[date('w', $lesson_date)] . ', ' . date(' j ', $lesson_date) . $Miesiace[date('n', $lesson_date)];
-            array_push($lesson_days_with_names, [$lesson_day, $name_of_day]);
-        }
-
+        $class = SchoolClass::findOrFail($request->class_id);
 
         return view('dashboard.plan.month.index', [
-            'lesson_days' => $lesson_days_with_names,
+            'dates' => $dates,
             'view_type' => 'plan',
             'years' => $years,
             'months' => $months,
-            'head_text' => 'Plan',
+            'this_year' => $request->year,
+            'this_month' => $request->month,
+            'head_text' => 'Plan zajęć dla klasy: ' . $class->FullName,
+            'class_id' => $request->class_id
         ]);
     }
 }

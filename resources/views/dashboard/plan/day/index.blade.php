@@ -1,49 +1,48 @@
 @extends('dashboard.home')
 
-@section('title', $head_text)
+@section('title', 'Godziny lekcyjne')
 
 @section('content_header')
     <div class="content-header-inner">
         <h1>{!! $head_text !!}</h1>
 
+        <a href="{{route('plan.month.index', ['class_id' => $class_id, 'year' => $date->year, 'month' => $date->month, 'day' => $date->day])}}">
+            <button class="btn btn-info btn-sm"><i class="fa fa-undo"></i> Cofnij</button>
+        </a>
     </div>
 @stop
 
 @section('content')
 
-
-
-    <table class="is-dataTable table-striped table-bordered mt-3" width="100%">
+    <table class="table-striped table-bordered mt-3 text-center" width="100%">
         <thead>
         <tr>
             <th>{{__('dashboard/plan.Godzina')}}</th>
-
             <th>{{__('dashboard/plan.Przedmiot')}}</th>
+            <th>{{__('global.Akcje')}}</th>
         </tr>
         </thead>
 
         <tbody>
         @foreach($terms as $term)
+            <tr>
+                <td>{{$term->fullHour}}</td>
                 <td>
-                    <p>
-                    <ul>
-                        {{str_pad($term->start_hour, 2, "0", STR_PAD_LEFT ).':'.str_pad($term->start_minute, 2, "0", STR_PAD_LEFT ).' - '.$term->end_hour.':'.str_pad($term->end_minute, 2, "0", STR_PAD_LEFT )}}
-                    </ul>
-                    </p>
+                @if($lesson = App\Lesson::where('lesson_date', '=', $full_date)->where('term_id', '=', (int) $term->id)->first())
+                        {{$lesson->schedule->subject->name}}
+                    @else
+                    -
+                @endif
                 </td>
-
                 <td>
-                    <p>
-                    <ul>
-                        @foreach ($term->schedules as $schedule)
-                            @if ($loop->first)
-                                <a href="{{ route( "plan.presences.index", [ 'term_id' => $term->id, 'schedule_id' => $schedule->id, 'class_id' => Request()->class_id] ) }}"> {{$schedule->subject->name}} </a>
-                            @endif
-                        @endforeach
-                    </ul>
-                    </p>
+                    @if($lesson)
+                    <a href="{{ route( 'plan.presences.index', [ 'class_id'  => $class_id, 'lesson_id' => $lesson->id]) }}">
+                        <button class="btn btn-success diary-edit-btn" title="{{__('dashboard/plan.Obecności')}}">
+                            <i class="far fa-calendar-check"></i>
+                        </button>
+                    </a>
+                    @endif
                 </td>
-
             </tr>
         @endforeach
         </tbody>

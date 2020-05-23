@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Lesson;
 use App\Term;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PlanDayController extends Controller
@@ -10,14 +12,20 @@ class PlanDayController extends Controller
 
 
     public function index(Request $request) {
-        $day_of_week = intval(date('w', strtotime($request->date)));
-        $terms = Term::where( 'week_day', '=', $day_of_week)->orderBy('start_hour', 'ASC')
-            ->orderBy('start_minute', 'ASC')->get();//->sortBy('start_hour')->sortBy('start_minute');
+
+        $full_date = $request->year . '-' . $request->month . '-' . $request->day;
+
+        $date = Carbon::create($full_date);
+
+        $terms = Term::where( 'week_day', '=', $date->dayOfWeek)->orderBy('start_hour', 'ASC')
+            ->orderBy('start_minute', 'ASC')->get();
 
         return view( 'dashboard.plan.day.index', [
+            'class_id' => $request->class_id,
             'terms' => $terms,
-            'view_type' => 'day',
-            'head_text' => 'Plan dla dnia',
+            'date' => $date,
+            'full_date' => $full_date,
+            'head_text' => 'Godziny lekcyjne, dzień: ' . $date->isoFormat('D MMMM YYYY'),
         ] );
     }
 }

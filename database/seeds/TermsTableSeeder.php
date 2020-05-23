@@ -10,6 +10,7 @@ class TermsTableSeeder extends Seeder
      *
      * @return void
      */
+
     public function run()
     {
         $terms = [

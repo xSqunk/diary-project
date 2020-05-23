@@ -6,6 +6,10 @@
     <div class="content-header-inner">
         <h1>{!! $head_text !!}</h1>
 
+        <a href="{{ route( "plan.day.index", [ 'class_id'  => $class->id, 'year' => $date->year, 'month' => $date->month, 'day' => $date->day]) }}">
+            <button class="btn btn-info btn-sm"><i class="fa fa-undo"></i> Cofnij</button>
+        </a>
+
     </div>
 @stop
 
@@ -15,37 +19,33 @@
         <thead>
         <tr>
             <th>{{__('dashboard/plan.Student')}}</th>
-
-            <th>{{__('dashboard/plan.Obecny')}}</th>
+            <th>{{__('dashboard/user.Email')}}</th>
+            <th>{{__('dashboard/user.Telefon')}}</th>
+            <th>{{__('dashboard/plan.Status')}}</th>
         </tr>
         </thead>
 
         <tbody>
-        @foreach($presences as $presence)
+        @foreach($class->students as $student)
+            <tr data-student_id="{{$student->id}}" data-lesson_id="{{$lesson->id}}">
+            @if(!$student->isActive())
+                @continue
+            @endif
             <td>
-                <p>
-                <ul>
-                    {{$presence->student->meta->name.' '.$presence->student->meta->surname}}
-{{--                    {{str_pad($term->start_hour, 2, "0", STR_PAD_LEFT ).':'.str_pad($term->start_minute, 2, "0", STR_PAD_LEFT ).' - '.$term->end_hour.':'.str_pad($term->end_minute, 2, "0", STR_PAD_LEFT )}}--}}
-
-
-                </ul>
-                </p>
+                <img src="{{ $student->meta->getAvatarUrl() }}" class="img-circle udiAvatarImage" alt="User Image">
+                    <a href="{{route('student.show', ['id' => $student->hashId])}}">{{ $student->meta->name . ' ' . $student->meta->surname}}</a>
             </td>
 
-            <td>
-                <p>
-                <ul>
-                    <select required name="status" class=" @if( $errors->has('status') ) input-error @endif custom-select"  id="status">
-                        <option value="0" @if ($presence->presence == 0) selected @endif>Nieobecny</option>
-                        <option value="1" @if ($presence->presence == 1) selected @endif>Obecny</option>
-                        <option value="2" @if ($presence->presence == 2) selected @endif>Obecny (spóźniony)</option>
-                        <option value="3" @if ($presence->presence == 3) selected @endif>Nieobecny (usprawiedliwiony)</option>
-                        <option value="4" @if ($presence->presence == 4) selected @endif>Zwolniony</option>
-                    </select>
+            <td>{{ $student->email }}</td>
+            <td class="is-text-centered"><p>{{$student->meta->phone}}</p></td>
 
-                </ul>
-                </p>
+            <td>
+                <select name="status" class="status form-control">
+                    <option value="-1" selected disabled>Wybierz opcję</option>
+                    @foreach(\App\Presence::getStatuses() as $val => $status)
+                        <option value="{{$val}}" @if(($presence = \App\Presence::where('lesson_id', '=', $lesson->id)->where('student_id', '=', $student->id)->first()) && $presence->presence == $val ) selected @endif >{{$status}}</option>
+                    @endforeach
+                </select>
             </td>
 
             </tr>
@@ -57,7 +57,7 @@
 @stop
 
 @section('js')
-    @include('dashboard.plan.month.js.index')
+    @include('dashboard.plan.presences.js.status')
 @stop
 
 @section('css')

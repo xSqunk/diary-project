@@ -34,6 +34,6 @@ class CreatePresencesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lessons');
+        Schema::dropIfExists('presences');
     }
 }
