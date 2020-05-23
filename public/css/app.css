@@ -9492,6 +9492,7 @@ span#select2-parent-container {
   margin-top: -10px !important;
 }
 
+<<<<<<< HEAD
 .brand-image {
   display: none;
 }
@@ -9504,3 +9505,16 @@ a.brand-link {
   padding-left: 30px;
 }
 
+=======
+.gradebox {
+  float: left;
+  width: 30px;
+  height: 30px;
+  margin: 5px;
+  border: 1px solid rgba(0, 0, 0, .2);
+  text-align: center;
+  position: center;
+  top: 50%;
+  font-weight: bold;
+}
+>>>>>>> mb

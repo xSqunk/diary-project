@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\SchoolClass;
 use App\User;
+use App\ClassSubjects;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Input;
+
 
 class ClassController extends Controller
 {
@@ -134,4 +137,5 @@ class ClassController extends Controller
         $user->class_id = 0;
         $user->save();
     }
+
 }

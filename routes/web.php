@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Input;
+use App\SchoolClass;
+// use Request;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,5 +22,11 @@ Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
+Route::get('api/dropdown', function(){
+  $input = Request::get('option');
+    $class = SchoolClass::findOrFail($input);
+    $students = $class->students();
+    return Response::make($students->get(['id','email']));
+});
 
 //Auth::routes();

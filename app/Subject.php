@@ -77,4 +77,10 @@ class Subject extends Model
         return $this->name . ' (' . $this->getTypeNameAttribute($this->name) . ')';
     }
 
+
+    public function grades()
+    {
+        return $this->hasMany(Grade::class, 'subject_id');
+    }
+
 }

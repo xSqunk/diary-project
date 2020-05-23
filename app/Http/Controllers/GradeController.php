@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Grade;
 use App\User;
 use App\Subject;
+use App\SchoolClass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -23,10 +24,15 @@ class GradeController extends Controller
     public function index( Request $request ){
 
         $grades = Grade::all();
+        $classes = SchoolClass::all();
+        $students = User::InGroup('student')->get();
 
         return view( 'dashboard.grades.index', [
             'grades' => $grades,
+            'classes' => $classes,
+            'students' => $students,
             'head_text' => 'Lista ocen',
+            'view_type' => 'grades'
         ] );
     }
 
@@ -49,6 +55,7 @@ class GradeController extends Controller
             'students' => User::InGroup('student')->OnlyActive()->get(),
             'teachers' => User::InGroup('teacher')->OnlyActive()->get(),
             'subjects' => Subject::getAvailableSubjects(),
+            'schoolclasses' => SchoolClass::all(),
             'user' => $user,
         ] );
     }
@@ -145,4 +152,11 @@ class GradeController extends Controller
         $grade = Grade::findByHashidOrFail( $request->hashId );
         $grade->delete();
     }
+
+    // public function classstudents(){
+
+    //     $schoolclass_id = Input::get('schoolclass_id');
+    //     $classstudents = User::where('class_id', '=', $schoolclass_id)->get();
+    //     return response()->json($classstudents);
+    // }
 }
