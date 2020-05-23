@@ -49,7 +49,11 @@
 								<div></div>
 								<i class="fas fa-list-ol"></i> Uczniowie
 								<span class="badge  badge-pill badge-info">{{\App\User::InClass($class->id)->count()}}/{{$class->max_members}}</span></a>
-						</div>
+
+                            <a class="dropdown-item" href="{{route('plan.month.index', ['class_id' => $class->id])}}">
+                                <div></div>
+                                <i class="fas fa-list-ol"></i> Plan
+                        </div>
 					</div>
 					<a href="{{ route( 'classes.edit', [ 'class' => $class->hashId ] ) }}">
 						<button class="btn btn-success diary-edit-btn" title="{{__('dashboard/class.Edytuj klasę')}}">

@@ -23,16 +23,16 @@
 					<label class="control-label" for="type">{{__('dashboard/plan.Plan')}}</label>
 					<select required name="year" class="form-control" id="year">
                             @foreach( $years as $year)
-                                <option value="{{$year}}" @if(isset($_GET['chosenYear'])) selected @endif >{{$year}}</option>
+                                <option value="{{$year}}" @if(isset($request->month)) selected @endif >{{$year}}</option>
                             @endforeach
 					</select>
                     <select required name="month" class="form-control" id="month">
                             @foreach( $months as $key=>$month)
-                                <option value="{{$key}}" @if(isset($_GET['chosenMonth'])) selected @endif >{{$month}}</option>
+                                <option value="{{$key + 1}}" @if(isset($_GET['month']) && $_GET['month'] === $key) selected @endif >{{$month}}</option>
                             @endforeach
                     </select>
 				</div>
-				<button class="btn btn-primary" type="submit" >Filtruj</button>
+				<button class="btn btn-primary" type="submit" value="{{ request('request') }}" >Filtruj</button>
 			</form>
 		</div>
 	</div>
@@ -50,15 +50,14 @@
 
 		<tbody>
 		@foreach($lesson_days as $lesson_day)
-			<tr data-hash_id="{{$lesson_day->hashId}}">
-
+			<tr data-hash_id="{{$lesson_day[0]->hashId}}">
 				<td>
 					<p>
-                        <ul> {{substr($lesson_day->lesson_date, 8)}} </ul>
+                        <ul>
+                        <a href="{{ route( "plan.day.index", [ 'date' => $lesson_day[0]->lesson_date, 'class_id' => Request()->class_id]) }}"> {{$lesson_day[1]}} </a>
+                        </ul>
 					</p>
 				</td>
-
-
 			</tr>
 		@endforeach
 		</tbody>

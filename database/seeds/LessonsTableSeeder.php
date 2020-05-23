@@ -18,7 +18,8 @@ class LessonsTableSeeder extends Seeder
 
         $lessons = array(
             [
-                'deputy_id' => 1,
+                'class_id' => 1,
+                'deputy_id' => 3,
                 'schedule_id' => 1,
                 'lesson_date' =>  Carbon::createFromFormat('Y-m-d', '2020-05-01'),
                 'term_id' => 1,
@@ -28,10 +29,11 @@ class LessonsTableSeeder extends Seeder
                 'absences' => 5,
             ],
             [
-                'deputy_id' => 1,
+                'class_id' => 2,
+                'deputy_id' => 4,
                 'schedule_id' => 2,
                 'lesson_date' =>  Carbon::createFromFormat('Y-m-d', '2020-04-02'),
-                'term_id' => 2,
+                'term_id' => 33,
                 'school_week' => 1,
                 'took_place' => TRUE,
                 'presences' => 21,

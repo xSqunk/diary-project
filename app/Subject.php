@@ -28,6 +28,7 @@ class Subject extends Model
         ] );
     }
 
+
     public function getNoteSubjectAttribute(): string{
         return $this->subject->meta->name;
     }

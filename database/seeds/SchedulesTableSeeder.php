@@ -23,7 +23,7 @@ class SchedulesTableSeeder extends Seeder
             ],
             [
                 'term_id' => 2,
-                'class_id' => 2,
+                'class_id' => 33,
                 'teacher_id' => 2,
                 'classroom_id' => 2,
                 'subject_id' => 2,
