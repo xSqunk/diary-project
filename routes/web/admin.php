@@ -96,6 +96,14 @@ Route::middleware( ['auth', 'roles:admin'] )->group( static function(){
                 'uses' => 'PlanMonthController@index'
             ] )->name( 'plan.month.index' );
 
+            Route::get( '/day', [
+                'uses' => 'PlanDayController@index'
+            ] )->name( 'plan.day.index' );
+
+            Route::get( '/day/presences', [
+                'uses' => 'PresencesController@index'
+            ] )->name( 'plan.presences.index' );
+
         } );
 
         Route::group( [ 'prefix' => 'teachers' ], function(){
