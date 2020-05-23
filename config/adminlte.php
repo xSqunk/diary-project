@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'eDiary',
+    'title' => 'eRegister',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -45,7 +45,7 @@ return [
     |
     */
 
-    'logo' => '<b>eDiary</b>',
+    'logo' => '<b>eRegister</b>',
     'logo_img' => 'img/logo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,

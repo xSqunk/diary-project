@@ -13,7 +13,7 @@
     <div class="login-box-outer">
         <div class="login-box">
             <div class="login-logo">
-                <img src="{{asset('img/logo.png')}}" width="80" />
+                <img src="{{asset('img/logo.png')}}" width="140" />
             </div>
             <div class="login-box-body">
                 <p class="login-box-msg">Logowanie do dziennika elektronicznego</p>
