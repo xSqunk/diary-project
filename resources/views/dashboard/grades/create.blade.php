@@ -31,6 +31,30 @@
 							<input type="text" class="form-control" name="teacher" id="teacher" value="{{$user->meta->name}} {{$user->meta->surname}}" readonly>
 						</div>
 
+						<!-- <div class="diary-form-row">
+							<label for="schoolclass">{{__('dashboard/class.Klasa')}}</label>
+							<select name="schoolclass" id="schoolclass" class="form-control input-md" required>
+								<option value="0" selected>{{__('dashboard/class.Wybierz klasę')}}</option>
+								@foreach($schoolclasses as $schoolclass)
+									<option value="{{$schoolclass->id}}" @if( old( 'schoolclass') == $schoolclass->id ) selected @endif>
+										{{$schoolclass->fullName}}
+									</option>
+								@endforeach
+							</select>
+						</div>
+
+						<div class="diary-form-row">
+							<label for="classstudents">{{__('dashboard/class.Klasa')}}</label>
+							<select name="classstudents" id="classstudents" class="form-control input-md" required>
+								<option value="0" selected>{{__('dashboard/class.Wybierz klasę')}}</option>
+								@foreach($schoolclasses as $schoolclass)
+									<option value="{{$schoolclass->id}}" @if( old( 'schoolclass') == $schoolclass->id ) selected @endif>
+										{{$schoolclass->fullName}}
+									</option>
+								@endforeach
+							</select>
+						</div> -->
+
 						<div class="diary-form-row">
 							<label for="student_id">{{__('dashboard/grade.Uczeń')}}</label>
 							<select name="student_id" id="student_id" class="form-control input-md input-select2" required>
@@ -55,15 +79,47 @@
 							</select>
 						</div>
 
-						<div class="diary-form-row">
+						<!-- <div class="diary-form-row">
 							<label for="grade">{{__('dashboard/grade.Ocena')}}</label>
 							<input type="number" class="@if( $errors->has('grade') ) input-error @endif form-control" name="grade" id="grade" value="{{ old('grade') }}" required>
+						</div> -->
+
+						<div class="diary-form-row">
+							<label for="grade">{{__('dashboard/grade.Ocena')}}</label>
+							<select name="grade" id="grade" class="form-control input-md input-select2" required>
+								<option value="0" selected>{{__('dashboard/grade.Wybierz ocenę')}}</option>
+								<option value="1" @if( old( 'grade') == "1" ) selected @endif>{{__('1')}}</option>
+								<option value="1.5" @if( old( 'grade') == "1.5" ) selected @endif>{{__('1.5')}}</option>
+								<option value="2" @if( old( 'grade') == "2" ) selected @endif>{{__('2')}}</option>
+								<option value="2.5" @if( old( 'grade') == "2.5" ) selected @endif>{{__('2.5')}}</option>
+								<option value="3" @if( old( 'grade') == "3" ) selected @endif>{{__('3')}}</option>
+								<option value="3.5" @if( old( 'grade') == "3.5" ) selected @endif>{{__('3.5')}}</option>
+								<option value="4" @if( old( 'grade') == "4" ) selected @endif>{{__('4')}}</option>
+								<option value="4.5" @if( old( 'grade') == "4.5" ) selected @endif>{{__('4.5')}}</option>
+								<option value="5" @if( old( 'grade') == "5" ) selected @endif>{{__('5')}}</option>
+								<option value="5.5" @if( old( 'grade') == "5.5" ) selected @endif>{{__('5.5')}}</option>
+								<option value="6" @if( old( 'grade') == "6" ) selected @endif>{{__('6')}}</option>
+							</select>
 						</div>
 
 
-						<div class="diary-form-row">
+						<!-- <div class="diary-form-row">
 							<label for="weight">{{__('dashboard/grade.Waga')}}</label>
 							<input type="number" class="@if( $errors->has('weight') ) input-error @endif form-control" name="weight" id="weight" value="{{ old('weight') }}" required>
+						</div> -->
+
+						<div class="diary-form-row">
+							<label for="weight">{{__('dashboard/grade.Waga')}}</label>
+							<select name="weight" id="weight" class="form-control input-md input-select2" required>
+								<option value="0" selected>{{__('dashboard/grade.Wybierz wagę')}}</option>
+								<option value="1" @if( old( 'weight') == "1" ) selected @endif>{{__('1 - Zadanie domowe')}}</option>
+								<option value="2" @if( old( 'weight') == "2" ) selected @endif>{{__('2 - Aktywność')}}</option>
+								<option value="3" @if( old( 'weight') == "3" ) selected @endif>{{__('3 - Kartkówka')}}</option>
+								<option value="4" @if( old( 'weight') == "4" ) selected @endif>{{__('4 - Odpowiedź')}}</option>
+								<option value="5" @if( old( 'weight') == "5" ) selected @endif>{{__('5 - Przykladowa waga')}}</option>
+								<option value="6" @if( old( 'weight') == "6" ) selected @endif>{{__('6 - Przykladowa waga')}}</option>
+								<option value="7" @if( old( 'weight') == "7" ) selected @endif>{{__('7 - Praca klasowa')}}</option>
+							</select>
 						</div>
 
 						<div class="diary-form-row">
@@ -89,5 +145,20 @@
 	<script>
 	@include('dashboard.common.errorsJs')
 	</script>
+	<!-- <script type="text/javascript">
+		$('#schoolclass').on('change', function(e){
+			console.log(e);
+			var schoolclass_id = e.target.value;
+			$.get('/json-classstudents?schoolclass_id=' + schoolclass_id,function(data) {
+				console.log(data);
+				$('classstudents').empty();
+				$('classstudents').append('<option value="0" selected>{{__('dashboard/class.Wybierz klasę')}}</option>')
+
+				$.each(data, function(index, classstudentsObj){
+					$('classstudents').append('<option value="'+ classstudentsObj.id +'">'+ classstudentsObj.name + '</option>');
+				})
+			});
+		})
+	</script> -->
 	 @include('dashboard.grades.js.create')
 @stop

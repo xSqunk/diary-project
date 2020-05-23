@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\SchoolClass;
 use App\User;
+use App\Subject;
+use App\ClassSubjects;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -178,12 +180,29 @@ class StudentController extends Controller
         ] );
     }
 
+
     public function getPanel( Request $request ){
+
+        $student = User::findOrFail($request->id);
+        $subject = Subject::all();
+        // $subjectgrade = Subject::all();
+        
+        $studentclass = SchoolClass::findOrFail($student->class_id);
+
 
         $panel = str_replace('tab-', '', $request->tab_id);
 
         echo view( "dashboard.students.panels.$panel", [
-            //data array
+            'student' => $student,
+            'subjects' => $subject,
+            // 'subjectsgrades' =>$subjectgrade,
+            'avg' => 0,
+            'weights' => 1,
+            'average' => 0,
+            'gradenumber' =>0,
+            'bckcolor' => null,
+            'studentclass' => $studentclass,
         ] )->render();
     }
+
 }

@@ -63,4 +63,14 @@ class SchoolClass extends Model
 
         return $types;
     }
+
+    public function students()
+    {
+        return $this->hasMany(User::class, 'class_id', 'id');
+    }
+
+    public function classsubjects()
+    {
+        return $this->hasMany(ClassSubjects::class, 'class_id', 'id');
+    }
 }

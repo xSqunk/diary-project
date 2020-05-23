@@ -17,7 +17,7 @@ class Subject extends Model
         'name', 'shortcut'
     ];
 
-<<<<<<< HEAD
+
     public const SUBJECT_MATEMATYKA = 1;
     public const SUBJECT_BIOLOGIA = 2;
     public const SUBJECT_FIZYKA = 3;
@@ -57,7 +57,7 @@ class Subject extends Model
         return $subjects;
     }
 
-=======
+
     public function index( Request $request ){
         $subjects = Subject::isSubject()->get();
 
@@ -75,5 +75,10 @@ class Subject extends Model
     public function getFullNameAttribute(){
         return $this->name . ' (' . $this->getTypeNameAttribute($this->name) . ')';
     }
->>>>>>> cee978ff0860b1d6e37d43924b941c36a3cefa6e
+
+    public function grades()
+    {
+        return $this->hasMany(Grade::class, 'subject_id');
+    }
+
 }

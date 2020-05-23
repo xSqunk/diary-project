@@ -37,6 +37,16 @@ class User extends Authenticatable
         return $this->belongsToMany( __CLASS__, 'parents', 'student_id', 'parent_id');
     }
 
+    public function grades()
+    {
+        return $this->hasMany(Grade::class,'student_id', 'id');
+    }
+
+     public function schoolclass()
+    {
+        return $this->belongsTo(SchoolClass::class, 'id', 'class_id');
+    }
+
     public function getHashIdAttribute(){
         return $this->hashId();
     }

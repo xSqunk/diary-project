@@ -1,4 +1,6 @@
 @extends('dashboard.home')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 
 @section('title', $head_text)
 
@@ -9,10 +11,40 @@
 			<button class="btn btn-info btn-sm"><i class="fa fa-plus "></i> {{__('dashboard/grade.Dodaj')}}</button>
 		</a>
 	</div>
+
 @stop
 
 @section('content')
 
+<div class="filter-container">
+		<h3 class="mb-4">{{__('dashboard/user.Filtrowanie')}}</h3>
+
+		<div class="form-row">
+			<form action="{{ route( "$view_type.index" ) }}" id="form-grade-filter" method="GET" novalidate enctype="multipart/form-data">
+				@csrf
+				<div class="form-sclass filter-sclass">
+					<label class="control-label" for="type">{{__('dashboard/grade.Klasa')}}</label>
+					<select required name="sclass" class="form-control" id="sclass">
+						<option value="all">Wszystkie</option>
+						@foreach($classes as $schoolclass )
+							<option value="{{$schoolclass->id}}">{{$schoolclass->FullName}}</option>
+						@endforeach
+					</select>
+				</div>
+
+				<div class="form-cstudent filter-cstudent">
+					<label class="control-label" for="type">{{__('dashboard/grade.Uczeń')}}</label>
+					<select required name="cstudent" class="form-control" id="cstudent">
+						<option value="all">Wszyscy</option>
+						<!-- @foreach($students as $student )
+							<option value="{{$student->id}}">{{$student->meta-> name}} {{$student->meta->surname}}</option>
+						@endforeach -->
+					</select>
+				</div>
+				<button class="btn btn-primary" type="submit" >Filtruj</button>
+			</form>
+		</div>
+	</div>
 
 	<table class="is-dataTable table-striped table-bordered mt-3" width="100%">
 		<thead>
@@ -80,7 +112,25 @@
 			});
 
 		});
-	</script> -->
+	</script>
+	<script>
+		jQuery(document).ready(function($){
+  	$('#sclass').change(function(){
+			$.get("{{ url('api/dropdown')}}", 
+				{ option: $(this).val() }, 
+				function(data) {
+					var students = $('#cstudent');
+					students.empty();
+ 					 
+ 					 students.append("<option value='0'>Wszyscy użytkownicy</option>");
+					
+					$.each(data, function(index, element) {
+			            students.append("<option value='"+ element.id +"'>" + element.email + "</option>");
+			        });
+				});
+		});
+	});
+	</script>
 	@include('dashboard.grades.js.index')
 @stop
 
