@@ -222,9 +222,7 @@ class StudentController extends Controller
     //            data array
 //            'name' => $panel->name,
             'surname' => 'bla bla',
-            'notes' => $student -> notes
-
-
+            'notes' => $student -> notes,
 
             'student' => $student,
             'subjects' => $subject,

@@ -1,6 +1,4 @@
-<<<<<<< HEAD
-Oceny
-=======
+
 <table class="is-dataTable table-striped table-bordered mt-3" width="100%">
 		<thead>
 			<tr>
@@ -12,7 +10,7 @@ Oceny
 	
 		<tbody>
 		@foreach($studentclass->classsubjects as $class_subject)
-		<? php
+		<?php
 		{{$avg = 0.0}}
 		{{$weights = 0.0}}
 		?>
@@ -22,7 +20,7 @@ Oceny
 				</td>
 				<td>
 					@foreach($student->grades->where('subject_id','=', $class_subject->subjects->id) as $grade)
-					<? php
+					<?php
 						@if($grade->weight == 1){
 							{{$bckcolor = "#FFA500" }}
 						} 
@@ -47,7 +45,7 @@ Oceny
 						@endif
 					?>
 					<div class="gradebox" style="background-color: {{$bckcolor}}" id="{{$gradenumber}}" data-teachername="{{$grade->teacher->meta->name}} {{$grade->teacher->meta->surname}}" data-grade="{{$grade->grade}}" data-weight="{{$grade->weight}}" data-description="{{$grade->description}}" data-createdat="{{$grade->created_at}}"><a style="color:black" href="#" class="hover">{{$grade->grade}}</a></div>
-					<? php 
+					<?php
 					{{$avg = $avg + $grade->grade * $grade->weight}}
 					{{$weights+= $grade->weight}}
 					{{$gradenumber+= 1}}
@@ -55,7 +53,7 @@ Oceny
 					@endforeach
 				</td>
 				<td>
-				<? php
+				<?php
 					@if($weights != 0) {
 					{{$average = $avg / $weights}}
 					}
@@ -97,4 +95,3 @@ Oceny
 @section('css')
 
 @stop
->>>>>>> mb
