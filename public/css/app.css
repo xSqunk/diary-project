@@ -9492,3 +9492,7 @@ span#select2-parent-container {
   margin-top: -10px !important;
 }
 
+.brand-image {
+  display: none;
+}
+

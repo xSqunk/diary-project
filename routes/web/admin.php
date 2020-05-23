@@ -180,6 +180,10 @@ Route::middleware( ['auth', 'roles:admin'] )->group( static function(){
             ] )->name( 'notes.store' );
 
 
+            Route::get( '/{class_id}', [
+                'uses' => 'StudentController@notes'
+            ] )->name( 'students.class.notes' );
+
         } );
 
         Route::group( [ 'prefix' => 'grades' ], function(){
