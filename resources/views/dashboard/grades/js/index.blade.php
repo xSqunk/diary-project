@@ -1,15 +1,16 @@
 <script>
 
     $(document).ready(function() {
-        $('.delete-note').click(function() {
+        $('.delete-grade').click(function() {
 
             let row = $(this).closest('tr');
             let hash_id = row.data('hash_id');
             let name = row.data('name');
+            let surname = row.data('surname');
 
             swal.fire({
                 title: 'Jesteś pewny?',
-                text: "Czy napewno chcesz usunąć uwagę " + name,
+                text: "Czy napewno chcesz usunąć ocenę uczniowi " + name + " " + surname,
                 type: 'warning',
                 icon: 'warning',
                 showCancelButton: true,
@@ -23,7 +24,7 @@
             }).then((result) => {
                 if (result.value) {
                     $.ajax( {
-                        url: '{{route('notes.delete')}}' + '?_token=' + '{{ csrf_token() }}',
+                        url: '{{route('grades.delete')}}' + '?_token=' + '{{ csrf_token() }}',
                         type: 'DELETE',
                         data: {
                             hashId: hash_id
@@ -38,7 +39,7 @@
 
                     swal.fire({
                         title: 'Usunięto!',
-                        html: 'Uwaga została usunięta',
+                        html: 'Ocena została usunięta',
                         type: 'success',
                         icon: 'success'
                     }).then(function() {
@@ -47,7 +48,7 @@
                 } else {
                     swal.fire({
                         title: 'Anulowano',
-                        html: 'Nie usunięto uwagi',
+                        html: 'Nie usunięto oceny',
                         type: 'error',
                         icon: 'error'
                     })

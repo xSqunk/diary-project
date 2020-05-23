@@ -71,4 +71,11 @@ class NotesClass extends Model
         }
     }
 
+
+    public function scopeInClass( $query, $class_id ){
+        return $query->join('users' ,  'notes.student_id', 'users.id')->where( 'class_id', '=', $class_id );
+    }
+
+
+
 }

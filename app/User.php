@@ -28,14 +28,19 @@ class User extends Authenticatable
     public const STATUS_IS_INACTIVE = 0;
 
     public function meta(): \Illuminate\Database\Eloquent\Relations\HasOne
-    {
-        return $this->hasOne(UserMeta::class);
-    }
+{
+    return $this->hasOne(UserMeta::class);
+}
 
     public function parents(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany( __CLASS__, 'parents', 'student_id', 'parent_id');
     } #############
+
+    public function notes()
+    {
+        return $this->hasMany( NotesClass::class, 'student_id');
+    }
 
     public function getHashIdAttribute(){
         return $this->hashId();
