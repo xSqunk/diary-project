@@ -82,7 +82,7 @@
 				<td>
 					<img src="{{ $user->meta->getAvatarUrl() }}" class="img-circle udiAvatarImage" alt="User Image">
 					@if($view_type === 'students')
-					<a href="{{route('student.show', ['id' => $user->hashId])}}">{{ $user->meta->name . ' ' . $user->meta->surname}}</a>
+                        <a href="{{route('student.show', ['id' => $user->hashId])}}">{{ $user->meta->name . ' ' . $user->meta->surname}}</a>
 					@else
 					{{ $user->meta->name . ' ' . $user->meta->surname}}
 					@endif

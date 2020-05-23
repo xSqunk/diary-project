@@ -16,6 +16,7 @@ class CreateLessonsTable extends Migration
         Schema::create('lessons', function (Blueprint $table) {
             $table->id();
 
+            $table->bigInteger('class_id')->unsigned();
             $table->bigInteger( 'deputy_id' )->unsigned();
             $table->bigInteger( 'schedule_id' )->unsigned();
             $table->date( 'lesson_date' );
@@ -25,8 +26,9 @@ class CreateLessonsTable extends Migration
             $table->tinyInteger( 'presences' )->unsigned()->default(0);
             $table->tinyInteger( 'absences' )->unsigned()->default(0);
 
-            # $table->foreign('deputy_id')->references('id')->on('users')->onDelete('cascade');
-            # $table->foreign('schedule_id')->references('id')->on('schedules')->onDelete('cascade');
+            $table->foreign('class_id')->references('id')->on('classes')->onDelete('cascade');
+            $table->foreign('deputy_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('schedule_id')->references('id')->on('schedules')->onDelete('cascade');
 
             $table->timestamps();
         });

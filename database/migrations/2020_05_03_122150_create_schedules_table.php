@@ -22,13 +22,10 @@ class CreateSchedulesTable extends Migration
             $table->bigInteger( 'classroom_id' )->unsigned();
             $table->bigInteger( 'subject_id' )->unsigned();
 
-            # $table->foreign('term_id')->references('id')->on('terms')->onDelete('cascade');
-            # $table->foreign('class_id')->references('id')->on('classes')->onDelete('cascade');
-            # $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('cascade');
-            # $table->foreign('classroom_id')->references('id')->on('classrooms')->onDelete('cascade');
-            # $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
+             $table->foreign('term_id')->references('id')->on('terms')->onDelete('cascade');
+             $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
 
-            $table->timestamps();
+             $table->timestamps();
         });
     }
 

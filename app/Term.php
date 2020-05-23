@@ -2,17 +2,15 @@
 
 namespace App;
 
+use App\Schedule;
 use Illuminate\Database\Eloquent\Model;
 
 class Term extends Model
 {
 
-    public function getFullStartAttribute(){
-         return "{$this->start_hour}:{$this->start_minute}";
-    }
-
-    public function getFullEndAttribute(){
-         return "{$this->end_hour}:{$this->end_minute}";
+    public function schedules()
+    {
+        return $this->hasMany('App\Schedule');
     }
 
     protected $fillable = [
