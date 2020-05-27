@@ -28,14 +28,15 @@
 
 						<div class="diary-form-row">
 							<label for="teacher">{{__('dashboard/note.Nauczyciel')}}</label>
-                            <select name="teacher_id" id="teacher_id" class="form-control input-md input-select2" required>
-                                <option value="0" selected>{{__('dashboard/note.Nauczyciel')}}</option>
-                                @foreach($teachers as $teacher)
-                                    <option value="{{$teacher->id}}" @if( old( 'teacher_id') == $teacher->id ) @endif>
-                                        {{$teacher->meta->name}} {{$teacher->meta->surname}}
-                                    </option>
-                                @endforeach
-                            </select>
+{{--                            <select name="teacher_id" id="teacher_id" class="form-control input-md input-select2" required>--}}
+{{--                                <option value="0" selected>{{__('dashboard/note.Nauczyciel')}}</option>--}}
+{{--                                @foreach($teachers as $teacher)--}}
+{{--                                    <option value="{{$teacher->id}}" @if( old( 'teacher_id') == $teacher->id ) @endif>--}}
+{{--                                        {{$teacher->meta->name}} {{$teacher->meta->surname}}--}}
+{{--                                    </option>--}}
+{{--                                @endforeach--}}
+{{--                            </select>--}}
+                            <input type="text" class="form-control" name="teacher" id="teacher" value="{{$user->meta->name}} {{$user->meta->surname}}" readonly>
 						</div>
 
 						<div class="diary-form-row">

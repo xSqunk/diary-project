@@ -127,10 +127,6 @@
 									<span class="badge badge-pill badge-info">{{$user->parents()->count()}}</span>
 								</a>
 							@endif
-                                <a class="dropdown-item">
-                                    <div></div>
-                                    <i class="far fa-sticky-note"></i> {{__('dashboard/note.Dodaj uwage uczniowi')}}
-                                </a>
 							@if($class)
 								<button class="dropdown-item class-signout"
 										data-student_id="{{$user->id}}"

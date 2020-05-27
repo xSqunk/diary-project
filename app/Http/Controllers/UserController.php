@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Group;
+use App\NotesClass;
 use App\User;
 use Exception;
 use Illuminate\Http\Request;

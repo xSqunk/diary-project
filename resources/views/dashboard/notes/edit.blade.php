@@ -23,25 +23,18 @@
 			<form action="{{ route( 'notes.update' ) }}" id="form-note-insert" method="POST" novalidate enctype="multipart/form-data">
 				@csrf
 
-				<input type="hidden" name="noteId" value="{{$note->noteId}}" />
+				<input type="hidden" name="noteId" value="{{$note->id}}" />
 
 				<div class="" style="display: flex;padding: 40px 0;">
 					<div class="diary-form-grid grid-size-2" style="flex:1;margin-bottom: 20px;">
 
 						<div class="diary-form-row">
-							<label for="teacher">{{__('dashboard/note.Nauczyciel')}}</label>
-                            <select name="teacher_id" id="teacher_id" class="form-control input-md input-select2" required>
-                                <option value="0" selected>{{__('dashboard/note.Wybierz nauczyciela')}}</option>
-                                @foreach($teachers as $teacher)
-                                    <option value="{{$teacher->id}}" @if( old( 'teacher_id', $note->teacher_id) == $teacher->id ) selected @endif>
-                                        {{$teacher->meta->name}} {{$teacher->meta->surname}}
-                                    </option>
-                                @endforeach
-                            </select>
+							<label for="teacher_id">{{__('dashboard/note.Nauczyciel')}}</label>
+                            <input type="text" class="form-control" name="teacher_id" id="teacher_id" value="{{$user->meta->name}} {{$user->meta->surname}}" readonly>
 						</div>
 
 						<div class="diary-form-row">
-							<label for="student">{{__('dashboard/note.Student')}}</label>
+							<label for="student_id">{{__('dashboard/note.Student')}}</label>
                             <select name="student_id" id="student_id" class="form-control input-md input-select2" required>
                                 <option value="0" selected>{{__('dashboard/note.Student')}}</option>
                                 @foreach($students as $student)
@@ -54,7 +47,7 @@
 						</div>
 
 						<div class="diary-form-row">
-							<label for="subject">{{__('dashboard/note.Przedmiot')}}</label>
+							<label for="subject_id">{{__('dashboard/note.Przedmiot')}}</label>
                             <select name="subject_id" id="subject_id" class="form-control input-md input-select2" required>
                                 <option value="0" selected>{{__('dashboard/note.Przedmiot')}}</option>
                                 @foreach($subjects as $subject)

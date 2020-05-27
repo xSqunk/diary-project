@@ -6,7 +6,9 @@ use App\NotesClass;
 use App\User;
 use App\UserMeta;
 use App\Subject;
+use Hashids\Hashids;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class NotesController extends Controller
@@ -34,29 +36,39 @@ class NotesController extends Controller
 
     }
 
+    public function student(Request $request) {
 
-    public function create(){
+        $studentId = Auth::id();
+        $notes = NotesClass::AuthUser($studentId)->get();
+
+        return view( 'dashboard.notes.index_student', [
+            'notes' => $notes,
+            'head_text' => 'Lista uwag',
+        ] );
+    }
+
+    public function studentCreate(){
+        $user = Auth::user();
         return view( 'dashboard.notes.create', [
             'head_text' => 'Dodawanie uwagi',
             'teachers' => User::InGroup('teacher')->OnlyActive()->get(),
             'students' => User::InGroup('student')->OnlyActive()->get(),
             'subjects' => Subject::all(),
             'types' => NotesClass::getAvailableTypes(),
+            'user' => $user,
         ] );
     }
 
-    public function edit($id) {
 
-        $note = NotesClass::findByHashidOrFail( $id );
-
-        return view( 'dashboard.notes.edit', [
-            'class' => $note,
-            'head_text' => 'Edytowanie uwagi',
+    public function create(){
+        $user = Auth::user();
+        return view( 'dashboard.notes.create', [
+            'head_text' => 'Dodawanie uwagi',
             'teachers' => User::InGroup('teacher')->OnlyActive()->get(),
             'students' => User::InGroup('student')->OnlyActive()->get(),
             'subjects' => Subject::all(),
             'types' => NotesClass::getAvailableTypes(),
-            'note' => $note
+            'user' => $user,
         ] );
     }
 
@@ -64,7 +76,7 @@ class NotesController extends Controller
 
         $validator = Validator::make( $request->all(), [
             'student_id'       => 'required|not_in:0',
-            'teacher_id'       => 'required|not_in:0',
+//            'teacher_id'       => 'required|not_in:0',
             'subject_id'      => 'required|not_in:0',
             'text'             => 'required|nullable',
             'positiv'          => 'required|nullable',
@@ -74,14 +86,13 @@ class NotesController extends Controller
 
         if( $validator->fails() ){
             return redirect()->back()->withErrors( $validator )->withInput(
-                $request->all( 'student_id', 'teacher_id', 'subject_id', 'text', 'positiv' )
+                $request->all( 'student_id', 'subject_id', 'text', 'positiv' )
             );
         }
-
         $now = date('Y-m-d H-i');
         $note = new NotesClass();
         $note->student_id = $request->student_id;
-        $note->teacher_id = $request->teacher_id;
+        $note->teacher_id = Auth::user()->id;
         $note->subject_id = $request->subject_id;
         $note->text = $request->text;
         $note->positiv = $request->positiv;
@@ -96,15 +107,32 @@ class NotesController extends Controller
         ] );
     }
 
+    public function edit($id) {
+
+        $note = NotesClass::findByHashidOrFail( $id );
+        return view( 'dashboard.notes.edit', [
+            'id' => $note,
+            'head_text' => 'Edytowanie uwagi',
+            'teachers' => User::InGroup('teacher')->OnlyActive()->get(),
+            'students' => User::InGroup('student')->OnlyActive()->get(),
+            'subjects' => Subject::all(),
+            'types' => NotesClass::getAvailableTypes(),
+            'note' => $note,
+            'user' => Auth::user(),
+        ] );
+    }
+
     public function update( Request $request) {
 
-        $note = NotesClass::findByHashid( $request );
+//        $note = NotesClass::findByHashidOrFail( $request->noteId );
+
+
+        $note = NotesClass::findByHashid( $request->noteId);
 
         $validator = Validator::make( $request->all(), [
-            'student_id'       => 'required|not_in:0' . $note->id,
-            'teacher_id'       => 'required|not_in:0',
-            'subject_id'       => 'required|not_in:0',
-            'text'             => 'required|nullable',
+            'student_id'       => 'required|nullable',
+            'subject_id'       => 'required|nullable',
+            'text'             => 'required|nullable|max:255',
             'positiv'          => 'required|nullable',
         ] );
 
@@ -112,18 +140,19 @@ class NotesController extends Controller
 
         if( $validator->fails() ){
             return redirect()->back()->withErrors( $validator )->withInput(
-                $request->all( 'student_id', 'teacher_id', 'subject_id', 'text', 'positiv' )
+                $request->all( 'student_id', 'subject_id', 'text', 'positiv' )
             );
         }
 
-        $note = NotesClass::find($id);
+        dd($request->all());
         $now = date('Y-m-d H-i');
+//        $note->teacher_id = $request->teacher_id;
         $note->student_id = $request->student_id;
-        $note->teacher_id = $request->teacher_id;
         $note->subject_id = $request->subject_id;
         $note->text = $request->text;
         $note->positiv = $request->positiv;
         $now = $request->updated_at;
+
         $note->save();
 
 

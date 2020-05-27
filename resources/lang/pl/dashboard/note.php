@@ -14,5 +14,7 @@ return [
     'Wybierz studenta' => 'Wybierz studenta',
     'Wybierz przedmiot' => 'Wybierz przedmiot',
     'Data utworzenia' => 'Data utworzenia',
-    'Dodaj uwage uczniowi' => 'Dodaj uwage uczniowi'
+    'Dodaj uwage uczniowi' => 'Dodaj uwage uczniowi',
+    'Lista uwag ucznia' => 'Lista uwag ucznia',
+    'Opis' => 'Opis'
 ];

@@ -10,5 +10,10 @@ Route::middleware( ['auth', 'roles:student'] )->group( static function(){
                 'uses' => 'GradeController@student'
             ] )->name( 'grades.student' );
         });
+        Route::group( [ 'prefix' => 'notes' ], static function(){
+            Route::get( '/student', [
+                'uses' => 'NotesController@student'
+            ] )->name( 'notes.student' );
+        });
     });
 });

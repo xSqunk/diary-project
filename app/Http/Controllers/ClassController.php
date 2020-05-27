@@ -86,7 +86,6 @@ class ClassController extends Controller
     public function update(Request $request) {
 
         $class = SchoolClass::findByHashidOrFail( $request->classId );
-
         $validator = Validator::make( $request->all(), [
             'teacher_id'       => 'required|not_in:0|unique:classes,teacher_id,' . $class->id,
             'sign'             => 'required|max:10',

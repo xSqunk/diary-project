@@ -105,6 +105,22 @@ class RoleMiddleware
                                 'url'  => route('grades.create'),
                             ],
                         ],
+                    ],
+                    'admin_notes' => [
+                        'text'    => 'Uwagi',
+                        'icon' => 'fas fa-sticky-note',
+                        'submenu' => [
+                            [
+                                'text' => 'Lista uwag',
+                                'icon' => 'fas fa-clipboard',
+                                'url'  => route('notes.index'),
+                            ],
+                            [
+                                'text' => 'Dodaj uwagę',
+                                'icon' => 'fas fa-pencil-ruler',
+                                'url'  => route('notes.create'),
+                            ],
+                        ],
                     ]
                 ],
                 'teacher' => [
@@ -121,8 +137,20 @@ class RoleMiddleware
                                 'url'  => route('grades.student'),
                             ],
                         ],
+                    ],
+                    'my_notes' => [
+                        'text' => 'Moje uwagi',
+                        'icon' => 'fas fa-sticky-note',
+                        'submenu' => [
+                            [
+                                'text' => 'Lista uwag',
+                                'icon' => 'fas fa-clipboard',
+                                'url' => route('notes.student'),
+                            ],
+                        ],
                     ]
                 ],
+
                 'parent' => [
 
                 ],
