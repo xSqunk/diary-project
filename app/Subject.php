@@ -83,4 +83,7 @@ class Subject extends Model
         return $this->hasMany(Grade::class, 'subject_id');
     }
 
+    public function scopeClassSubjects( $query, $class_id ){
+        return $query->join('class_subjects' ,  'subjects.id', 'class_subjects.subjects_id')->where( 'class_id', '=', $class_id )->select('subjects.id as id', 'subjects.name as name');
+    }
 }

@@ -10,58 +10,59 @@
 	
 		<tbody>
 		@foreach($studentclass->classsubjects as $class_subject)
-		<?php
-		{{$avg = 0.0}}
-		{{$weights = 0.0}}
-		?>
+
+		@php
+		$avg = 0.0;
+		$weights = 0.0;
+		@endphp
+
 			<tr>
 				<td>
 					{{$class_subject->subjects->name}}
 				</td>
 				<td>
 					@foreach($student->grades->where('subject_id','=', $class_subject->subjects->id) as $grade)
-					<?php
-						@if($grade->weight == 1){
-							{{$bckcolor = "#FFA500" }}
+						@php
+						if($grade->weight == 1){
+							$bckcolor = "#FFA500";
 						} 
-						@elseif ($grade->weight == 2){
-							{{$bckcolor = "#FFFF00"}}
+						elseif ($grade->weight == 2){
+							$bckcolor = "#FFFF00";
 						}
-						@elseif ($grade->weight == 3){
-							{{$bckcolor = "#00FF00"}}
+						elseif ($grade->weight == 3){
+							$bckcolor = "#00FF00";
 						}
-						@elseif ($grade->weight == 4){
-							{{$bckcolor = "#008000"}}
+						elseif ($grade->weight == 4){
+							$bckcolor = "#008000";
 						}
-						@elseif ($grade->weight == 5){
-							{{$bckcolor = "#87CEEB"}}
+						elseif ($grade->weight == 5){
+							$bckcolor = "#87CEEB";
 						}
-						@elseif ($grade->weight == 6){
-							{{$bckcolor = "#4169E1"}}
+						elseif ($grade->weight == 6){
+							$bckcolor = "#4169E1";
 						}
-						@else {
-							{{$bckcolor = "#FF0000"}}
+						else {
+							$bckcolor = "#FF0000";
 						}
-						@endif
-					?>
+						@endphp
 					<div class="gradebox" style="background-color: {{$bckcolor}}" id="{{$gradenumber}}" data-teachername="{{$grade->teacher->meta->name}} {{$grade->teacher->meta->surname}}" data-grade="{{$grade->grade}}" data-weight="{{$grade->weight}}" data-description="{{$grade->description}}" data-createdat="{{$grade->created_at}}"><a style="color:black" href="#" class="hover">{{$grade->grade}}</a></div>
-					<?php
-					{{$avg = $avg + $grade->grade * $grade->weight}}
-					{{$weights+= $grade->weight}}
-					{{$gradenumber+= 1}}
-					?>
+					@php
+					$avg = $avg + $grade->grade * $grade->weight;
+					$weights+= $grade->weight;
+					$gradenumber+= 1;
+					@endphp
 					@endforeach
 				</td>
 				<td>
-				<?php
-					@if($weights != 0) {
-					{{$average = $avg / $weights}}
+					@php
+					if($weights != 0) {
+					$average = $avg / $weights;
 					}
-					@else {
-						{{$average = '-'}}
+					else {
+						$average = '-';
 					}
-					@endif
-					?>
+
+					@endphp
 					{{$average}}		
 				</td>
 				@endforeach

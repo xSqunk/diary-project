@@ -20,31 +20,28 @@
 		<h3 class="mb-4">{{__('dashboard/user.Filtrowanie')}}</h3>
 
 		<div class="form-row">
-			<form action="{{ route( "$view_type.index" ) }}" id="form-grade-filter" method="GET" novalidate enctype="multipart/form-data">
-				@csrf
-				<div class="form-sclass filter-sclass">
+				<form action="{{ route( 'grades.index') }}" id="form-grade-filter" method="GET" novalidate enctype="multipart/form-data">
+				<div class="form-group filter-group">
 					<label class="control-label" for="type">{{__('dashboard/grade.Klasa')}}</label>
-					<select required name="sclass" class="form-control" id="sclass">
-						<option value="all">Wszystkie</option>
-						@foreach($classes as $schoolclass )
-							<option value="{{$schoolclass->id}}">{{$schoolclass->FullName}}</option>
-						@endforeach
+					<select required name="class" class="form-control mr-3" id="class">
+                            <option value="all">Wszystkie</option>
+							@foreach($classes as $schoolclass )
+							<option value="{{$schoolclass->id}}"  @if((int) $this_class === $schoolclass->id) selected @endif>{{$schoolclass->FullName}}</option>
+							@endforeach
 					</select>
-				</div>
-
-				<div class="form-cstudent filter-cstudent">
 					<label class="control-label" for="type">{{__('dashboard/grade.Uczeń')}}</label>
-					<select required name="cstudent" class="form-control" id="cstudent">
-						<option value="all">Wszyscy</option>
-						<!-- @foreach($students as $student )
-							<option value="{{$student->id}}">{{$student->meta-> name}} {{$student->meta->surname}}</option>
-						@endforeach -->
-					</select>
+                    <select required name="student" class="form-control mr-3" id="student">
+                            <option value="all">Wszyscy</option>
+                            @foreach($students as $student )
+							<option value="{{$student->user_id}}"  @if((int) $this_student === $student->user_id) selected @endif>{{$student->name}} {{$student->surname}} ({{$student->PESEL}})</option>
+							@endforeach
+                    </select>
 				</div>
-				<button class="btn btn-primary" type="submit" >Filtruj</button>
+				<button class="btn btn-primary" type="submit" value="{{ request('request') }}" >Filtruj</button>
 			</form>
 		</div>
 	</div>
+
 
 	<table class="is-dataTable table-striped table-bordered mt-3" width="100%">
 		<thead>
@@ -115,17 +112,17 @@
 	</script>
 	<script>
 		jQuery(document).ready(function($){
-  	$('#sclass').change(function(){
-			$.get("{{ url('api/dropdown')}}", 
+  	$('#class').change(function(){
+			$.get("{{ url('api/gradefilter')}}", 
 				{ option: $(this).val() }, 
 				function(data) {
-					var students = $('#cstudent');
+					var students = $('#student');
 					students.empty();
  					 
- 					 students.append("<option value='0'>Wszyscy użytkownicy</option>");
+ 					 students.append("<option value='all'>Wszyscy</option>");
 					
 					$.each(data, function(index, element) {
-			            students.append("<option value='"+ element.id +"'>" + element.email + "</option>");
+			            students.append("<option value='"+ element.user_id +"'> " + element.name +" " + element.surname + " " + "(" + element.PESEL + ")" + "</option>");
 			        });
 				});
 		});

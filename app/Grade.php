@@ -36,9 +36,9 @@ class Grade extends Model
         return $this->hashId();
     }
 
-    // public function scopeStudentGrades( $query, $student_id ){
-    //     return $query->where( 'student_id', '=', $student_id );
-    // }
+    public function scopeInClass( $query, $class_id ){
+        return $query->join('users' ,  'grades.student_id', 'users.id')->where( 'class_id', '=', $class_id );
+    }
 
 
 }

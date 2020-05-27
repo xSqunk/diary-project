@@ -36,34 +36,18 @@
 
 						<div class="diary-form-row">
 							<label for="student_id">{{__('dashboard/grade.Uczeń')}}</label>
-							<select name="student_id" id="student_id" class="form-control input-md input-select2" required>
-								<option value="0" selected>{{__('dashboard/grade.Wybierz ucznia')}}</option>
-								@foreach($students as $student)
-									<option value="{{$student->id}}" @if( old( 'student_id', $grade->student_id) == $student->id ) selected @endif>
-										{{$student->meta->name}} {{$student->meta->surname}}
-									</option>
-								@endforeach
+							<select name="student_id" id="student_id" class="form-control input-md" readonly>
+								<option value="{{$grade->student->id}}" selected>{{$grade->student->meta->name}} {{$grade->student->meta->surname}}
+									({{$grade->student->meta->PESEL}})</option>
 							</select>
 						</div>
-
 
 						<div class="diary-form-row">
 							<label for="subject_id">{{__('dashboard/grade.Przedmiot')}}</label>
-							<select name="subject_id" id="subject_id" class="form-control input-md" required>
-								<option value="0" selected>{{__('dashboard/grade.Wybierz przedmiot')}}</option>
-								@foreach($subjects as $key => $subject)
-									<option value="{{$key}}" @if( old( 'subject', $grade->subject_id) == $key ) selected @endif>
-										{{$subject}}
-									</option>
-								@endforeach
+							<select name="subject_id" id="subject_id" class="form-control input-md" readonly>
+								<option value="{{$grade->subject->id}}" selected>{{$grade->subject->name}}</option>
 							</select>
 						</div>
-
-
-						<!-- <div class="diary-form-row">
-							<label for="grade">{{__('dashboard/grade.Ocena')}}</label>
-							<input type="number" class="@if( $errors->has('grade') ) input-error @endif form-control" name="grade" id="grade" value="{{ old('grade', $grade->grade) }}" required>
-						</div> -->
 
 						<div class="diary-form-row">
 							<label for="grade">{{__('dashboard/grade.Ocena')}}</label>
@@ -82,12 +66,6 @@
 								<option value="6" @if( old( 'grade', $grade->grade) == "6" ) selected @endif>{{__('6')}}</option>
 							</select>
 						</div>
-
-
-						<!-- <div class="diary-form-row">
-							<label for="weight">{{__('dashboard/grade.Waga')}}</label>
-							<input type="number" class="@if( $errors->has('weight') ) input-error @endif form-control" name="weight" id="weight" value="{{ old('weight', $grade->weight) }}" required>
-						</div> -->
 
 						<div class="diary-form-row">
 							<label for="weight">{{__('dashboard/grade.Waga')}}</label>

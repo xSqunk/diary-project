@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Grade;
 use App\User;
+use App\UserMeta;
 use App\Subject;
 use App\SchoolClass;
 use Illuminate\Http\Request;
@@ -13,9 +14,10 @@ use Illuminate\Support\Facades\Auth;
 class GradeController extends Controller
 {
     protected const attributesNames = [
-        'teacher_id'            => '<strong>Wystawiający</strong>',
-        'student_id'            => '<strong>Uczeń</strong>',
-        'subject_id'     => '<strong>Przedmiot</strong>',
+        'teacher'            => '<strong>Wystawiający</strong>',
+        'student'            => '<strong>Uczeń</strong>',
+        'subject'     => '<strong>Przedmiot</strong>',
+        'class'     => '<strong>Klasa</strong>',
         'grade'     => '<strong>Ocena</strong>',
         'weight'             => '<strong>Waga</strong>',
         'description'             => '<strong>Opis</strong>',
@@ -23,16 +25,32 @@ class GradeController extends Controller
 
     public function index( Request $request ){
 
-        $grades = Grade::all();
-        $classes = SchoolClass::all();
-        $students = User::InGroup('student')->get();
 
+        if((!isset($request->class) || $request->class == 'all') && (!isset($request->student) || $request->student == 'all')) {
+            $grades = Grade::all();
+         } elseif($request->class != 'all' && $request->student == 'all'){
+            $grades = Grade::InClass($request->class)->get();
+        } else{
+            $grades = Grade::where('student_id', '=',$request->student)->get();
+        }
+
+        $classes = SchoolClass::all();
+        if(isset($request->class) && $request->class != 'all'){
+            $students = UserMeta::InClass($request->class)->get();
+         }
+         else{
+             $students = UserMeta::IsStudent()->get();
+         }
+
+        
         return view( 'dashboard.grades.index', [
             'grades' => $grades,
             'classes' => $classes,
             'students' => $students,
             'head_text' => 'Lista ocen',
-            'view_type' => 'grades'
+            'view_type' => 'grades',
+            'this_class' => $request->class,
+            'this_student' => $request->student
         ] );
     }
 
@@ -63,8 +81,9 @@ class GradeController extends Controller
     public function store( Request $request ){
 
         $validator = Validator::make( $request->all(), [
-            'student_id'             => 'required|not_in:0',
-            'subject_id'      => 'required|not_in:0',
+            'student'             => 'required|not_in:0',
+            'subject'      => 'required|not_in:0',
+            'class'         => 'required|not_in:0',
             'grade'             => 'required|in:1,1.5,2,2.5,3,3.5,4,4.5,5,5.5,6',
             'weight'      => 'required|in:1,2,3,4,5,6,7',
             'description'	=> 'max:150'
@@ -74,7 +93,7 @@ class GradeController extends Controller
 
         if( $validator->fails() ){
             return redirect()->back()->withErrors( $validator )->withInput(
-                $request->all('student_id', 'subject_id', 'grade', 'weight', 'description' )
+                $request->all('student', 'subject', 'grade', 'weight', 'description' )
             );
         }
 
@@ -82,8 +101,8 @@ class GradeController extends Controller
 
         $grade = new Grade();
         $grade->teacher_id = Auth::user()->id;
-        $grade->student_id = $request->student_id;
-        $grade->subject_id = $request->subject_id;
+        $grade->student_id = $request->student;
+        $grade->subject_id = $request->subject;
         $grade->grade = $request->grade;
         $grade->weight = $request->weight;
         $grade->description = $request->description;
@@ -104,9 +123,8 @@ class GradeController extends Controller
         return view( 'dashboard.grades.edit', [
             'grade' => $grade,
             'head_text' => 'Edycja oceny',
-            'students' => User::InGroup('student')->OnlyActive()->get(),
-            'teachers' => User::InGroup('teacher')->OnlyActive()->get(),
-            'subjects' => Subject::getAvailableSubjects(),
+            'subject' => $grade->subject,
+            'student' => $grade->student,
             'user' => Auth::user(),
         ] );
     
@@ -153,10 +171,4 @@ class GradeController extends Controller
         $grade->delete();
     }
 
-    // public function classstudents(){
-
-    //     $schoolclass_id = Input::get('schoolclass_id');
-    //     $classstudents = User::where('class_id', '=', $schoolclass_id)->get();
-    //     return response()->json($classstudents);
-    // }
 }

@@ -1,4 +1,5 @@
 @extends('dashboard.home')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 @section('title', $head_text)
 
@@ -31,62 +32,33 @@
 							<input type="text" class="form-control" name="teacher" id="teacher" value="{{$user->meta->name}} {{$user->meta->surname}}" readonly>
 						</div>
 
-						<!-- <div class="diary-form-row">
-							<label for="schoolclass">{{__('dashboard/class.Klasa')}}</label>
-							<select name="schoolclass" id="schoolclass" class="form-control input-md" required>
-								<option value="0" selected>{{__('dashboard/class.Wybierz klasę')}}</option>
-								@foreach($schoolclasses as $schoolclass)
-									<option value="{{$schoolclass->id}}" @if( old( 'schoolclass') == $schoolclass->id ) selected @endif>
-										{{$schoolclass->fullName}}
-									</option>
-								@endforeach
-							</select>
-						</div>
+					<div class="form-row">
+					<label class="control-label" for="type">{{__('dashboard/grade.Klasa')}}</label>
+					<select required name="class" class="form-control mr-3" id="class">
+						<option value="0" selected disabled>{{__('dashboard/grade.Wybierz klasę')}}</option>
+						@foreach($schoolclasses as $schoolclass)
+						<option value="{{$schoolclass->id}}">{{$schoolclass->FullName}}</option>
+						@endforeach
+					</select>
+					</div>
 
-						<div class="diary-form-row">
-							<label for="classstudents">{{__('dashboard/class.Klasa')}}</label>
-							<select name="classstudents" id="classstudents" class="form-control input-md" required>
-								<option value="0" selected>{{__('dashboard/class.Wybierz klasę')}}</option>
-								@foreach($schoolclasses as $schoolclass)
-									<option value="{{$schoolclass->id}}" @if( old( 'schoolclass') == $schoolclass->id ) selected @endif>
-										{{$schoolclass->fullName}}
-									</option>
-								@endforeach
-							</select>
-						</div> -->
+					<div class="form-row">
+					<label class="control-label" for="type">{{__('dashboard/grade.Uczeń')}}</label>
+					<select required name="student" class="form-control mr-3" id="student">
+						<option value="0" selected>{{__('dashboard/grade.Wybierz ucznia')}}</option>
+					</select>
+					</div>
 
-						<div class="diary-form-row">
-							<label for="student_id">{{__('dashboard/grade.Uczeń')}}</label>
-							<select name="student_id" id="student_id" class="form-control input-md input-select2" required>
-								<option value="0" selected>{{__('dashboard/grade.Wybierz ucznia')}}</option>
-								@foreach($students as $student)
-									<option value="{{$student->id}}" @if( old( 'student_id') == $student->id ) selected @endif>
-										{{$student->meta->name}} {{$student->meta->surname}}
-									</option>
-								@endforeach
-							</select>
-						</div>
-
-						<div class="diary-form-row">
-							<label for="subject_id">{{__('dashboard/grade.Przedmiot')}}</label>
-							<select name="subject_id" id="subject_id" class="form-control input-md" required>
-								<option value="0" selected>{{__('dashboard/grade.Wybierz przedmiot')}}</option>
-								@foreach($subjects as $key => $subject)
-									<option value="{{$key}}" @if( old( 'subject') == $key ) selected @endif>
-										{{$subject}}
-									</option>
-								@endforeach
-							</select>
-						</div>
-
-						<!-- <div class="diary-form-row">
-							<label for="grade">{{__('dashboard/grade.Ocena')}}</label>
-							<input type="number" class="@if( $errors->has('grade') ) input-error @endif form-control" name="grade" id="grade" value="{{ old('grade') }}" required>
-						</div> -->
+					<div class="form-row">
+					<label class="control-label" for="type">{{__('dashboard/grade.Przedmiot')}}</label>
+					<select required name="subject" class="form-control mr-3" id="subject">
+						<option value="0" selected>{{__('dashboard/grade.Wybierz przedmiot')}}</option>
+					</select>
+					</div>
 
 						<div class="diary-form-row">
 							<label for="grade">{{__('dashboard/grade.Ocena')}}</label>
-							<select name="grade" id="grade" class="form-control input-md input-select2" required>
+							<select name="grade" id="grade" class="form-control mr-3" required>
 								<option value="0" selected>{{__('dashboard/grade.Wybierz ocenę')}}</option>
 								<option value="1" @if( old( 'grade') == "1" ) selected @endif>{{__('1')}}</option>
 								<option value="1.5" @if( old( 'grade') == "1.5" ) selected @endif>{{__('1.5')}}</option>
@@ -102,15 +74,9 @@
 							</select>
 						</div>
 
-
-						<!-- <div class="diary-form-row">
-							<label for="weight">{{__('dashboard/grade.Waga')}}</label>
-							<input type="number" class="@if( $errors->has('weight') ) input-error @endif form-control" name="weight" id="weight" value="{{ old('weight') }}" required>
-						</div> -->
-
 						<div class="diary-form-row">
 							<label for="weight">{{__('dashboard/grade.Waga')}}</label>
-							<select name="weight" id="weight" class="form-control input-md input-select2" required>
+							<select name="weight" id="weight" class="form-control mr-3" required>
 								<option value="0" selected>{{__('dashboard/grade.Wybierz wagę')}}</option>
 								<option value="1" @if( old( 'weight') == "1" ) selected @endif>{{__('1 - Zadanie domowe')}}</option>
 								<option value="2" @if( old( 'weight') == "2" ) selected @endif>{{__('2 - Aktywność')}}</option>
@@ -145,20 +111,35 @@
 	<script>
 	@include('dashboard.common.errorsJs')
 	</script>
-	<!-- <script type="text/javascript">
-		$('#schoolclass').on('change', function(e){
-			console.log(e);
-			var schoolclass_id = e.target.value;
-			$.get('/json-classstudents?schoolclass_id=' + schoolclass_id,function(data) {
-				console.log(data);
-				$('classstudents').empty();
-				$('classstudents').append('<option value="0" selected>{{__('dashboard/class.Wybierz klasę')}}</option>')
+	<script>
+		jQuery(document).ready(function($){
+  	$('#class').change(function(){
+			$.get("{{ url('api/student')}}", 
+				{ option: $(this).val() }, 
+				function(data) {
+					var students = $('#student');
+					students.empty();
+ 									
+					$.each(data, function(index, element) {
+			            students.append("<option value='"+ element.user_id +"'> " + element.name +" " + element.surname + " " + "(" + element.PESEL + ")" + "</option>");
+			        });
+				});
 
-				$.each(data, function(index, classstudentsObj){
-					$('classstudents').append('<option value="'+ classstudentsObj.id +'">'+ classstudentsObj.name + '</option>');
-				})
-			});
-		})
-	</script> -->
+
+			$.get("{{ url('api/subject')}}", 
+				{ option: $(this).val() }, 
+				function(data) {
+					var subjects = $('#subject');
+					subjects.empty();
+ 					
+					subjects.append("<option value='0' disabled>Wybierz przedmiot</option>");
+
+					$.each(data, function(index, element) {
+			            subjects.append("<option value='"+ element.id +"'> " + element.name +" </option>");
+			        });
+				});
+		});
+	});
+	</script>
 	 @include('dashboard.grades.js.create')
 @stop
