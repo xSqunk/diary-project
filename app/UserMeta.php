@@ -28,4 +28,12 @@ class UserMeta extends Model
 
         return asset( $baseDir . 'avatars/user.png' );
     }
+
+    public function scopeInClass( $query, $class_id ){
+        return $query->join('users' ,  'user_meta.user_id', 'users.id')->where( 'class_id', '=', $class_id );
+    }
+
+    public function scopeIsStudent($query){
+        return $query->join('users' ,  'user_meta.user_id', 'users.id')->where( 'role_student', '=', '1' );
+    }
 }

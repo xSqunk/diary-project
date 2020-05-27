@@ -26,6 +26,11 @@ class SchoolClass extends Model
         return $this->hasOne(User::class, 'id', 'teacher_id');
     }
 
+    public function students()
+    {
+        return $this->hasMany(User::class, 'class_id', 'id');
+    }
+
     public function getHashIdAttribute(){
         return $this->hashId();
     }
@@ -62,5 +67,10 @@ class SchoolClass extends Model
         );
 
         return $types;
+    }
+
+    public function classsubjects()
+    {
+        return $this->hasMany(ClassSubjects::class, 'class_id', 'id');
     }
 }

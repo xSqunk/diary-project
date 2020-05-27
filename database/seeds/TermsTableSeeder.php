@@ -1,5 +1,4 @@
 <?php
-
 use App\Term;
 use Illuminate\Database\Seeder;
 

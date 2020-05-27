@@ -96,9 +96,21 @@ Route::middleware( ['auth', 'roles:admin'] )->group( static function(){
 
         Route::group( [ 'prefix' => 'plan' ], function(){
 
-            Route::get( '/', [
+            Route::get( '/{class_id}', [
                 'uses' => 'PlanMonthController@index'
             ] )->name( 'plan.month.index' );
+
+            Route::get( '/day/class/{class_id}/{year}/{month}/{day}', [
+                'uses' => 'PlanDayController@index'
+            ] )->name( 'plan.day.index' );
+
+            Route::get( '/day/presences/{class_id}/{lesson_id}', [
+                'uses' => 'PresencesController@index'
+            ] )->name( 'plan.presences.index' );
+
+            Route::post( 'presents/save', [
+                'uses' => 'PresencesController@saveStatus'
+            ] )->name( 'presents.save' );
 
         } );
 
@@ -183,6 +195,10 @@ Route::middleware( ['auth', 'roles:admin'] )->group( static function(){
             Route::post( '/update', [
                 'uses' => 'NotesController@update'
             ] )->name('notes.update');
+
+            Route::get( '/{class_id}', [
+                'uses' => 'StudentController@notes'
+            ] )->name( 'students.class.notes' );
 
         } );
 

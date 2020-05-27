@@ -49,12 +49,15 @@
 								<div></div>
 								<i class="fas fa-list-ol"></i> Uczniowie
 								<span class="badge  badge-pill badge-info">{{\App\User::InClass($class->id)->count()}}/{{$class->max_members}}</span></a>
-
-                            <a class="dropdown-item" href="{{route('students.class.notes', ['class_id' => $class->id])}}">
+                        <a class="dropdown-item" href="{{route('plan.month.index', ['class_id' => $class->id])}}">
                                 <div></div>
-                                <i class="far fa-sticky-note"></i> Lista Uwag
-                                <span class="badge  badge-pill badge-info"></span>
-                            </a>
+                                <i class="fas fa-list-ol"></i> Plan
+                        </div>
+                        <a class="dropdown-item" href="{{route('students.class.notes', ['class_id' => $class->id])}}">
+                            <div></div>
+                            <i class="far fa-sticky-note"></i> Lista Uwag
+                            <span class="badge  badge-pill badge-info"></span>
+                        </a>
 						</div>
 					</div>
 					<a href="{{ route( 'classes.edit', [ 'class' => $class->hashId ] ) }}">
