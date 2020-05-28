@@ -102,7 +102,7 @@ class TeachersTableSeeder extends Seeder
 
         foreach($users as $user) {
             $row = new User();
-            $row->class_id = $user['class_id'] ?? 0;
+            $row->class_id = $user['class_id'] ?? null;
             $row->email = $user['email'];
             $row->password = Hash::make($user['password']);
             $row->status = $user['status'];
