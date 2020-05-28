@@ -53,6 +53,9 @@
 					<label class="control-label" for="type">{{__('dashboard/grade.Przedmiot')}}</label>
 					<select required name="subject" class="form-control mr-3" id="subject">
 						<option value="0" selected>{{__('dashboard/grade.Wybierz przedmiot')}}</option>
+						@foreach($subjects as $subject)
+							<option value="{{$subject->id}}">{{$subject->name}}</option>
+						@endforeach
 					</select>
 					</div>
 

@@ -196,7 +196,7 @@ Route::middleware( ['auth', 'roles:admin'] )->group( static function(){
                 'uses' => 'NotesController@update'
             ] )->name('notes.update');
 
-            Route::get( '/{class_id}', [
+            Route::get( '/class/{class_id}', [
                 'uses' => 'StudentController@notes'
             ] )->name( 'students.class.notes' );
 

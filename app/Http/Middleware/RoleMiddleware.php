@@ -17,7 +17,6 @@ class RoleMiddleware
      */
     public function handle($request, Closure $next, $role = null)
     {
-
         if($role && Auth::user()->{'role_' . $role} !== 1) {
             return response(view( 'dashboard.not-allowed')->render());
         }

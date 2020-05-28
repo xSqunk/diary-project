@@ -42,29 +42,40 @@
 				<td>
 					<div class="btn-group" role="group">
 						<button id="btnGroupDrop1" type="button" class="btn btn-sm btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<i class="fas fa-address-book"></i> Akcje
+							<i class="fas fa-address-book"></i> Dziennik
 						</button>
+
 						<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
 							<a class="dropdown-item" href="{{route('students.class.index', ['class_id' => $class->id])}}">
 								<div></div>
 								<i class="fas fa-list-ol"></i> Uczniowie
-								<span class="badge  badge-pill badge-info">{{\App\User::InClass($class->id)->count()}}/{{$class->max_members}}</span></a>
+								<span class="badge  badge-pill badge-info">{{\App\User::InClass($class->id)->count()}}/{{$class->max_members}}</span>
+							</a>
                         <a class="dropdown-item" href="{{route('plan.month.index', ['class_id' => $class->id])}}">
                                 <div></div>
-                                <i class="fas fa-list-ol"></i> Plan
-                        </div>
-                        <a class="dropdown-item" href="{{route('students.class.notes', ['class_id' => $class->id])}}">
-                            <div></div>
-                            <i class="far fa-sticky-note"></i> Lista Uwag
-                            <span class="badge  badge-pill badge-info"></span>
-                        </a>
+                                <i class="fas fa-list-ol"></i> Obecności
+						</a>
+
+							<a class="dropdown-item" href="{{route('students.class.notes', ['class_id' => $class->id])}}">
+								<div></div>
+								<i class="far fa-sticky-note"></i> Lista Uwag
+								<span class="badge  badge-pill badge-info"></span>
+							</a>
 						</div>
+
+
 					</div>
+
+
+
 					<a href="{{ route( 'classes.edit', [ 'class' => $class->hashId ] ) }}">
 						<button class="btn btn-success diary-edit-btn" title="{{__('dashboard/class.Edytuj klasę')}}">
 							<i class="fas fa-edit"></i>
 						</button>
 					</a>
+
+
+
 					<button class="btn btn-danger delete-class" title="{{__('dashboard/user.Usuń klasę')}}">
 						<i class="fas fa-trash"></i>
 					</button>

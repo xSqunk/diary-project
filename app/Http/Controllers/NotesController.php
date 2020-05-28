@@ -127,7 +127,7 @@ class NotesController extends Controller
 //        $note = NotesClass::findByHashidOrFail( $request->noteId );
 
 
-        $note = NotesClass::findByHashid( $request->noteId);
+        $note = NotesClass::findOrFail( $request->noteId);
 
         $validator = Validator::make( $request->all(), [
             'student_id'       => 'required|nullable',
@@ -144,7 +144,7 @@ class NotesController extends Controller
             );
         }
 
-        dd($request->all());
+//        dd($request->all());
         $now = date('Y-m-d H-i');
 //        $note->teacher_id = $request->teacher_id;
         $note->student_id = $request->student_id;

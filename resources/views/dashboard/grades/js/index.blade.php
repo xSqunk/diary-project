@@ -4,7 +4,7 @@
         $('.delete-grade').click(function() {
 
             let row = $(this).closest('tr');
-            let hash_id = row.data('hash_id');
+            let id = row.data('id');
             let name = row.data('name');
             let surname = row.data('surname');
 
@@ -27,7 +27,7 @@
                         url: '{{route('grades.delete')}}' + '?_token=' + '{{ csrf_token() }}',
                         type: 'DELETE',
                         data: {
-                            hashId: hash_id
+                            id: id
                         },
                         success: function ( data ) {
                             console.log(data);

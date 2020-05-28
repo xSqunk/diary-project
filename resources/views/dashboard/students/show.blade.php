@@ -74,9 +74,9 @@
     <nav data-id="{{$student->id}}">
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <a class="nav-item nav-link ajax-tab active" data-toggle="tab" href="#tab-overall" role="tab" aria-controls="tab-overall" aria-selected="true">{{__('dashboard/student.Dane ucznia')}}</a>
-            <a class="nav-item nav-link ajax-tab" data-toggle="tab" href="#tab-parents" role="tab" aria-controls="tab-parents" aria-selected="false">{{__('dashboard/student.Rodzice')}}</a>
+{{--            <a class="nav-item nav-link ajax-tab" data-toggle="tab" href="#tab-parents" role="tab" aria-controls="tab-parents" aria-selected="false">{{__('dashboard/student.Rodzice')}}</a>--}}
             <a class="nav-item nav-link ajax-tab" data-toggle="tab" href="#tab-grades" role="tab" aria-controls="tab-grades" aria-selected="false">{{__('dashboard/student.Oceny')}}</a>
-            <a class="nav-item nav-link ajax-tab" data-toggle="tab" href="#tab-presences" role="tab" aria-controls="tab-presences" aria-selected="false">{{__('dashboard/student.Obecności')}}</a>
+{{--            <a class="nav-item nav-link ajax-tab" data-toggle="tab" href="#tab-presences" role="tab" aria-controls="tab-presences" aria-selected="false">{{__('dashboard/student.Obecności')}}</a>--}}
             <a class="nav-item nav-link ajax-tab" data-toggle="tab" href="#tab-notices" role="tab" aria-controls="tab-notices" aria-selected="false">{{__('dashboard/student.Uwagi')}}</a>
         </div>
     </nav>

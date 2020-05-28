@@ -9,6 +9,12 @@ return [
     'Email' => 'Email',
     'Nr telefonu' => 'Nr telefonu',
 
+    'Imię' => 'Imię',
+    'Nazwisko' => 'Nazwisko',
+    'Data urodzenia' => 'Data urodzenia',
+    'PESEL' => 'PESEL',
+    'Klasa' => 'Klasa',
+
     'Użytkownik został pomyślnie odblokowany' => 'Uczeń został pomyślnie odblokowany',
     'Użytkownik został pomyślnie zablokowany' => 'Uczeń został pomyślnie zablokowany',
 

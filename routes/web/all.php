@@ -19,5 +19,6 @@ Route::middleware( ['auth', 'roles'] )->group( static function(){
         Route::post( '/passwordUpdate', [
             'uses' => 'UserController@passwordUpdate'
         ] )->name( 'users.passwordUpdate' );
+
     });
 });

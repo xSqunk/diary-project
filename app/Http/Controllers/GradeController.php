@@ -41,7 +41,6 @@ class GradeController extends Controller
          else{
              $students = UserMeta::IsStudent()->get();
          }
-
         
         return view( 'dashboard.grades.index', [
             'grades' => $grades,
@@ -55,13 +54,18 @@ class GradeController extends Controller
     }
 
     public function student(Request $request) {
-        echo 'MOJE OCENY';
 
-        $grades = Grade::all();
+        $grades = Grade::where('student_id', '=', auth()->user()->id)->get();
 
-        return view( 'dashboard.grades.index', [
+        return view( 'dashboard.student-grades.index', [
             'grades' => $grades,
+            'class_subjects' => Subject::all(),
+            'student' => User::findOrFail(auth()->user()->id),
             'head_text' => 'Lista ocen',
+            'avg' => 0,
+            'weights' => 1,
+            'average' => 0,
+            'gradenumber' =>0
         ] );
     }
 
@@ -72,7 +76,7 @@ class GradeController extends Controller
             'head_text' => 'Dodawanie oceny',
             'students' => User::InGroup('student')->OnlyActive()->get(),
             'teachers' => User::InGroup('teacher')->OnlyActive()->get(),
-            'subjects' => Subject::getAvailableSubjects(),
+            'subjects' => Subject::all(),
             'schoolclasses' => SchoolClass::all(),
             'user' => $user,
         ] );
@@ -167,7 +171,8 @@ class GradeController extends Controller
     }
 
     public function delete( Request $request ){
-        $grade = Grade::findByHashidOrFail( $request->hashId );
+        echo $request->id;
+        $grade = Grade::findOrFail( $request->id );
         $grade->delete();
     }
 

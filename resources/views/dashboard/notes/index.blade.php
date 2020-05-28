@@ -58,11 +58,9 @@
                             <i class="fas fa-edit"></i>
                         </button>
                     </a>
-                    <a href="{{ route( 'notes.delete' ) }}">
-                        <button class="btn btn-danger delete-note" title="{{__('dashboard/note.Usuń uwage')}}">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </a>
+					<button class="btn btn-danger delete-note" title="{{__('dashboard/note.Usuń uwage')}}">
+						<i class="fas fa-trash"></i>
+					</button>
                 </td>
 			</tr>
 		@endforeach

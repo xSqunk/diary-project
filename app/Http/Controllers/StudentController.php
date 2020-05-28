@@ -208,12 +208,10 @@ class StudentController extends Controller
     public function getPanel( Request $request ){
         $student = User::findOrFail($request->id);
 
-        $student = User::findOrFail($request->id);
         $subject = Subject::all();
         // $subjectgrade = Subject::all();
         
         $studentclass = SchoolClass::findOrFail($student->class_id);
-
 
         $panel = str_replace('tab-', '', $request->tab_id);
 //        $student_notes = Notes::where('student_id', $request)->get();
@@ -223,10 +221,9 @@ class StudentController extends Controller
 //            'name' => $panel->name,
             'surname' => 'bla bla',
             'notes' => $student -> notes,
-
+            'class_subjects' => Subject::all(),
             'student' => $student,
             'subjects' => $subject,
-            // 'subjectsgrades' =>$subjectgrade,
             'avg' => 0,
             'weights' => 1,
             'average' => 0,

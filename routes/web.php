@@ -60,7 +60,7 @@ Route::get('api/student', function(){
 Route::get('api/subject', function(){
   
   $input_class = Request::get('option');
-  $subjects = Subject::ClassSubjects($input_class);
+  $subjects = Subject::all();
 
     return Response::make($subjects->get(['id','name']));
 });

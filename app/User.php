@@ -49,7 +49,7 @@ class User extends Authenticatable
 
      public function schoolclass()
     {
-        return $this->belongsTo(SchoolClass::class, 'id', 'class_id');
+        return $this->belongsTo(SchoolClass::class, 'class_id', 'id');
     }
 
     public function getHashIdAttribute(){

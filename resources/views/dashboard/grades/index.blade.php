@@ -59,7 +59,7 @@
 
 		<tbody>
 		@foreach($grades as $grade)
-			<tr data-hash_id="{{$grade->hashId}}" data-name="{{$grade->student->meta->name}}" data-surname="{{$grade->student->meta->surname}}">
+			<tr data-id="{{$grade->id}}" data-name="{{$grade->student->meta->name}}" data-surname="{{$grade->student->meta->surname}}">
 				<td>
 					{{$grade->teacher->meta->name . ' ' . $grade->teacher->meta->surname}}
 				</td>

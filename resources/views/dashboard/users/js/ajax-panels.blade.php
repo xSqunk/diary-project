@@ -1,11 +1,16 @@
 <script>
     ( function ( $ ) {
         $( document ).ready( function () {
-            $('.ajax-tab.active').click();
+
+            loadPanel($('.ajax-tab.active'));
 
             $('.ajax-tab').click(function() {
-                let tab_id = $(this).attr('aria-controls');
-                let element_id = $(this).closest('nav').data('id');
+                loadPanel($(this));
+            });
+
+            function loadPanel(el) {
+                let tab_id = el.attr('aria-controls');
+                let element_id = el.closest('nav').data('id');
 
                 $('#' + tab_id).append('<div id="diary-ajax-loader" class="ajax-loader"><i class="fa fa-spinner fa-spin" style="font-size:24px"></i></div>');
                 $.ajax( {
@@ -23,7 +28,7 @@
                         addError( _this, 'Błąd #00987' );
                     },
                 } );
-            });
+            }
         });
 
     } )( jQuery );
